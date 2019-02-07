@@ -38,21 +38,21 @@ The parameters in the data of the PUT API calls and the response of the GET/PUT 
 
 ## Common Tasks
 
-For all common tasks the [authetication](#Authentication) is necessary.
+For all common tasks the [authetication](#authentication) is necessary.
 
 ### Get Organisation of User
 
-One user can have multiple organisations. With the logged in user the user can [get all organisations](#Get-All-Organisations).
+One user can have multiple organisations. With the logged in user the user can [get all organisations](#get-all-organisations).
 
 ### Add or Update an Animal
 
-For adding an animal to an organisation (`organisation_id`) at least the required fields in the animal data (link to animal parameters) need to be filled in. With the [PUT call](#Create-Update-Single-Animal) the animal can be added.
+For adding an animal to an organisation (`organisation_id`) at least the required fields in the animal data (link to animal parameters) need to be filled in. With the [PUT call](#create-update-single-animal) the animal can be added.
 
-For updating an animal the `organisation_id` and the `official_id` of the animal, which should be updated, need to be in the route. Write all changing parameters in the data and use the [animal PUT](#Create-Update-Single-Animal) methode. The response of the animal calls can be put in as data to the animal put call. Changes are detected and are applied.
+For updating an animal the `organisation_id` and the `official_id` of the animal, which should be updated, need to be in the route. Write all changing parameters in the data and use the [animal PUT](#create-update-single-animal) methode. The response of the animal calls can be put in as data to the animal put call. Changes are detected and are applied.
 
 ### Add insemination, pregnancy result, calving confirmation and abort
 
-These occurrence are stored as events where insemination, pregnancy result, calving confirmation and abort are the event types. To add an event the event type (`event_type`) and the event time (`event_ts`) need to be provided to the [event PUT methode](#Create-Events). Regarding of the type additional information can be added which is listed in the parameter list.
+These occurrence are stored as events where insemination, pregnancy result, calving confirmation and abort are the event types. To add an event the event type (`event_type`) and the event time (`event_ts`) need to be provided to the [event PUT methode](#create-events). Regarding of the type additional information can be added which is listed in the parameter list.
 
 The cronical order of an animal life and how the events happen is the following:
 
