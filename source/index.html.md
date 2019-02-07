@@ -7,7 +7,7 @@ language_tabs:
 
 toc_footers:
   - <a href='https://messenger-staging.smaxtec.com/'>smaXtec Messenger (staging)</a>
-  - <a href='https://api-staging.smaxtec.com/api/v2/'>smaXtec API (staging)</a>
+  - <a href='https://api-staging.smaxtec.com/integration/v2/'>smaXtec API (staging)</a>
 
 includes:
   - errors
@@ -26,7 +26,7 @@ The Integration API offer the following advantages:
 
 ## Endpoints
 
-The *live* `[endpoint]` is `https://api.smaxtec.com/api` and the *staging* is `https://api-staging.smaxtec.com/api`.
+The *live* `[endpoint]` is `https://api.smaxtec.com/integration/v2` and the *staging* is `https://api-staging.smaxtec.com/integration/v2`.
 
 ## Parameters and Responses
 
@@ -71,8 +71,8 @@ import requests
 
 email='user@smaxtec.com'
 password='super_secret_password'
-endpoint = 'https://api-staging.smaxtec.com/api'
-route = endpoint + '/v1/user/get_token?email=' + email + '&password=' + password
+endpoint = 'https://api-staging.smaxtec.com/integration/v2'
+route = endpoint + '/users/session_token?email=' + email + '&password=' + password
 headers = {'accept': 'application/json'}
 
 r = requests.get(route, headers=headers)
@@ -82,7 +82,7 @@ authentication = r.json()
 ```
 
 ```bash
-curl -X GET "[endpoint]/v1/user/get_token?email=[email]&password=[password]" \
+curl -X GET "[endpoint]/users/session_token?email=[email]&password=[password]" \
         -H  "accept: application/json"
 ```
 
@@ -107,7 +107,7 @@ For example:
 
 **HTTP Request**
 
-`GET "[endpoint]/v1/user/get_token?email=[email]&password=[password]"`
+`GET "[endpoint]/users/session_token?email=[email]&password=[password]"`
 
 # Organisations
 
@@ -118,8 +118,8 @@ For example:
 ```python
 import requests
 
-endpoint = 'https://api-staging.smaxtec.com/api'
-route = endpoint + '/v1/organisation'
+endpoint = 'https://api-staging.smaxtec.com/integration/v2'
+route = endpoint + '/organisations'
 token = 'yx2zvuB8JD8ppwGti84OT8Muq5eiB2b2EZqsqC-HOXUvLSg'
 headers = {
     'accept': 'application/json',
@@ -133,7 +133,7 @@ all_user_organisations = r.json()
 ```
 
 ```bash
-curl -X GET "[endpoint]/v1/organisation" \
+curl -X GET "[endpoint]/organisations" \
         -H  "accept: application/json" \
         -H  "Authorization: bearer [token]"
 ```
@@ -170,7 +170,7 @@ This endpoint retrieves all organisations of the user. For the Integration API c
 
 **HTTP Request**
 
-`GET [endpoint]/v1/organisation`
+`GET [endpoint]/organisations`
 
 **Response**
 
@@ -191,9 +191,9 @@ timezone        | Timezone of the organisation.
 ```python
 import requests
 
-endpoint = 'https://api-staging.smaxtec.com/api'
+endpoint = 'https://api-staging.smaxtec.com/integration/v2'
 organisation_id = '123456qwertz'
-route = endpoint + '/v2/integration/organisations/' + organisation_id + '/animals'
+route = endpoint + '/organisations/' + organisation_id + '/animals'
 token = 'yx2zvuB8JD8ppwGti84OT8Muq5eiB2b2EZqsqC-HOXUvLSg'
 headers = {
     'accept': 'application/json',
@@ -207,7 +207,7 @@ all_animals = r.json()
 ```
 
 ```bash
-curl -X GET "[endpoint]/v2/integration/organisations/[organisation_id]/animals" \
+curl -X GET "[endpoint]/organisations/[organisation_id]/animals" \
         -H  "accept: application/json" \
         -H  "Authorization: bearer [token]"
 ```
@@ -243,7 +243,7 @@ This endpoint retrieves from a provided `organisation_id` all animals.
 
 **HTTP Request**
 
-`GET "[endpoint]/v2/integration/organisations/[organisation_id]/animals"`
+`GET "[endpoint]/organisations/[organisation_id]/animals"`
 
 **URL Parameters**
 
@@ -258,10 +258,10 @@ organisation_id   | The ID of the organisation of which the animals should be re
 ```python
 import requests
 
-endpoint = 'https://api-staging.smaxtec.com/api'
+endpoint = 'https://api-staging.smaxtec.com/integration/v2'
 organisation_id = '123456qwertz'
 official_id = 'AT111111112'
-route = endpoint + '/v2/integration/organisations/' + organisation_id + '/animals/' + official_id
+route = endpoint + '/organisations/' + organisation_id + '/animals/' + official_id
 token = 'yx2zvuB8JD8ppwGti84OT8Muq5eiB2b2EZqsqC-HOXUvLSg'
 headers = {
     'accept': 'application/json',
@@ -275,7 +275,7 @@ animal = r.json()
 ```
 
 ```bash
-curl -X GET "[endpoint]/v2/integration/organisations/[organisation_id]/animals/[official_id]" \
+curl -X GET "[endpoint]/organisations/[organisation_id]/animals/[official_id]" \
         -H  "accept: application/json" \
         -H  "Authorization: bearer [token]"
 ```
@@ -309,7 +309,7 @@ This endpoint retrieves from a provided `organisation_id` and `official_id` the 
 
 **HTTP Request**
 
-`GET "[endpoint]/v2/integration/organisations/[organisation_id]/animals/[official_id]"`
+`GET "[endpoint]/organisations/[organisation_id]/animals/[official_id]"`
 
 **URL Parameters**
 
@@ -324,10 +324,10 @@ official_id     | The official id of the animal. This is in the most cases the e
 
 ```python
 import requests
-endpoint = 'https://api-staging.smaxtec.com/api'
+endpoint = 'https://api-staging.smaxtec.com/integration/v2'
 organisation_id = '123456qwertz'
 official_id = 'AT111111112'
-route = endpoint + '/v2/integration/organisations/' + organisation_id + '/animals/' + official_id
+route = endpoint + '/organisations/' + organisation_id + '/animals/' + official_id
 data = {
     "name": "Strolcha",
     "sensor": "0700000001",
@@ -361,7 +361,7 @@ animal = r.json()
 ```
 
 ```bash
-curl -X PUT "[endpoint]/v2/integration/organisations/[organisation_id]/animals/[official_id]" \
+curl -X PUT "[endpoint]/organisations/[organisation_id]/animals/[official_id]" \
         -H  "accept: application/json" \
         -H  "Authorization: bearer [token]" \
         -H  "Content-Type: application/json" \
@@ -397,7 +397,7 @@ This endpoint creates/updates an animal which is in the organisation with `organ
 
 **HTTP Request**
 
-`PUT "[endpoint]/v2/integration/organisations/[organisation_id]/animals/[official_id]"`
+`PUT "[endpoint]/organisations/[organisation_id]/animals/[official_id]"`
 
 **URL Parameters**
 
@@ -437,10 +437,10 @@ Occurrences which arise for an animal are stored in the **events**. These events
 ```python
 import requests
 
-endpoint = 'https://api-staging.smaxtec.com/api'
+endpoint = 'https://api-staging.smaxtec.com/integration/v2'
 organisation_id = '123456qwertz'
 official_id = 'AT111111112'
-route = endpoint + '/v2/integration/organisations/' + organisation_id + '/animals/' + official_id + '/events'
+route = endpoint + '/organisations/' + organisation_id + '/animals/' + official_id + '/events'
 token = 'yx2zvuB8JD8ppwGti84OT8Muq5eiB2b2EZqsqC-HOXUvLSg'
 headers = {
     'accept': 'application/json',
@@ -454,12 +454,12 @@ all_animal_events = r.json()
 ```
 
 ```bash
-curl -X GET "[endpoint]/v2/integration/organisations/[organisation_id]/animals/[official_id]/events" \
+curl -X GET "[endpoint]/organisations/[organisation_id]/animals/[official_id]/events" \
         -H  "accept: application/json" \
         -H  "Authorization: bearer [token]"
 ```
 
-> Response example (will change)
+> Response example
 
 ```json
 [
@@ -538,7 +538,7 @@ curl -X GET "[endpoint]/v2/integration/organisations/[organisation_id]/animals/[
 This endpoint retrieves from a provided `organisation_id` and `official_id` the events of an animal.
 
 **HTTP Request**
-`GET "[endpoint]/v2/integration/organisations/[organisation_id]/animals/[official_id]/events"`
+`GET "[endpoint]/organisations/[organisation_id]/animals/[official_id]/events"`
 
 **URL Parameters**
 
@@ -554,10 +554,10 @@ animal_id | The ID of the organisation of which the animals should be retrived. 
 ```python
 import requests
 
-endpoint = 'https://api-staging.smaxtec.com/api'
+endpoint = 'https://api-staging.smaxtec.com/integration/v2'
 organisation_id = '123456qwertz'
 official_id = 'AT111111112'
-route = endpoint + '/v2/integration/organisations/' + organisation_id + '/animals/' + official_id + '/events'
+route = endpoint + '/organisations/' + organisation_id + '/animals/' + official_id + '/events'
 data = {
     "events": [
         {
@@ -582,7 +582,7 @@ all_animal_events = r.json()
 ```
 
 ```bash
-curl -X PUT "[endpoint]/v2/integration/organisations/[organisation_id]/animals/[official_id]/events" \
+curl -X PUT "[endpoint]/organisations/[organisation_id]/animals/[official_id]/events" \
         -H  "accept: application/json" \
         -H  "Authorization: bearer [token]"
         -d "{  \"events\": [    {    \"event_type\": \"insemination\",    \"event_ts\": \"2019-01-18T12:00:00+00:00\",    \"information\": {      \"days_to_calving\": 275    }    }  ]}"
@@ -611,7 +611,7 @@ It is possible to add just the events to the data which should be added to the s
 
 **HTTP Request**
 
-`PUT "[endpoint]/v2/integration/organisations/[organisation_id]/animals/[official_id]/events"`
+`PUT "[endpoint]/organisations/[organisation_id]/animals/[official_id]/events"`
 
 **URL Parameters**
 
