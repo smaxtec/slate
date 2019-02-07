@@ -34,7 +34,7 @@ The parameters in the data of the PUT API calls and the response of the GET/PUT 
 
 ## User Registration
 
-<aside class="warning">TODO</aside>
+The registration is done via the [smaXtec messenger](https://messenger.smaxtec.com).
 
 ## Common Tasks
 

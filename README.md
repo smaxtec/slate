@@ -6,7 +6,7 @@
 
 <p align="center"><img src="https://raw.githubusercontent.com/smaxtec/slate/master/source/images/example-screenshot.png" width=700 alt="Screenshot of smaXtec Integration API Documentation created with Slate"></p>
 
-<p align="center"><em>The example above was created with Slate. Check it out:  <a href="https://smaxtec.github.io/slate">smaXtec Integration API</a>.</em></p>
+<p align="center"><em>The screen shot above was created from the <a href="https://smaxtec.github.io/slate">smaXtec Integration API documentation</a>.</em></p>
 
 
 Getting Started with Slate
