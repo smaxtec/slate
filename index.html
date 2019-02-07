@@ -301,15 +301,15 @@
 <h2 id='user-registration'>User Registration</h2>
 <aside class="warning">TODO</aside>
 <h2 id='common-tasks'>Common Tasks</h2>
-<p>For all common tasks the <a href="#Authentication">authetication</a> is necessary.</p>
+<p>For all common tasks the <a href="#authentication">authetication</a> is necessary.</p>
 <h3 id='get-organisation-of-user'>Get Organisation of User</h3>
-<p>One user can have multiple organisations. With the logged in user the user can <a href="#Get-All-Organisations">get all organisations</a>.</p>
+<p>One user can have multiple organisations. With the logged in user the user can <a href="#get-all-organisations">get all organisations</a>.</p>
 <h3 id='add-or-update-an-animal'>Add or Update an Animal</h3>
-<p>For adding an animal to an organisation (<code>organisation_id</code>) at least the required fields in the animal data (link to animal parameters) need to be filled in. With the <a href="#Create-Update-Single-Animal">PUT call</a> the animal can be added.</p>
+<p>For adding an animal to an organisation (<code>organisation_id</code>) at least the required fields in the animal data (link to animal parameters) need to be filled in. With the <a href="#create-update-single-animal">PUT call</a> the animal can be added.</p>
 
-<p>For updating an animal the <code>organisation_id</code> and the <code>official_id</code> of the animal, which should be updated, need to be in the route. Write all changing parameters in the data and use the <a href="#Create-Update-Single-Animal">animal PUT</a> methode. The response of the animal calls can be put in as data to the animal put call. Changes are detected and are applied.</p>
+<p>For updating an animal the <code>organisation_id</code> and the <code>official_id</code> of the animal, which should be updated, need to be in the route. Write all changing parameters in the data and use the <a href="#create-update-single-animal">animal PUT</a> methode. The response of the animal calls can be put in as data to the animal put call. Changes are detected and are applied.</p>
 <h3 id='add-insemination-pregnancy-result-calving-confirmation-and-abort'>Add insemination, pregnancy result, calving confirmation and abort</h3>
-<p>These occurrence are stored as events where insemination, pregnancy result, calving confirmation and abort are the event types. To add an event the event type (<code>event_type</code>) and the event time (<code>event_ts</code>) need to be provided to the <a href="#Create-Events">event PUT methode</a>. Regarding of the type additional information can be added which is listed in the parameter list.</p>
+<p>These occurrence are stored as events where insemination, pregnancy result, calving confirmation and abort are the event types. To add an event the event type (<code>event_type</code>) and the event time (<code>event_ts</code>) need to be provided to the <a href="#create-events">event PUT methode</a>. Regarding of the type additional information can be added which is listed in the parameter list.</p>
 
 <p>The cronical order of an animal life and how the events happen is the following:</p>
 
