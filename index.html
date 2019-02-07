@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <title>API Reference</title>
+    <title>smaXtec Integration API Reference</title>
 
     <style>
       .highlight table td { padding: 5px; }
@@ -199,9 +199,10 @@
     <link href="stylesheets/screen.css" rel="stylesheet" media="screen" />
     <link href="stylesheets/print.css" rel="stylesheet" media="print" />
       <script src="javascripts/all.js"></script>
+    <link href="images/favicons.png" rel="icon" type="image/png" />
   </head>
 
-  <body class="index" data-languages="[&quot;shell&quot;,&quot;ruby&quot;,&quot;python&quot;,&quot;javascript&quot;]">
+  <body class="index" data-languages="[&quot;bash&quot;,&quot;python&quot;]">
     <a href="#" id="nav-button">
       <span>
         NAV
@@ -211,10 +212,8 @@
     <div class="toc-wrapper">
       <img src="images/logo.png" class="logo" alt="Logo" />
         <div class="lang-selector">
-              <a href="#" data-language-name="shell">shell</a>
-              <a href="#" data-language-name="ruby">ruby</a>
+              <a href="#" data-language-name="bash">bash</a>
               <a href="#" data-language-name="python">python</a>
-              <a href="#" data-language-name="javascript">javascript</a>
         </div>
         <div class="search">
           <input type="text" class="search" id="input-search" placeholder="Search">
@@ -223,21 +222,54 @@
       <ul id="toc" class="toc-list-h1">
           <li>
             <a href="#introduction" class="toc-h1 toc-link" data-title="Introduction">Introduction</a>
+              <ul class="toc-list-h2">
+                  <li>
+                    <a href="#endpoints" class="toc-h2 toc-link" data-title="Endpoints">Endpoints</a>
+                  </li>
+                  <li>
+                    <a href="#parameters-and-responses" class="toc-h2 toc-link" data-title="Parameters and Responses">Parameters and Responses</a>
+                  </li>
+                  <li>
+                    <a href="#user-registration" class="toc-h2 toc-link" data-title="User Registration">User Registration</a>
+                  </li>
+                  <li>
+                    <a href="#common-tasks" class="toc-h2 toc-link" data-title="Common Tasks">Common Tasks</a>
+                  </li>
+              </ul>
           </li>
           <li>
             <a href="#authentication" class="toc-h1 toc-link" data-title="Authentication">Authentication</a>
           </li>
           <li>
-            <a href="#kittens" class="toc-h1 toc-link" data-title="Kittens">Kittens</a>
+            <a href="#organisations" class="toc-h1 toc-link" data-title="Organisations">Organisations</a>
               <ul class="toc-list-h2">
                   <li>
-                    <a href="#get-all-kittens" class="toc-h2 toc-link" data-title="Get All Kittens">Get All Kittens</a>
+                    <a href="#get-all-organisations" class="toc-h2 toc-link" data-title="Get All Organisations">Get All Organisations</a>
+                  </li>
+              </ul>
+          </li>
+          <li>
+            <a href="#animals" class="toc-h1 toc-link" data-title="Animals">Animals</a>
+              <ul class="toc-list-h2">
+                  <li>
+                    <a href="#get-all-animals" class="toc-h2 toc-link" data-title="Get All Animals">Get All Animals</a>
                   </li>
                   <li>
-                    <a href="#get-a-specific-kitten" class="toc-h2 toc-link" data-title="Get a Specific Kitten">Get a Specific Kitten</a>
+                    <a href="#get-single-animal" class="toc-h2 toc-link" data-title="Get Single Animal">Get Single Animal</a>
                   </li>
                   <li>
-                    <a href="#delete-a-specific-kitten" class="toc-h2 toc-link" data-title="Delete a Specific Kitten">Delete a Specific Kitten</a>
+                    <a href="#create-update-single-animal" class="toc-h2 toc-link" data-title="Create/Update Single Animal">Create/Update Single Animal</a>
+                  </li>
+              </ul>
+          </li>
+          <li>
+            <a href="#events" class="toc-h1 toc-link" data-title="Events">Events</a>
+              <ul class="toc-list-h2">
+                  <li>
+                    <a href="#get-all-events" class="toc-h2 toc-link" data-title="Get All Events">Get All Events</a>
+                  </li>
+                  <li>
+                    <a href="#create-events" class="toc-h2 toc-link" data-title="Create Events">Create Events</a>
                   </li>
               </ul>
           </li>
@@ -246,258 +278,846 @@
           </li>
       </ul>
         <ul class="toc-footer">
-            <li><a href='#'>Sign Up for a Developer Key</a></li>
-            <li><a href='https://github.com/lord/slate'>Documentation Powered by Slate</a></li>
+            <li><a href='https://messenger-staging.smaxtec.com/'>smaXtec Messenger (staging)</a></li>
+            <li><a href='https://api-staging.smaxtec.com/api/v2/'>smaXtec API (staging)</a></li>
         </ul>
     </div>
     <div class="page-wrapper">
       <div class="dark-box"></div>
       <div class="content">
         <h1 id='introduction'>Introduction</h1>
-<p>Welcome to the Kittn API! You can use our API to access Kittn API endpoints, which can get information on various cats, kittens, and breeds in our database.</p>
+<p>Welcome to the smaXtec Integration API! 🐮 You can use our API to access intern API endpoints, which can get information on animals and animal events in our database.</p>
 
-<p>We have language bindings in Shell, Ruby, Python, and JavaScript! You can view code examples in the dark area to the right, and you can switch the programming language of the examples with the tabs in the top right.</p>
+<p>The Integration API offer the following advantages:</p>
 
-<p>This example API documentation page was created with <a href="https://github.com/lord/slate">Slate</a>. Feel free to edit it and use it as a base for your own API&#39;s documentation.</p>
+<ul>
+<li>The animals are identified with the eratag/EID and not the smaXtec internal IDs.</li>
+<li>External partners do not need to choose to update or create. They can simply send the current state of all objects and smaXtec will do the synchronisation.</li>
+</ul>
+<h2 id='endpoints'>Endpoints</h2>
+<p>The <em>live</em> <code>[endpoint]</code> is <code>https://api.smaxtec.com/api</code> and the <em>staging</em> is <code>https://api-staging.smaxtec.com/api</code>.</p>
+<h2 id='parameters-and-responses'>Parameters and Responses</h2>
+<p>The parameters in the data of the PUT API calls and the response of the GET/PUT API calls are the same. This means that the output can be taken and provided to a PUT methode.</p>
+<h2 id='user-registration'>User Registration</h2>
+<aside class="warning">TODO</aside>
+<h2 id='common-tasks'>Common Tasks</h2>
+<p>For all common tasks the <a href="#Authentication">authetication</a> is necessary.</p>
+<h3 id='get-organisation-of-user'>Get Organisation of User</h3>
+<p>One user can have multiple organisations. With the logged in user the user can <a href="#Get-All-Organisations">get all organisations</a>.</p>
+<h3 id='add-or-update-an-animal'>Add or Update an Animal</h3>
+<p>For adding an animal to an organisation (<code>organisation_id</code>) at least the required fields in the animal data (link to animal parameters) need to be filled in. With the <a href="#Create-Update-Single-Animal">PUT call</a> the animal can be added.</p>
+
+<p>For updating an animal the <code>organisation_id</code> and the <code>official_id</code> of the animal, which should be updated, need to be in the route. Write all changing parameters in the data and use the <a href="#Create-Update-Single-Animal">animal PUT</a> methode. The response of the animal calls can be put in as data to the animal put call. Changes are detected and are applied.</p>
+<h3 id='add-insemination-pregnancy-result-calving-confirmation-and-abort'>Add insemination, pregnancy result, calving confirmation and abort</h3>
+<p>These occurrence are stored as events where insemination, pregnancy result, calving confirmation and abort are the event types. To add an event the event type (<code>event_type</code>) and the event time (<code>event_ts</code>) need to be provided to the <a href="#Create-Events">event PUT methode</a>. Regarding of the type additional information can be added which is listed in the parameter list.</p>
+
+<p>The cronical order of an animal life and how the events happen is the following:</p>
+
+<p><code>-&gt; insemination -&gt; pregnancy_result -&gt; calving_confirmation -&gt;</code></p>
+
+<p>or</p>
+
+<p><code>-&gt; insemination -&gt; pregnancy_result -&gt; abort -&gt;</code></p>
 <h1 id='authentication'>Authentication</h1>
 <blockquote>
-<p>To authorize, use this code:</p>
+<p>Request</p>
 </blockquote>
-<pre class="highlight ruby tab-ruby"><code><span class="nb">require</span> <span class="s1">'kittn'</span>
+<pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">requests</span>
 
-<span class="n">api</span> <span class="o">=</span> <span class="no">Kittn</span><span class="o">::</span><span class="no">APIClient</span><span class="p">.</span><span class="nf">authorize!</span><span class="p">(</span><span class="s1">'meowmeowmeow'</span><span class="p">)</span>
-</code></pre><pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">kittn</span>
+<span class="n">email</span><span class="o">=</span><span class="s">'user@smaxtec.com'</span>
+<span class="n">password</span><span class="o">=</span><span class="s">'super_secret_password'</span>
+<span class="n">endpoint</span> <span class="o">=</span> <span class="s">'https://api-staging.smaxtec.com/api'</span>
+<span class="n">route</span> <span class="o">=</span> <span class="n">endpoint</span> <span class="o">+</span> <span class="s">'/v1/user/get_token?email='</span> <span class="o">+</span> <span class="n">email</span> <span class="o">+</span> <span class="s">'&amp;password='</span> <span class="o">+</span> <span class="n">password</span>
+<span class="n">headers</span> <span class="o">=</span> <span class="p">{</span><span class="s">'accept'</span><span class="p">:</span> <span class="s">'application/json'</span><span class="p">}</span>
 
-<span class="n">api</span> <span class="o">=</span> <span class="n">kittn</span><span class="o">.</span><span class="n">authorize</span><span class="p">(</span><span class="s">'meowmeowmeow'</span><span class="p">)</span>
-</code></pre><pre class="highlight shell tab-shell"><code><span class="c"># With shell, you can just pass the correct header with each request</span>
-curl <span class="s2">"api_endpoint_here"</span>
-  -H <span class="s2">"Authorization: meowmeowmeow"</span>
-</code></pre><pre class="highlight javascript tab-javascript"><code><span class="kr">const</span> <span class="nx">kittn</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'kittn'</span><span class="p">);</span>
+<span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">route</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">)</span>
 
-<span class="kd">let</span> <span class="nx">api</span> <span class="o">=</span> <span class="nx">kittn</span><span class="p">.</span><span class="nx">authorize</span><span class="p">(</span><span class="s1">'meowmeowmeow'</span><span class="p">);</span>
+<span class="n">status_code</span> <span class="o">=</span> <span class="n">r</span><span class="o">.</span><span class="n">status_code</span>
+<span class="n">authentication</span> <span class="o">=</span> <span class="n">r</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
+</code></pre><pre class="highlight shell"><code>curl -X GET <span class="s2">"[endpoint]/v1/user/get_token?email=[email]&amp;password=[password]"</span> <span class="se">\</span>
+        -H  <span class="s2">"accept: application/json"</span>
 </code></pre>
 <blockquote>
-<p>Make sure to replace <code>meowmeowmeow</code> with your API key.</p>
+<p>Response example</p>
 </blockquote>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="s2">"token"</span><span class="p">:</span><span class="w"> </span><span class="s2">"yx2zvuB8JD8ppwGti84OT8Muq5eiB2b2EZqsqC-HOXUvLSg"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+<p>An authorization token is requested over the API. The Response is a token which needs to be in all API requests to the server in a header that looks like the following:</p>
 
-<p>Kittn uses API keys to allow access to the API. You can register a new Kittn API key at our <a href="http://example.com/developers">developer portal</a>.</p>
+<p><code>-H &quot;authorization: Bearer [token]&quot;</code></p>
 
-<p>Kittn expects for the API key to be included in all API requests to the server in a header that looks like the following:</p>
+<p>For example:</p>
 
-<p><code>Authorization: meowmeowmeow</code></p>
+<p><code>-H &quot;authorization: Bearer yx2zvuB8JD8ppwGti84OT8Muq5eiB2b2EZqsqC-HOXUvLSg&quot;</code></p>
 
-<aside class="notice">
-You must replace <code>meowmeowmeow</code> with your personal API key.
-</aside>
-<h1 id='kittens'>Kittens</h1><h2 id='get-all-kittens'>Get All Kittens</h2><pre class="highlight ruby tab-ruby"><code><span class="nb">require</span> <span class="s1">'kittn'</span>
+<aside class="notice">The authorization header is needed in all following calls.</aside>
 
-<span class="n">api</span> <span class="o">=</span> <span class="no">Kittn</span><span class="o">::</span><span class="no">APIClient</span><span class="p">.</span><span class="nf">authorize!</span><span class="p">(</span><span class="s1">'meowmeowmeow'</span><span class="p">)</span>
-<span class="n">api</span><span class="p">.</span><span class="nf">kittens</span><span class="p">.</span><span class="nf">get</span>
-</code></pre><pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">kittn</span>
+<p><strong>HTTP Request</strong></p>
 
-<span class="n">api</span> <span class="o">=</span> <span class="n">kittn</span><span class="o">.</span><span class="n">authorize</span><span class="p">(</span><span class="s">'meowmeowmeow'</span><span class="p">)</span>
-<span class="n">api</span><span class="o">.</span><span class="n">kittens</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
-</code></pre><pre class="highlight shell tab-shell"><code>curl <span class="s2">"http://example.com/api/kittens"</span>
-  -H <span class="s2">"Authorization: meowmeowmeow"</span>
-</code></pre><pre class="highlight javascript tab-javascript"><code><span class="kr">const</span> <span class="nx">kittn</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'kittn'</span><span class="p">);</span>
+<p><code>GET &quot;[endpoint]/v1/user/get_token?email=[email]&amp;password=[password]&quot;</code></p>
+<h1 id='organisations'>Organisations</h1><h2 id='get-all-organisations'>Get All Organisations</h2>
+<blockquote>
+<p>Request</p>
+</blockquote>
+<pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">requests</span>
 
-<span class="kd">let</span> <span class="nx">api</span> <span class="o">=</span> <span class="nx">kittn</span><span class="p">.</span><span class="nx">authorize</span><span class="p">(</span><span class="s1">'meowmeowmeow'</span><span class="p">);</span>
-<span class="kd">let</span> <span class="nx">kittens</span> <span class="o">=</span> <span class="nx">api</span><span class="p">.</span><span class="nx">kittens</span><span class="p">.</span><span class="nx">get</span><span class="p">();</span>
+<span class="n">endpoint</span> <span class="o">=</span> <span class="s">'https://api-staging.smaxtec.com/api'</span>
+<span class="n">route</span> <span class="o">=</span> <span class="n">endpoint</span> <span class="o">+</span> <span class="s">'/v1/organisation'</span>
+<span class="n">token</span> <span class="o">=</span> <span class="s">'yx2zvuB8JD8ppwGti84OT8Muq5eiB2b2EZqsqC-HOXUvLSg'</span>
+<span class="n">headers</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s">'accept'</span><span class="p">:</span> <span class="s">'application/json'</span><span class="p">,</span>
+    <span class="s">'Authorization'</span><span class="p">:</span> <span class="s">'bearer '</span> <span class="o">+</span> <span class="n">token</span>
+<span class="p">}</span>
+
+<span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">route</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">)</span>
+
+<span class="n">status_code</span> <span class="o">=</span> <span class="n">r</span><span class="o">.</span><span class="n">status_code</span>
+<span class="n">all_user_organisations</span> <span class="o">=</span> <span class="n">r</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
+</code></pre><pre class="highlight shell"><code>curl -X GET <span class="s2">"[endpoint]/v1/organisation"</span> <span class="se">\</span>
+        -H  <span class="s2">"accept: application/json"</span> <span class="se">\</span>
+        -H  <span class="s2">"Authorization: bearer [token]"</span>
 </code></pre>
 <blockquote>
-<p>The above command returns JSON structured like this:</p>
+<p>Response example</p>
 </blockquote>
 <pre class="highlight json tab-json"><code><span class="p">[</span><span class="w">
   </span><span class="p">{</span><span class="w">
-    </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Fluffums"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"breed"</span><span class="p">:</span><span class="w"> </span><span class="s2">"calico"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"fluffiness"</span><span class="p">:</span><span class="w"> </span><span class="mi">6</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"cuteness"</span><span class="p">:</span><span class="w"> </span><span class="mi">7</span><span class="w">
-  </span><span class="p">},</span><span class="w">
-  </span><span class="p">{</span><span class="w">
-    </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Max"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"breed"</span><span class="p">:</span><span class="w"> </span><span class="s2">"unknown"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"fluffiness"</span><span class="p">:</span><span class="w"> </span><span class="mi">5</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"cuteness"</span><span class="p">:</span><span class="w"> </span><span class="mi">10</span><span class="w">
+    </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Organisation Name"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"organisation_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"123456qwertz"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"permissions"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+      </span><span class="s2">"read"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"groups.update"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"animals.create"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"animals.update"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"animals.archive"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"animals.changetags"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"animals.changegroup"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"devices.update"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"lactations.update"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"diagnosis.update"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"heats.update"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"organisations.update"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"annotations.update"</span><span class="w">
+    </span><span class="p">],</span><span class="w">
+    </span><span class="s2">"role"</span><span class="p">:</span><span class="w"> </span><span class="s2">"admin"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"timezone"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Europe/Vienna"</span><span class="w">
   </span><span class="p">}</span><span class="w">
 </span><span class="p">]</span><span class="w">
 </span></code></pre>
-<p>This endpoint retrieves all kittens.</p>
-<h3 id='http-request'>HTTP Request</h3>
-<p><code>GET http://example.com/api/kittens</code></p>
-<h3 id='query-parameters'>Query Parameters</h3>
+<p>This endpoint retrieves all organisations of the user. For the Integration API calls the <code>organisation_id</code> is needed to make changes to the animals of the organsation.</p>
+
+<p><strong>HTTP Request</strong></p>
+
+<p><code>GET [endpoint]/v1/organisation</code></p>
+
+<p><strong>Response</strong></p>
+
 <table><thead>
 <tr>
 <th>Parameter</th>
-<th>Default</th>
 <th>Description</th>
 </tr>
 </thead><tbody>
 <tr>
-<td>include_cats</td>
-<td>false</td>
-<td>If set to true, the result will also include cats.</td>
+<td>name</td>
+<td>Name of the Organisation.</td>
 </tr>
 <tr>
-<td>available</td>
-<td>true</td>
-<td>If set to false, the result will include kittens that have already been adopted.</td>
+<td>organisation_id</td>
+<td>ID of the organisation of which the animals should be retrived.</td>
+</tr>
+<tr>
+<td>permissions</td>
+<td>Permission the user has for this organisation.</td>
+</tr>
+<tr>
+<td>role</td>
+<td>Role the user has for this organisation.</td>
+</tr>
+<tr>
+<td>timezone</td>
+<td>Timezone of the organisation.</td>
 </tr>
 </tbody></table>
+<h1 id='animals'>Animals</h1><h2 id='get-all-animals'>Get All Animals</h2>
+<blockquote>
+<p>Request</p>
+</blockquote>
+<pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">requests</span>
 
-<aside class="success">
-Remember — a happy kitten is an authenticated kitten!
-</aside>
-<h2 id='get-a-specific-kitten'>Get a Specific Kitten</h2><pre class="highlight ruby tab-ruby"><code><span class="nb">require</span> <span class="s1">'kittn'</span>
+<span class="n">endpoint</span> <span class="o">=</span> <span class="s">'https://api-staging.smaxtec.com/api'</span>
+<span class="n">organisation_id</span> <span class="o">=</span> <span class="s">'123456qwertz'</span>
+<span class="n">route</span> <span class="o">=</span> <span class="n">endpoint</span> <span class="o">+</span> <span class="s">'/v2/integration/organisations/'</span> <span class="o">+</span> <span class="n">organisation_id</span> <span class="o">+</span> <span class="s">'/animals'</span>
+<span class="n">token</span> <span class="o">=</span> <span class="s">'yx2zvuB8JD8ppwGti84OT8Muq5eiB2b2EZqsqC-HOXUvLSg'</span>
+<span class="n">headers</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s">'accept'</span><span class="p">:</span> <span class="s">'application/json'</span><span class="p">,</span>
+    <span class="s">'Authorization'</span><span class="p">:</span> <span class="s">'bearer '</span> <span class="o">+</span> <span class="n">token</span>
+<span class="p">}</span>
 
-<span class="n">api</span> <span class="o">=</span> <span class="no">Kittn</span><span class="o">::</span><span class="no">APIClient</span><span class="p">.</span><span class="nf">authorize!</span><span class="p">(</span><span class="s1">'meowmeowmeow'</span><span class="p">)</span>
-<span class="n">api</span><span class="p">.</span><span class="nf">kittens</span><span class="p">.</span><span class="nf">get</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
-</code></pre><pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">kittn</span>
+<span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">route</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">)</span>
 
-<span class="n">api</span> <span class="o">=</span> <span class="n">kittn</span><span class="o">.</span><span class="n">authorize</span><span class="p">(</span><span class="s">'meowmeowmeow'</span><span class="p">)</span>
-<span class="n">api</span><span class="o">.</span><span class="n">kittens</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
-</code></pre><pre class="highlight shell tab-shell"><code>curl <span class="s2">"http://example.com/api/kittens/2"</span>
-  -H <span class="s2">"Authorization: meowmeowmeow"</span>
-</code></pre><pre class="highlight javascript tab-javascript"><code><span class="kr">const</span> <span class="nx">kittn</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'kittn'</span><span class="p">);</span>
-
-<span class="kd">let</span> <span class="nx">api</span> <span class="o">=</span> <span class="nx">kittn</span><span class="p">.</span><span class="nx">authorize</span><span class="p">(</span><span class="s1">'meowmeowmeow'</span><span class="p">);</span>
-<span class="kd">let</span> <span class="nx">max</span> <span class="o">=</span> <span class="nx">api</span><span class="p">.</span><span class="nx">kittens</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="mi">2</span><span class="p">);</span>
+<span class="n">status_code</span> <span class="o">=</span> <span class="n">r</span><span class="o">.</span><span class="n">status_code</span>
+<span class="n">all_animals</span> <span class="o">=</span> <span class="n">r</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
+</code></pre><pre class="highlight shell"><code>curl -X GET <span class="s2">"[endpoint]/v2/integration/organisations/[organisation_id]/animals"</span> <span class="se">\</span>
+        -H  <span class="s2">"accept: application/json"</span> <span class="se">\</span>
+        -H  <span class="s2">"Authorization: bearer [token]"</span>
 </code></pre>
 <blockquote>
-<p>The above command returns JSON structured like this:</p>
+<p>Response example</p>
 </blockquote>
-<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
-  </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Max"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"breed"</span><span class="p">:</span><span class="w"> </span><span class="s2">"unknown"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"fluffiness"</span><span class="p">:</span><span class="w"> </span><span class="mi">5</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"cuteness"</span><span class="p">:</span><span class="w"> </span><span class="mi">10</span><span class="w">
-</span><span class="p">}</span><span class="w">
+<pre class="highlight json tab-json"><code><span class="p">[</span><span class="w">
+  </span><span class="p">{</span><span class="w">
+    </span><span class="s2">"_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"5c480ab3314724e123456789"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"archived"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"birthday"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2019-01-10T13:04:52+00:00"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"created_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2019-01-23T06:33:24+00:00"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"current_device_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0700000001"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"display_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"AT111111112 - susi"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"group_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"57920fca506d993asdfghjkl"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"lactation_status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Young_Cow"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"location"</span><span class="p">:</span><span class="w"> </span><span class="s2">"stall"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"mark"</span><span class="p">:</span><span class="w"> </span><span class="s2">"AT111111112"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"mixed_race"</span><span class="p">:</span><span class="w"> </span><span class="p">[{</span><span class="s2">"race"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ANGLER"</span><span class="p">,</span><span class="w"> </span><span class="s2">"percent"</span><span class="p">:</span><span class="w"> </span><span class="mi">22</span><span class="p">},</span><span class="w"> </span><span class="p">{</span><span class="s2">"race"</span><span class="p">:</span><span class="w"> </span><span class="s2">"FLECKVIEW"</span><span class="p">,</span><span class="w"> </span><span class="s2">"percent"</span><span class="p">:</span><span class="w"> </span><span class="mi">78</span><span class="p">}],</span><span class="w">
+    </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"susi"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"official_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"AT111111112"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"official_id_rule"</span><span class="p">:</span><span class="w"> </span><span class="s2">"AT"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"organisation_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"123456qwertz"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"race"</span><span class="p">:</span><span class="w"> </span><span class="s2">"mixed"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"sensor"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0700000001"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"tags"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"sold"</span><span class="p">]</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">]</span><span class="w">
 </span></code></pre>
-<p>This endpoint retrieves a specific kitten.</p>
+<p>This endpoint retrieves from a provided <code>organisation_id</code> all animals.</p>
 
-<aside class="warning">Inside HTML code blocks like this one, you can't use Markdown, so use <code>&lt;code&gt;</code> blocks to denote code.</aside>
-<h3 id='http-request-2'>HTTP Request</h3>
-<p><code>GET http://example.com/kittens/&lt;ID&gt;</code></p>
-<h3 id='url-parameters'>URL Parameters</h3>
+<p><strong>HTTP Request</strong></p>
+
+<p><code>GET &quot;[endpoint]/v2/integration/organisations/[organisation_id]/animals&quot;</code></p>
+
+<p><strong>URL Parameters</strong></p>
+
 <table><thead>
 <tr>
 <th>Parameter</th>
 <th>Description</th>
+<th></th>
 </tr>
 </thead><tbody>
 <tr>
-<td>ID</td>
-<td>The ID of the kitten to retrieve</td>
+<td>organisation_id</td>
+<td>The ID of the organisation of which the animals should be retrived.</td>
+<td><code>required</code></td>
 </tr>
 </tbody></table>
-<h2 id='delete-a-specific-kitten'>Delete a Specific Kitten</h2><pre class="highlight ruby tab-ruby"><code><span class="nb">require</span> <span class="s1">'kittn'</span>
+<h2 id='get-single-animal'>Get Single Animal</h2>
+<blockquote>
+<p>Request</p>
+</blockquote>
+<pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">requests</span>
 
-<span class="n">api</span> <span class="o">=</span> <span class="no">Kittn</span><span class="o">::</span><span class="no">APIClient</span><span class="p">.</span><span class="nf">authorize!</span><span class="p">(</span><span class="s1">'meowmeowmeow'</span><span class="p">)</span>
-<span class="n">api</span><span class="p">.</span><span class="nf">kittens</span><span class="p">.</span><span class="nf">delete</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
-</code></pre><pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">kittn</span>
+<span class="n">endpoint</span> <span class="o">=</span> <span class="s">'https://api-staging.smaxtec.com/api'</span>
+<span class="n">organisation_id</span> <span class="o">=</span> <span class="s">'123456qwertz'</span>
+<span class="n">official_id</span> <span class="o">=</span> <span class="s">'AT111111112'</span>
+<span class="n">route</span> <span class="o">=</span> <span class="n">endpoint</span> <span class="o">+</span> <span class="s">'/v2/integration/organisations/'</span> <span class="o">+</span> <span class="n">organisation_id</span> <span class="o">+</span> <span class="s">'/animals/'</span> <span class="o">+</span> <span class="n">official_id</span>
+<span class="n">token</span> <span class="o">=</span> <span class="s">'yx2zvuB8JD8ppwGti84OT8Muq5eiB2b2EZqsqC-HOXUvLSg'</span>
+<span class="n">headers</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s">'accept'</span><span class="p">:</span> <span class="s">'application/json'</span><span class="p">,</span>
+    <span class="s">'Authorization'</span><span class="p">:</span> <span class="s">'bearer '</span> <span class="o">+</span> <span class="n">token</span>
+<span class="p">}</span>
 
-<span class="n">api</span> <span class="o">=</span> <span class="n">kittn</span><span class="o">.</span><span class="n">authorize</span><span class="p">(</span><span class="s">'meowmeowmeow'</span><span class="p">)</span>
-<span class="n">api</span><span class="o">.</span><span class="n">kittens</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
-</code></pre><pre class="highlight shell tab-shell"><code>curl <span class="s2">"http://example.com/api/kittens/2"</span>
-  -X DELETE
-  -H <span class="s2">"Authorization: meowmeowmeow"</span>
-</code></pre><pre class="highlight javascript tab-javascript"><code><span class="kr">const</span> <span class="nx">kittn</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'kittn'</span><span class="p">);</span>
+<span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">route</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">)</span>
 
-<span class="kd">let</span> <span class="nx">api</span> <span class="o">=</span> <span class="nx">kittn</span><span class="p">.</span><span class="nx">authorize</span><span class="p">(</span><span class="s1">'meowmeowmeow'</span><span class="p">);</span>
-<span class="kd">let</span> <span class="nx">max</span> <span class="o">=</span> <span class="nx">api</span><span class="p">.</span><span class="nx">kittens</span><span class="p">.</span><span class="k">delete</span><span class="p">(</span><span class="mi">2</span><span class="p">);</span>
+<span class="n">status_code</span> <span class="o">=</span> <span class="n">r</span><span class="o">.</span><span class="n">status_code</span>
+<span class="n">animal</span> <span class="o">=</span> <span class="n">r</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
+</code></pre><pre class="highlight shell"><code>curl -X GET <span class="s2">"[endpoint]/v2/integration/organisations/[organisation_id]/animals/[official_id]"</span> <span class="se">\</span>
+        -H  <span class="s2">"accept: application/json"</span> <span class="se">\</span>
+        -H  <span class="s2">"Authorization: bearer [token]"</span>
 </code></pre>
 <blockquote>
-<p>The above command returns JSON structured like this:</p>
+<p>Response example</p>
 </blockquote>
 <pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
-  </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"deleted"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">":("</span><span class="w">
+  </span><span class="s2">"_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"5c480ab3314724e123456789"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"archived"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"birthday"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2019-01-10T13:04:52+00:00"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"created_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2019-01-23T06:33:24+00:00"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"current_device_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0700000001"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"display_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"AT111111112 - susi"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"group_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"57920fca506d993asdfghjkl"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"lactation_status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Young_Cow"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"location"</span><span class="p">:</span><span class="w"> </span><span class="s2">"stall"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"mark"</span><span class="p">:</span><span class="w"> </span><span class="s2">"AT111111112"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"mixed_race"</span><span class="p">:</span><span class="w"> </span><span class="p">[{</span><span class="s2">"race"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ANGLER"</span><span class="p">,</span><span class="w"> </span><span class="s2">"percent"</span><span class="p">:</span><span class="w"> </span><span class="mi">22</span><span class="p">},</span><span class="w"> </span><span class="p">{</span><span class="s2">"race"</span><span class="p">:</span><span class="w"> </span><span class="s2">"FLECKVIEW"</span><span class="p">,</span><span class="w"> </span><span class="s2">"percent"</span><span class="p">:</span><span class="w"> </span><span class="mi">78</span><span class="p">}],</span><span class="w">
+  </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"susi"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"official_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"AT111111112"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"official_id_rule"</span><span class="p">:</span><span class="w"> </span><span class="s2">"AT"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"organisation_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"123456qwertz"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"race"</span><span class="p">:</span><span class="w"> </span><span class="s2">"mixed"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"sensor"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0700000001"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"tags"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"sold"</span><span class="p">]</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
-<p>This endpoint deletes a specific kitten.</p>
-<h3 id='http-request-3'>HTTP Request</h3>
-<p><code>DELETE http://example.com/kittens/&lt;ID&gt;</code></p>
-<h3 id='url-parameters-2'>URL Parameters</h3>
+<p>This endpoint retrieves from a provided <code>organisation_id</code> and <code>official_id</code> the animal.</p>
+
+<p><strong>HTTP Request</strong></p>
+
+<p><code>GET &quot;[endpoint]/v2/integration/organisations/[organisation_id]/animals/[official_id]&quot;</code></p>
+
+<p><strong>URL Parameters</strong></p>
+
 <table><thead>
 <tr>
 <th>Parameter</th>
 <th>Description</th>
+<th></th>
 </tr>
 </thead><tbody>
 <tr>
-<td>ID</td>
-<td>The ID of the kitten to delete</td>
+<td>organisation_id</td>
+<td>The ID of the organisation of which the animals should be retrived.</td>
+<td><code>required</code></td>
+</tr>
+<tr>
+<td>official_id</td>
+<td>The official id of the animal. This is in the most cases the eartag of the animal.</td>
+<td><code>required</code></td>
+</tr>
+</tbody></table>
+<h2 id='create-update-single-animal'>Create/Update Single Animal</h2>
+<blockquote>
+<p>Request</p>
+</blockquote>
+<pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">requests</span>
+<span class="n">endpoint</span> <span class="o">=</span> <span class="s">'https://api-staging.smaxtec.com/api'</span>
+<span class="n">organisation_id</span> <span class="o">=</span> <span class="s">'123456qwertz'</span>
+<span class="n">official_id</span> <span class="o">=</span> <span class="s">'AT111111112'</span>
+<span class="n">route</span> <span class="o">=</span> <span class="n">endpoint</span> <span class="o">+</span> <span class="s">'/v2/integration/organisations/'</span> <span class="o">+</span> <span class="n">organisation_id</span> <span class="o">+</span> <span class="s">'/animals/'</span> <span class="o">+</span> <span class="n">official_id</span>
+<span class="n">data</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s">"name"</span><span class="p">:</span> <span class="s">"Strolcha"</span><span class="p">,</span>
+    <span class="s">"sensor"</span><span class="p">:</span> <span class="s">"0700000001"</span><span class="p">,</span>
+    <span class="s">"group_id"</span><span class="p">:</span> <span class="s">"57920fca506d993asdfgh123"</span><span class="p">,</span>
+    <span class="s">"birthday"</span><span class="p">:</span> <span class="s">"2019-01-10T13:04:52+00:00"</span><span class="p">,</span>
+    <span class="s">"race"</span><span class="p">:</span> <span class="s">"mixed"</span><span class="p">,</span>
+    <span class="s">"location"</span><span class="p">:</span> <span class="s">"stall"</span><span class="p">,</span>
+    <span class="s">"_id"</span><span class="p">:</span> <span class="s">"5c480ab3314724e123456789"</span><span class="p">,</span>
+    <span class="s">"official_id_rule"</span><span class="p">:</span> <span class="s">"AT"</span><span class="p">,</span>
+    <span class="s">"display_name"</span><span class="p">:</span> <span class="s">"AT111111112 - susi"</span><span class="p">,</span>
+    <span class="s">"archived"</span><span class="p">:</span> <span class="bp">False</span><span class="p">,</span>
+    <span class="s">"created_at"</span><span class="p">:</span> <span class="s">"2019-01-23T06:33:24+00:00"</span><span class="p">,</span>
+    <span class="s">"official_id"</span><span class="p">:</span> <span class="s">"AT111111112"</span><span class="p">,</span>
+    <span class="s">"lactation_status"</span><span class="p">:</span> <span class="s">"Young_Cow"</span><span class="p">,</span>
+    <span class="s">"current_device_id"</span><span class="p">:</span> <span class="s">"0700000001"</span><span class="p">,</span>
+    <span class="s">"mark"</span><span class="p">:</span> <span class="s">"AT111111112"</span><span class="p">,</span>
+    <span class="s">"tags"</span><span class="p">:</span> <span class="p">[</span><span class="s">"sold"</span><span class="p">],</span>
+    <span class="s">"mixed_race"</span><span class="p">:</span> <span class="p">[{</span><span class="s">"race"</span><span class="p">:</span> <span class="s">"ANGLER"</span><span class="p">,</span> <span class="s">"percent"</span><span class="p">:</span> <span class="mi">22</span><span class="p">},</span> <span class="p">{</span><span class="s">"race"</span><span class="p">:</span> <span class="s">"FLECKVIEW"</span><span class="p">,</span> <span class="s">"percent"</span><span class="p">:</span> <span class="mi">78</span><span class="p">}],</span>
+    <span class="s">"organisation_id"</span><span class="p">:</span> <span class="s">"123456qwertz"</span>
+<span class="p">}</span>
+<span class="n">token</span> <span class="o">=</span> <span class="s">'yx2zvuB8JD8ppwGti84OT8Muq5eiB2b2EZqsqC-HOXUvLSg'</span>
+<span class="n">headers</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s">'accept'</span><span class="p">:</span> <span class="s">'application/json'</span><span class="p">,</span>
+    <span class="s">'Authorization'</span><span class="p">:</span> <span class="s">'bearer '</span> <span class="o">+</span> <span class="n">token</span>
+<span class="p">}</span>
+
+<span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="n">route</span><span class="p">,</span> <span class="n">json</span><span class="o">=</span><span class="n">data</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">)</span>
+
+<span class="n">status_code</span> <span class="o">=</span> <span class="n">r</span><span class="o">.</span><span class="n">status_code</span>
+<span class="n">animal</span> <span class="o">=</span> <span class="n">r</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
+</code></pre><pre class="highlight shell"><code>curl -X PUT <span class="s2">"[endpoint]/v2/integration/organisations/[organisation_id]/animals/[official_id]"</span> <span class="se">\</span>
+        -H  <span class="s2">"accept: application/json"</span> <span class="se">\</span>
+        -H  <span class="s2">"Authorization: bearer [token]"</span> <span class="se">\</span>
+        -H  <span class="s2">"Content-Type: application/json"</span> <span class="se">\</span>
+        -d <span class="s2">"{  </span><span class="se">\"</span><span class="s2">name</span><span class="se">\"</span><span class="s2">: </span><span class="se">\"</span><span class="s2">Strolcha</span><span class="se">\"</span><span class="s2">,  </span><span class="se">\"</span><span class="s2">sensor</span><span class="se">\"</span><span class="s2">: </span><span class="se">\"</span><span class="s2">0700000001</span><span class="se">\"</span><span class="s2">,  </span><span class="se">\"</span><span class="s2">group_id</span><span class="se">\"</span><span class="s2">: </span><span class="se">\"</span><span class="s2">57920fca506d993asdfgh123</span><span class="se">\"</span><span class="s2">,  </span><span class="se">\"</span><span class="s2">birthday</span><span class="se">\"</span><span class="s2">: </span><span class="se">\"</span><span class="s2">2019-01-10T13:04:52+00:00</span><span class="se">\"</span><span class="s2">,  </span><span class="se">\"</span><span class="s2">race</span><span class="se">\"</span><span class="s2">: </span><span class="se">\"</span><span class="s2">mixed</span><span class="se">\"</span><span class="s2">,  </span><span class="se">\"</span><span class="s2">location</span><span class="se">\"</span><span class="s2">: </span><span class="se">\"</span><span class="s2">stall</span><span class="se">\"</span><span class="s2">,  </span><span class="se">\"</span><span class="s2">_id</span><span class="se">\"</span><span class="s2">: </span><span class="se">\"</span><span class="s2">5c480ab3314724e123456789</span><span class="se">\"</span><span class="s2">,  </span><span class="se">\"</span><span class="s2">official_id_rule</span><span class="se">\"</span><span class="s2">: </span><span class="se">\"</span><span class="s2">AT</span><span class="se">\"</span><span class="s2">,  </span><span class="se">\"</span><span class="s2">display_name</span><span class="se">\"</span><span class="s2">: </span><span class="se">\"</span><span class="s2">AT111111112 - susi</span><span class="se">\"</span><span class="s2">,  </span><span class="se">\"</span><span class="s2">archived</span><span class="se">\"</span><span class="s2">: false,  </span><span class="se">\"</span><span class="s2">created_at</span><span class="se">\"</span><span class="s2">: </span><span class="se">\"</span><span class="s2">2019-01-23T06:33:24+00:00</span><span class="se">\"</span><span class="s2">,  </span><span class="se">\"</span><span class="s2">official_id</span><span class="se">\"</span><span class="s2">: </span><span class="se">\"</span><span class="s2">AT111111112</span><span class="se">\"</span><span class="s2">,  </span><span class="se">\"</span><span class="s2">lactation_status</span><span class="se">\"</span><span class="s2">: </span><span class="se">\"</span><span class="s2">Young_Cow</span><span class="se">\"</span><span class="s2">,  </span><span class="se">\"</span><span class="s2">current_device_id</span><span class="se">\"</span><span class="s2">: </span><span class="se">\"</span><span class="s2">0700000001</span><span class="se">\"</span><span class="s2">,  </span><span class="se">\"</span><span class="s2">mark</span><span class="se">\"</span><span class="s2">: </span><span class="se">\"</span><span class="s2">AT111111112</span><span class="se">\"</span><span class="s2">,  </span><span class="se">\"</span><span class="s2">tags</span><span class="se">\"</span><span class="s2">: [</span><span class="se">\"</span><span class="s2">sold</span><span class="se">\"</span><span class="s2">],  </span><span class="se">\"</span><span class="s2">mixed_race</span><span class="se">\"</span><span class="s2">: [{</span><span class="se">\"</span><span class="s2">race</span><span class="se">\"</span><span class="s2">: </span><span class="se">\"</span><span class="s2">ANGLER</span><span class="se">\"</span><span class="s2">, </span><span class="se">\"</span><span class="s2">percent</span><span class="se">\"</span><span class="s2">: 22}, {</span><span class="se">\"</span><span class="s2">race</span><span class="se">\"</span><span class="s2">: </span><span class="se">\"</span><span class="s2">FLECKVIEW</span><span class="se">\"</span><span class="s2">, </span><span class="se">\"</span><span class="s2">percent</span><span class="se">\"</span><span class="s2">: 78}],,  </span><span class="se">\"</span><span class="s2">organisation_id</span><span class="se">\"</span><span class="s2">: </span><span class="se">\"</span><span class="s2">123456qwertz</span><span class="se">\"</span><span class="s2">}"</span>
+</code></pre>
+<blockquote>
+<p>Response example</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="s2">"_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"5c480ab3314724e123456789"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"archived"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"birthday"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2019-01-10T13:04:52+00:00"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"created_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2019-01-23T06:33:24+00:00"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"current_device_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0700000001"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"display_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"AT111111112 - Strolcha"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"group_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"57920fca506d993asdfghjkl"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"lactation_status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Young_Cow"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"location"</span><span class="p">:</span><span class="w"> </span><span class="s2">"stall"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"mark"</span><span class="p">:</span><span class="w"> </span><span class="s2">"AT111111112"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"mixed_race"</span><span class="p">:</span><span class="w"> </span><span class="p">[{</span><span class="s2">"race"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ANGLER"</span><span class="p">,</span><span class="w"> </span><span class="s2">"percent"</span><span class="p">:</span><span class="w"> </span><span class="mi">22</span><span class="p">},</span><span class="w"> </span><span class="p">{</span><span class="s2">"race"</span><span class="p">:</span><span class="w"> </span><span class="s2">"FLECKVIEW"</span><span class="p">,</span><span class="w"> </span><span class="s2">"percent"</span><span class="p">:</span><span class="w"> </span><span class="mi">78</span><span class="p">}],</span><span class="w">
+  </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Strolcha"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"official_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"AT111111112"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"official_id_rule"</span><span class="p">:</span><span class="w"> </span><span class="s2">"AT"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"organisation_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"123456qwertz"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"race"</span><span class="p">:</span><span class="w"> </span><span class="s2">"mixed"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"sensor"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0700000001"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"tags"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"sold"</span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+<p>This endpoint creates/updates an animal which is in the organisation with <code>organisation_id</code> and the <code>official_id</code>. If the animal is created or updated depents. If the animal with the provided <code>official_id</code> in the organisation exists, it gets updated. Otherwise the animal is created. The animal response can be used as a input for thes call and just the parameters that are needed to be updated can be replaced.</p>
+
+<p><strong>HTTP Request</strong></p>
+
+<p><code>PUT &quot;[endpoint]/v2/integration/organisations/[organisation_id]/animals/[official_id]&quot;</code></p>
+
+<p><strong>URL Parameters</strong></p>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+<th></th>
+</tr>
+</thead><tbody>
+<tr>
+<td>organisation_id</td>
+<td>The ID of the organisation of which the animals should be retrived.</td>
+<td><code>required</code></td>
+</tr>
+<tr>
+<td>official_id</td>
+<td>The official id of the animal. This is in the most cases the eartag of the animal.</td>
+<td><code>required</code></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>_id</td>
+<td>Internal ID for the animal. Can&#39;t be changed.</td>
+<td></td>
+</tr>
+<tr>
+<td>archived</td>
+<td>When the animal is archived (inactive) the archived is set to <code>true</code>.</td>
+<td></td>
+</tr>
+<tr>
+<td>birthday</td>
+<td>Day of birth of the animal.</td>
+<td></td>
+</tr>
+<tr>
+<td>created_at</td>
+<td>The creation time of the animal in the smaXtec system.</td>
+<td></td>
+</tr>
+<tr>
+<td>current_device_id</td>
+<td>The ID of the device which is currently active in the animal.</td>
+<td></td>
+</tr>
+<tr>
+<td>display_name</td>
+<td>Official ID and the Name of the animal.</td>
+<td></td>
+</tr>
+<tr>
+<td>group_id</td>
+<td>ID of the group where the animal is currently in.</td>
+<td></td>
+</tr>
+<tr>
+<td>lactation_status</td>
+<td>Status of the cow. Possible parameters: <code>Young_Cow</code>, <code>Lactating_Cow</code>, <code>Dry_Cow</code></td>
+<td></td>
+</tr>
+<tr>
+<td>location</td>
+<td>Location where the cow currently is.</td>
+<td></td>
+</tr>
+<tr>
+<td>mark</td>
+<td>Animal number.</td>
+<td><code>required</code> for creation.</td>
+</tr>
+<tr>
+<td>mixed_race</td>
+<td>When the animal is a breed of two or more races. Example: <code>&quot;mixed_race&quot;: [{&quot;race&quot;: &quot;ANGLER&quot;, &quot;percent&quot;: 22},</code> <code>{&quot;race&quot;: &quot;FLECKVIEW&quot;, &quot;percent&quot;: 78}]</code>. The percent needs to sum up to 100. If mixed race is set <code>&quot;race&quot;: &quot;mixed&quot;</code>.</td>
+<td></td>
+</tr>
+<tr>
+<td>name</td>
+<td>Name of the animal.</td>
+<td></td>
+</tr>
+<tr>
+<td>official_id</td>
+<td>Official ID (ear tag) of the animal. Needs to be unique in the organisation. If the official_id is in the data of the PUT methode and is different from the route the official_id gets updated.</td>
+<td></td>
+</tr>
+<tr>
+<td>official_id_rule</td>
+<td>The rule how the official_id should be formated/stored. Possible parameters: <code>AT</code>, <code>BE</code>, <code>BG</code>, etc. (country code).</td>
+<td></td>
+</tr>
+<tr>
+<td>organisation_id</td>
+<td>ID of the organisation where the animal belongs to.</td>
+<td></td>
+</tr>
+<tr>
+<td>race</td>
+<td>Race of the animal.</td>
+<td></td>
+</tr>
+<tr>
+<td>sensor</td>
+<td>The ID of the sonsor which is currently active in the animal.</td>
+<td></td>
+</tr>
+<tr>
+<td>tags</td>
+<td>Tags which can be given to the animals. Example: <code>&quot;tags&quot;: [&quot;sold&quot;]</code>.</td>
+<td></td>
+</tr>
+</tbody></table>
+<h1 id='events'>Events</h1>
+<p>Occurrences which arise for an animal are stored in the <strong>events</strong>. These events include reproduction events, health events and feeding events. All events can be fetched but just events of the type <code>insemination</code>, <code>pregnancy_result</code>, <code>calving_confirmation</code> and <code>abort</code> can be created via the API. Additional information regarding the event type can be added (TODO link to parameters). All other events are generated by the smaXtec system.</p>
+<h2 id='get-all-events'>Get All Events</h2>
+<blockquote>
+<p>Request</p>
+</blockquote>
+<pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">requests</span>
+
+<span class="n">endpoint</span> <span class="o">=</span> <span class="s">'https://api-staging.smaxtec.com/api'</span>
+<span class="n">organisation_id</span> <span class="o">=</span> <span class="s">'123456qwertz'</span>
+<span class="n">official_id</span> <span class="o">=</span> <span class="s">'AT111111112'</span>
+<span class="n">route</span> <span class="o">=</span> <span class="n">endpoint</span> <span class="o">+</span> <span class="s">'/v2/integration/organisations/'</span> <span class="o">+</span> <span class="n">organisation_id</span> <span class="o">+</span> <span class="s">'/animals/'</span> <span class="o">+</span> <span class="n">official_id</span> <span class="o">+</span> <span class="s">'/events'</span>
+<span class="n">token</span> <span class="o">=</span> <span class="s">'yx2zvuB8JD8ppwGti84OT8Muq5eiB2b2EZqsqC-HOXUvLSg'</span>
+<span class="n">headers</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s">'accept'</span><span class="p">:</span> <span class="s">'application/json'</span><span class="p">,</span>
+    <span class="s">'Authorization'</span><span class="p">:</span> <span class="s">'bearer '</span> <span class="o">+</span> <span class="n">token</span>
+<span class="p">}</span>
+
+<span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">route</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">)</span>
+
+<span class="n">status_code</span> <span class="o">=</span> <span class="n">r</span><span class="o">.</span><span class="n">status_code</span>
+<span class="n">all_animal_events</span> <span class="o">=</span> <span class="n">r</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
+</code></pre><pre class="highlight shell"><code>curl -X GET <span class="s2">"[endpoint]/v2/integration/organisations/[organisation_id]/animals/[official_id]/events"</span> <span class="se">\</span>
+        -H  <span class="s2">"accept: application/json"</span> <span class="se">\</span>
+        -H  <span class="s2">"Authorization: bearer [token]"</span>
+</code></pre>
+<blockquote>
+<p>Response example (will change)</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">[</span><span class="w">
+  </span><span class="p">{</span><span class="w">
+    </span><span class="s2">"_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"5b61e5bd90e6e1d84e4a2123"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"animal_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"5c480ab3314724e123456789"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"create_ts"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2018-08-01T16:54:21+00:00"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"event_ts"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2015-03-23T00:00:00+00:00"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"event_type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"calving_confirmation"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"information"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"legacy_lactation_info"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="p">{</span><span class="w">
+    </span><span class="s2">"_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"5b61e5bdb493c3931a260123"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"animal_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"5c480ab3314724e123456789"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"create_ts"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2018-08-01T16:54:21+00:00"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"event_ts"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2015-03-23T01:00:00+00:00"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"event_type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"information_update"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"information"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"milk_yield"</span><span class="p">:</span><span class="w"> </span><span class="mi">11000</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"dry_off_date"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"calving_number"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"legacy_lactation_info"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="p">{</span><span class="w">
+    </span><span class="s2">"_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"5b61eb7e2782f75791c5e123"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"animal_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"5c480ab3314724e123456789"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"create_ts"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2018-08-01T17:18:54+00:00"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"event_ts"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2017-05-15T00:00:00+00:00"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"event_type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"heat"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"information"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"legacy_heat"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="p">{</span><span class="w">
+    </span><span class="s2">"_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"5b61ed2c19cd8518817d6123"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"animal_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"5c480ab3314724e123456789"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"create_ts"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2018-08-01T17:26:04+00:00"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"event_ts"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2017-07-22T20:13:00+00:00"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"event_type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"insemination"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"information"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"legacy_heat"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"days_to_calving"</span><span class="p">:</span><span class="w"> </span><span class="mi">-1</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="p">{</span><span class="w">
+    </span><span class="s2">"_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"5b61ed2c041922c1f7030123"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"animal_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"5c480ab3314724e123456789"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"create_ts"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2018-08-01T17:26:04+00:00"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"event_ts"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2017-07-22T23:13:00+00:00"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"event_type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"pregnancy_result"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"information"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"pregnant"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"legacy_heat"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="p">{</span><span class="w">
+    </span><span class="s2">"_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"5ae62c4ad591117f095f4123"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"animal_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"5c480ab3314724e123456789"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"create_ts"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2018-04-29 21:00:00"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"event_ts"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2018-04-29 21:00:00"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"event_type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"health_106"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"information"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"threshold"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.75</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"calving_enabled"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"temp_dec_index"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.759</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"value"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.759</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"sensor_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0700006489"</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">]</span><span class="w">
+</span></code></pre>
+<p>This endpoint retrieves from a provided <code>organisation_id</code> and <code>official_id</code> the events of an animal.</p>
+
+<p><strong>HTTP Request</strong>
+<code>GET &quot;[endpoint]/v2/integration/organisations/[organisation_id]/animals/[official_id]/events&quot;</code></p>
+
+<p><strong>URL Parameters</strong></p>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+<th></th>
+</tr>
+</thead><tbody>
+<tr>
+<td>organisation_id</td>
+<td>The ID of the organisation of which the animals should be retrived.</td>
+<td><code>required</code></td>
+</tr>
+<tr>
+<td>animal_id</td>
+<td>The ID of the organisation of which the animals should be retrived.</td>
+<td><code>required</code></td>
+</tr>
+</tbody></table>
+<h2 id='create-events'>Create Events</h2>
+<blockquote>
+<p>Request</p>
+</blockquote>
+<pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">requests</span>
+
+<span class="n">endpoint</span> <span class="o">=</span> <span class="s">'https://api-staging.smaxtec.com/api'</span>
+<span class="n">organisation_id</span> <span class="o">=</span> <span class="s">'123456qwertz'</span>
+<span class="n">official_id</span> <span class="o">=</span> <span class="s">'AT111111112'</span>
+<span class="n">route</span> <span class="o">=</span> <span class="n">endpoint</span> <span class="o">+</span> <span class="s">'/v2/integration/organisations/'</span> <span class="o">+</span> <span class="n">organisation_id</span> <span class="o">+</span> <span class="s">'/animals/'</span> <span class="o">+</span> <span class="n">official_id</span> <span class="o">+</span> <span class="s">'/events'</span>
+<span class="n">data</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s">"events"</span><span class="p">:</span> <span class="p">[</span>
+        <span class="p">{</span>
+            <span class="s">"event_type"</span><span class="p">:</span> <span class="s">"insemination"</span><span class="p">,</span>
+            <span class="s">"event_ts"</span><span class="p">:</span> <span class="s">"2019-01-18T12:00:00+00:00"</span><span class="p">,</span>
+            <span class="s">"information"</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s">"days_to_calving"</span><span class="p">:</span> <span class="mi">275</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+    <span class="p">]</span>
+<span class="p">}</span>
+<span class="n">token</span> <span class="o">=</span> <span class="s">'yx2zvuB8JD8ppwGti84OT8Muq5eiB2b2EZqsqC-HOXUvLSg'</span>
+<span class="n">headers</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s">'accept'</span><span class="p">:</span> <span class="s">'application/json'</span><span class="p">,</span>
+    <span class="s">'Authorization'</span><span class="p">:</span> <span class="s">'bearer '</span> <span class="o">+</span> <span class="n">token</span>
+<span class="p">}</span>
+
+<span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="n">route</span><span class="p">,</span> <span class="n">json</span><span class="o">=</span><span class="n">data</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">)</span>
+
+<span class="n">status_code</span> <span class="o">=</span> <span class="n">r</span><span class="o">.</span><span class="n">status_code</span>
+<span class="n">all_animal_events</span> <span class="o">=</span> <span class="n">r</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
+</code></pre><pre class="highlight shell"><code>curl -X PUT <span class="s2">"[endpoint]/v2/integration/organisations/[organisation_id]/animals/[official_id]/events"</span> <span class="se">\</span>
+        -H  <span class="s2">"accept: application/json"</span> <span class="se">\</span>
+        -H  <span class="s2">"Authorization: bearer [token]"</span>
+        -d <span class="s2">"{  </span><span class="se">\"</span><span class="s2">events</span><span class="se">\"</span><span class="s2">: [    {    </span><span class="se">\"</span><span class="s2">event_type</span><span class="se">\"</span><span class="s2">: </span><span class="se">\"</span><span class="s2">insemination</span><span class="se">\"</span><span class="s2">,    </span><span class="se">\"</span><span class="s2">event_ts</span><span class="se">\"</span><span class="s2">: </span><span class="se">\"</span><span class="s2">2019-01-18T12:00:00+00:00</span><span class="se">\"</span><span class="s2">,    </span><span class="se">\"</span><span class="s2">information</span><span class="se">\"</span><span class="s2">: {      </span><span class="se">\"</span><span class="s2">days_to_calving</span><span class="se">\"</span><span class="s2">: 275    }    }  ]}"</span>
+</code></pre>
+<blockquote>
+<p>Response example (will change)</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">[</span><span class="w">
+  </span><span class="p">{</span><span class="w">
+    </span><span class="s2">"_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"5c584ba651945498be341123"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"animal_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"5c480ab3314724e123456789"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"create_ts"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2019-02-04T14:26:46+00:00"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"event_ts"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2019-01-18T12:00:00+00:00"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"event_type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"insemination"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"information"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"integration"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"days_to_calving"</span><span class="p">:</span><span class="w"> </span><span class="mi">275</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">]</span><span class="w">
+</span></code></pre>
+<p>This endpoint creates events for an animal with the given <code>official_id</code> which belongs to the organisation with the given <code>organisation_id</code>. If the event is created depents on the <code>event_type</code> and the <code>event_ts</code>. If the event with this two parameters does not exist, it gets created. Otherwise the event is skipped.
+It is possible to add just the events to the data which should be added to the smaXtec system or add just all events from your system and the smaXtec system adds those which are not in the system.</p>
+
+<p><strong>HTTP Request</strong></p>
+
+<p><code>PUT &quot;[endpoint]/v2/integration/organisations/[organisation_id]/animals/[official_id]/events&quot;</code></p>
+
+<p><strong>URL Parameters</strong></p>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+<th></th>
+</tr>
+</thead><tbody>
+<tr>
+<td>organisation_id</td>
+<td>The ID of the organisation of which the animals should be retrived.</td>
+<td><code>required</code></td>
+</tr>
+<tr>
+<td>official_id</td>
+<td>The official id of the animal. This is in the most cases the eartag of the animal.</td>
+<td><code>required</code></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>_id</td>
+<td>ID of the Event in the smaXtec system.</td>
+<td></td>
+</tr>
+<tr>
+<td>animal_id</td>
+<td>ID of the Aniamal in the smaXtec system.</td>
+<td></td>
+</tr>
+<tr>
+<td>create_ts</td>
+<td>Time when the event was created.</td>
+<td></td>
+</tr>
+<tr>
+<td>event_ts</td>
+<td>Time when the event happened.</td>
+<td></td>
+</tr>
+<tr>
+<td>event_type</td>
+<td>Type of the event. Just events of the type <code>insemination</code>, <code>pregnancy_result</code>, <code>calving_confirmation</code> and <code>abort</code> can be created.</td>
+<td></td>
+</tr>
+<tr>
+<td>information</td>
+<td>Additional information to the event depending on the event type.</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><strong>Insemination Parameters</strong></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>days_to_calving</td>
+<td>Days from the insamination untill the expected calving date. Default: <code>280</code></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><strong>Pregnancy Result Parameters</strong></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>expected_calving_date</td>
+<td>Date when the calving is expected.</td>
+<td></td>
+</tr>
+<tr>
+<td>insemination_date</td>
+<td>Date of the insamination which led to the pregnancy result. If no prior insemination on that date is saved an insemination event on that date will be created.</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><strong>Calving Confirmation Parameters</strong></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>calving_number</td>
+<td>Number of calving.</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><strong>Abort Parameters</strong></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>late_abort</td>
+<td>When the cow was long enough pregnant so that the cow is lactating then <code>late_abort</code> is <code>true</code>.</td>
+<td></td>
 </tr>
 </tbody></table>
 <h1 id='errors'>Errors</h1>
-<aside class="notice">
-This error section is stored in a separate file in <code>includes/_errors.md</code>. Slate allows you to optionally separate out your docs into many files...just save them to the <code>includes</code> folder and add them to the top of your <code>index.md</code>'s frontmatter. Files are included in the order listed.
-</aside>
-
-<p>The Kittn API uses the following error codes:</p>
+<p>The smaXtec Intern API uses the following error codes:</p>
 
 <table><thead>
 <tr>
 <th>Error Code</th>
-<th>Meaning</th>
+<th>Message</th>
+<th>Description</th>
 </tr>
 </thead><tbody>
 <tr>
-<td>400</td>
-<td>Bad Request -- Your request is invalid.</td>
-</tr>
-<tr>
 <td>401</td>
-<td>Unauthorized -- Your API key is wrong.</td>
-</tr>
-<tr>
-<td>403</td>
-<td>Forbidden -- The kitten requested is hidden for administrators only.</td>
+<td>UnauthorizedError</td>
+<td>The server could not verify that you are authorized to access the URL requested. You either supplied the wrong credentials (e.g. a bad password), or your browser doesn’t understand how to supply the credentials required.</td>
 </tr>
 <tr>
 <td>404</td>
-<td>Not Found -- The specified kitten could not be found.</td>
+<td>NotFoundError</td>
+<td>Organisation not found.</td>
 </tr>
 <tr>
-<td>405</td>
-<td>Method Not Allowed -- You tried to access a kitten with an invalid method.</td>
+<td>409</td>
+<td>ConflictError</td>
+<td>A conflict happened while processing the request. The resource might have been modified while the request was being processed.</td>
 </tr>
 <tr>
-<td>406</td>
-<td>Not Acceptable -- You requested a format that isn&#39;t json.</td>
-</tr>
-<tr>
-<td>410</td>
-<td>Gone -- The kitten requested has been removed from our servers.</td>
-</tr>
-<tr>
-<td>418</td>
-<td>I&#39;m a teapot.</td>
-</tr>
-<tr>
-<td>429</td>
-<td>Too Many Requests -- You&#39;re requesting too many kittens! Slow down!</td>
-</tr>
-<tr>
-<td>500</td>
-<td>Internal Server Error -- We had a problem with our server. Try again later.</td>
-</tr>
-<tr>
-<td>503</td>
-<td>Service Unavailable -- We&#39;re temporarily offline for maintenance. Please try again later.</td>
+<td>422</td>
+<td>AttributeError</td>
+<td>The request was well-formed but was unable to be followed due to semantic errors.</td>
 </tr>
 </tbody></table>
 
       </div>
       <div class="dark-box">
           <div class="lang-selector">
-                <a href="#" data-language-name="shell">shell</a>
-                <a href="#" data-language-name="ruby">ruby</a>
+                <a href="#" data-language-name="bash">bash</a>
                 <a href="#" data-language-name="python">python</a>
-                <a href="#" data-language-name="javascript">javascript</a>
           </div>
       </div>
     </div>
