@@ -52,7 +52,7 @@ For updating an animal the `organisation_id` and the `official_id` of the animal
 
 ### Add insemination, pregnancy result, calving confirmation and abort
 
-These occurrence are stored as events where insemination, pregnancy result, calving confirmation and abort are the event types. To add an event the event type (`event_type`) and the event time (`event_ts`) need to be provided to the [event PUT methode](#create-events). Regarding of the type additional information can be added which is listed in the parameter list.
+These occurrences are stored as [events](#events) where insemination, pregnancy result, calving confirmation and abort are the event types. To add an event the event type (`event_type`) and the event time (`event_ts`) need to be provided to the [event PUT methode](#create-events). Regarding of the type additional information can be added which is listed in the parameter list.
 
 The cronical order of an animal life and how the events happen is the following:
 
@@ -61,6 +61,19 @@ The cronical order of an animal life and how the events happen is the following:
 or
 
 `-> insemination -> pregnancy_result -> abort ->`
+
+## Placeholder
+
+Several placeholders are used in this document.
+
+Placeholder       | Description                                                                              | Example
+-----------       | -----------                                                                              | -------
+[token]           | [Authentication](#authentication) token which can be get over the API                    | yx2zvuB8JD8ppwGti84OT8Muq5eiB2b2EZqsqC-HOXUvLSg
+[endpoint]        | Endpoint to the integration API                                                          | https://api-staging.smaxtec.com/integration/v2
+[email]           | E-mail adress from the registered user                                                   | user@smaxtec.com
+[password]        | Password from the registered user                                                        | super_secret_password
+[organisation_id] | smaXtec intern ID of the organisation. Can be [get](#get-all-organisations) over the API | 123456qwertz
+[official_id]     | The official id of the animal. This is in the most cases the eartag of the animal.       | AT111111112
 
 # Authentication
 
@@ -177,7 +190,7 @@ This endpoint retrieves all organisations of the user. For the Integration API c
 Parameter       | Description
 ---------       | -----------
 name            | Name of the Organisation.
-organisation_id | ID of the organisation of which the animals should be retrived.
+organisation_id | ID of the organisation where the animal belongs to.
 permissions     | Permission the user has for this organisation.
 role            | Role the user has for this organisation.
 timezone        | Timezone of the organisation.
@@ -233,7 +246,6 @@ curl -X GET "[endpoint]/organisations/[organisation_id]/animals" \
     "official_id_rule": "AT",
     "organisation_id": "123456qwertz",
     "race": "mixed",
-    "sensor": "0700000001",
     "tags": ["sold"]
   }
 ]
@@ -249,7 +261,7 @@ This endpoint retrieves from a provided `organisation_id` all animals.
 
 Parameter         | Description ||
 ---------         | ----------- | ---
-organisation_id   | The ID of the organisation of which the animals should be retrived. | `required`
+organisation_id   | ID of the organisation where the animal belongs to. | `required`
 
 ## Get Single Animal
 
@@ -300,7 +312,6 @@ curl -X GET "[endpoint]/organisations/[organisation_id]/animals/[official_id]" \
   "official_id_rule": "AT",
   "organisation_id": "123456qwertz",
   "race": "mixed",
-  "sensor": "0700000001",
   "tags": ["sold"]
 }
 ```
@@ -315,7 +326,7 @@ This endpoint retrieves from a provided `organisation_id` and `official_id` the 
 
 Parameter | Description | |
 --------- | ----------- | ----
-organisation_id | The ID of the organisation of which the animals should be retrived. | `required`
+organisation_id | ID of the organisation where the animal belongs to. | `required`
 official_id     | The official id of the animal. This is in the most cases the eartag of the animal. | `required`
 
 ## Create/Update Single Animal
@@ -330,7 +341,6 @@ official_id = 'AT111111112'
 route = endpoint + '/organisations/' + organisation_id + '/animals/' + official_id
 data = {
     "name": "Strolcha",
-    "sensor": "0700000001",
     "group_id": "57920fca506d993asdfgh123",
     "birthday": "2019-01-10T13:04:52+00:00",
     "race": "mixed",
@@ -365,7 +375,7 @@ curl -X PUT "[endpoint]/organisations/[organisation_id]/animals/[official_id]" \
         -H  "accept: application/json" \
         -H  "Authorization: bearer [token]" \
         -H  "Content-Type: application/json" \
-        -d "{  \"name\": \"Strolcha\",  \"sensor\": \"0700000001\",  \"group_id\": \"57920fca506d993asdfgh123\",  \"birthday\": \"2019-01-10T13:04:52+00:00\",  \"race\": \"mixed\",  \"location\": \"stall\",  \"_id\": \"5c480ab3314724e123456789\",  \"official_id_rule\": \"AT\",  \"display_name\": \"AT111111112 - susi\",  \"archived\": false,  \"created_at\": \"2019-01-23T06:33:24+00:00\",  \"official_id\": \"AT111111112\",  \"lactation_status\": \"Young_Cow\",  \"current_device_id\": \"0700000001\",  \"mark\": \"AT111111112\",  \"tags\": [\"sold\"],  \"mixed_race\": [{\"race\": \"ANGLER\", \"percent\": 22}, {\"race\": \"FLECKVIEW\", \"percent\": 78}],,  \"organisation_id\": \"123456qwertz\"}"
+        -d "{  \"name\": \"Strolcha\",  \"group_id\": \"57920fca506d993asdfgh123\",  \"birthday\": \"2019-01-10T13:04:52+00:00\",  \"race\": \"mixed\",  \"location\": \"stall\",  \"_id\": \"5c480ab3314724e123456789\",  \"official_id_rule\": \"AT\",  \"display_name\": \"AT111111112 - susi\",  \"archived\": false,  \"created_at\": \"2019-01-23T06:33:24+00:00\",  \"official_id\": \"AT111111112\",  \"lactation_status\": \"Young_Cow\",  \"current_device_id\": \"0700000001\",  \"mark\": \"AT111111112\",  \"tags\": [\"sold\"],  \"mixed_race\": [{\"race\": \"ANGLER\", \"percent\": 22}, {\"race\": \"FLECKVIEW\", \"percent\": 78}],,  \"organisation_id\": \"123456qwertz\"}"
 ```
 
 > Response example
@@ -388,12 +398,11 @@ curl -X PUT "[endpoint]/organisations/[organisation_id]/animals/[official_id]" \
   "official_id_rule": "AT",
   "organisation_id": "123456qwertz",
   "race": "mixed",
-  "sensor": "0700000001",
   "tags": ["sold"]
 }
 ```
 
-This endpoint creates/updates an animal which is in the organisation with `organisation_id` and the `official_id`. If the animal is created or updated depents. If the animal with the provided `official_id` in the organisation exists, it gets updated. Otherwise the animal is created. The animal response can be used as a input for thes call and just the parameters that are needed to be updated can be replaced.
+This endpoint creates/updates an animal which is in the organisation with `organisation_id` and the `official_id`. If the animal is created or updated depends. If the animal with the provided `official_id` exists in the organisation, it gets updated. Otherwise the animal gets created. The animal response can be used as a input for thes call and just the parameters that are needed to be updated can be replaced.
 
 **HTTP Request**
 
@@ -403,17 +412,17 @@ This endpoint creates/updates an animal which is in the organisation with `organ
 
 Parameter         | Description ||
 ---------         | ----------- | ---
-organisation_id   | The ID of the organisation of which the animals should be retrived. | `required`
-official_id     | The official id of the animal. This is in the most cases the eartag of the animal. | `required`
+organisation_id   | ID of the organisation where the animal belongs to. | `required`
+official_id       | The official id of the animal. This is in the most cases the eartag of the animal. | `required`
 ||
 _id               | Internal ID for the animal. Can't be changed.
 archived          | When the animal is archived (inactive) the archived is set to `true`.
 birthday          | Day of birth of the animal.
-created_at        | The creation time of the animal in the smaXtec system.
+created_at        | The creation time of the animal in the smaXtec system. Can't be changed.
 current_device_id | The ID of the device which is currently active in the animal.
-display_name      | Official ID and the Name of the animal.
+display_name      | Composition of the official ID and the name of the animal.
 group_id          | ID of the group where the animal is currently in.
-lactation_status  | Status of the cow. Possible parameters: `Young_Cow`, `Lactating_Cow`, `Dry_Cow`
+lactation_status  | Status of the cow. Possible parameters: `Young_Cow`, `Lactating_Cow`, `Dry_Cow`. Changes according to events.
 location          | Location where the cow currently is.
 mark              | Animal number. | `required` for creation.
 mixed_race        | When the animal is a breed of two or more races. Example: `"mixed_race": [{"race": "ANGLER", "percent": 22}, ` `{"race": "FLECKVIEW", "percent": 78}]`. The percent needs to sum up to 100. If mixed race is set `"race": "mixed"`.
@@ -422,13 +431,12 @@ official_id       | Official ID (ear tag) of the animal. Needs to be unique in t
 official_id_rule  | The rule how the official_id should be formated/stored. Possible parameters: `AT`, `BE`, `BG`, etc. (country code).
 organisation_id   | ID of the organisation where the animal belongs to.
 race              | Race of the animal.
-sensor            | The ID of the sonsor which is currently active in the animal.
 tags              | Tags which can be given to the animals. Example: `"tags": ["sold"]`.
 
 
 # Events
 
-Occurrences which arise for an animal are stored in the **events**. These events include reproduction events, health events and feeding events. All events can be fetched but just events of the type `insemination`, `pregnancy_result`, `calving_confirmation` and `abort` can be created via the API. Additional information regarding the event type can be added (TODO link to parameters). All other events are generated by the smaXtec system.
+Occurrences which arise for an animal are stored in the **events**. These events include reproduction events, health events, feeding events etc.. All events can be fetched but just events of the type `insemination`, `pregnancy_result`, `calving_confirmation` and `abort` can be created via the API. Additional information regarding the event type can be added. All other events are generated by the smaXtec system.
 
 ## Get All Events
 
@@ -469,22 +477,14 @@ curl -X GET "[endpoint]/organisations/[organisation_id]/animals/[official_id]/ev
     "create_ts": "2018-08-01T16:54:21+00:00",
     "event_ts": "2015-03-23T00:00:00+00:00",
     "event_type": "calving_confirmation",
-    "information": {
-      "legacy_lactation_info": true
-    }
+    "calving_number": 3
   },
   {
     "_id": "5b61e5bdb493c3931a260123",
     "animal_id": "5c480ab3314724e123456789",
     "create_ts": "2018-08-01T16:54:21+00:00",
     "event_ts": "2015-03-23T01:00:00+00:00",
-    "event_type": "information_update",
-    "information": {
-      "milk_yield": 11000,
-      "dry_off_date": null,
-      "calving_number": 1,
-      "legacy_lactation_info": true
-    }
+    "event_type": "information_update"
   },
   {
     "_id": "5b61eb7e2782f75791c5e123",
@@ -492,9 +492,7 @@ curl -X GET "[endpoint]/organisations/[organisation_id]/animals/[official_id]/ev
     "create_ts": "2018-08-01T17:18:54+00:00",
     "event_ts": "2017-05-15T00:00:00+00:00",
     "event_type": "heat",
-    "information": {
-      "legacy_heat": true
-    }
+    "cycle_length": 300
   },
   {
     "_id": "5b61ed2c19cd8518817d6123",
@@ -502,10 +500,7 @@ curl -X GET "[endpoint]/organisations/[organisation_id]/animals/[official_id]/ev
     "create_ts": "2018-08-01T17:26:04+00:00",
     "event_ts": "2017-07-22T20:13:00+00:00",
     "event_type": "insemination",
-    "information": {
-      "legacy_heat": true,
-      "days_to_calving": -1
-    }
+    "days_to_calving": 275
   },
   {
     "_id": "5b61ed2c041922c1f7030123",
@@ -513,24 +508,16 @@ curl -X GET "[endpoint]/organisations/[organisation_id]/animals/[official_id]/ev
     "create_ts": "2018-08-01T17:26:04+00:00",
     "event_ts": "2017-07-22T23:13:00+00:00",
     "event_type": "pregnancy_result",
-    "information": {
-      "pregnant": true,
-      "legacy_heat": true
-    }
+    "pregnant": true,
+    "expected_calving_date": "2018-04-23T12:00:00+00:00",
+    "insemination_date": "2017-07-22T20:13:00+00:00"
   },
   {
     "_id": "5ae62c4ad591117f095f4123",
     "animal_id": "5c480ab3314724e123456789",
     "create_ts": "2018-04-29 21:00:00",
     "event_ts": "2018-04-29 21:00:00",
-    "event_type": "health_106",
-    "information": {
-      "threshold": 0.75,
-      "calving_enabled": 0,
-      "temp_dec_index": 0.759,
-      "value": 0.759,
-      "sensor_id": "0700006489"
-    }
+    "event_type": "health_106"
   }
 ]
 ```
@@ -544,8 +531,44 @@ This endpoint retrieves from a provided `organisation_id` and `official_id` the 
 
 Parameter | Description ||
 --------- | ----------- | ---
-organisation_id | The ID of the organisation of which the animals should be retrived. | `required`
-animal_id | The ID of the organisation of which the animals should be retrived. | `required`
+organisation_id | ID of the organisation where the animal belongs to. | `required`
+official_id | The official id of the animal. This is in the most cases the eartag of the animal. | `required`
+
+**Event Types**
+
+The smaXtec system has the following event types.
+
+Event Type           | Description
+----------           | -----------
+heat                 | Detection of a heat
+insemination         | Inseminated of an animal
+pregnancy_result     | A positive or negative pregnancy result
+calving_detection    | Detection of a calving
+dry_off              | Dry off
+calving_confirmation | Confirmation of a calving
+waiting_for_calving  | Few days before calving
+abort                | Abortion of a pregnancy which can be a late abort
+information_update   | Updating information
+diagnosis            | Diagnose
+health_101           | Insufficient water intake
+health_102           | Increase in drinking cycles
+health_103           | Reduced drinking cycles
+health_104           | Temperature increase
+health_106           | Temperature drop
+health_601           | THI ≥ 72 Heat stress
+health_602           | THI ≥ 78 Heat stress
+health_603           | THI ≥ 82 Heat stress
+health_703           | Drop in activity
+feeding_201          | Feed efficiency
+feeding_202          | Risk of acidosis
+feeding_203          | Increase in average pH
+feeding_204          | Drop in average pH
+feeding_205          | Increase in 12h pH
+feeding_206          | Drop in 12h pH
+fertility_105        | Indication of imminent calving
+fertility_702        | Oestrus
+actincrease_701      | Increase in activity
+actincrease_704      | Increase in activity
 
 ## Create Events
 
@@ -563,9 +586,7 @@ data = {
         {
             "event_type": "insemination",
             "event_ts": "2019-01-18T12:00:00+00:00",
-            "information": {
-                "days_to_calving": 275
-            }
+            "days_to_calving": 275
         }
     ]
 }
@@ -585,7 +606,7 @@ all_animal_events = r.json()
 curl -X PUT "[endpoint]/organisations/[organisation_id]/animals/[official_id]/events" \
         -H  "accept: application/json" \
         -H  "Authorization: bearer [token]"
-        -d "{  \"events\": [    {    \"event_type\": \"insemination\",    \"event_ts\": \"2019-01-18T12:00:00+00:00\",    \"information\": {      \"days_to_calving\": 275    }    }  ]}"
+        -d "{\"events\": [{\"event_type\": \"insemination\", \"event_ts\": \"2019-01-18T12:00:00+00:00\", \"days_to_calving\": 275}]}"
 ```
 
 > Response example (will change)
@@ -598,16 +619,15 @@ curl -X PUT "[endpoint]/organisations/[organisation_id]/animals/[official_id]/ev
     "create_ts": "2019-02-04T14:26:46+00:00",
     "event_ts": "2019-01-18T12:00:00+00:00",
     "event_type": "insemination",
-    "information": {
-      "integration": true,
-      "days_to_calving": 275
-    }
+    "days_to_calving": 275
   }
 ]
 ```
 
 This endpoint creates events for an animal with the given `official_id` which belongs to the organisation with the given `organisation_id`. If the event is created depents on the `event_type` and the `event_ts`. If the event with this two parameters does not exist, it gets created. Otherwise the event is skipped.
 It is possible to add just the events to the data which should be added to the smaXtec system or add just all events from your system and the smaXtec system adds those which are not in the system.
+
+<aside class="notice">Just events of the type <b>insemination</b>, <b>pregnancy_result</b>, <b>calving_confirmation</b> and <b>abort</b> can be created via the API.</aside>
 
 **HTTP Request**
 
@@ -617,15 +637,17 @@ It is possible to add just the events to the data which should be added to the s
 
 Parameter       | Description | |
 ---------       | ----------- | ----
-organisation_id | The ID of the organisation of which the animals should be retrived. | `required`
+organisation_id | The ID of the organisation which the animals belong to. | `required`
 official_id     | The official id of the animal. This is in the most cases the eartag of the animal. | `required`
 ||
 _id             | ID of the Event in the smaXtec system.
 animal_id       | ID of the Aniamal in the smaXtec system.
 create_ts       | Time when the event was created.
 event_ts        | Time when the event happened.
-event_type      | Type of the event. Just events of the type `insemination`, `pregnancy_result`, `calving_confirmation` and `abort` can be created.
-information     | Additional information to the event depending on the event type.
+event_type      | Type of the event.
+||
+**Heat Parameters**
+cycle_length                        | Length of the current cycle
 ||
 **Insemination Parameters**         |
 days_to_calving                     | Days from the insamination untill the expected calving date. Default: `280`
@@ -633,9 +655,10 @@ days_to_calving                     | Days from the insamination untill the expe
 **Pregnancy Result Parameters**     |
 expected_calving_date               | Date when the calving is expected.
 insemination_date                   | Date of the insamination which led to the pregnancy result. If no prior insemination on that date is saved an insemination event on that date will be created.
+pregnant                            | If the pregnancy resutl was positive (true) or negative (false).
 ||
 **Calving Confirmation Parameters** |
-calving_number                      | Number of calving.
+calving_number                      | Number of calvings.
 ||
 **Abort Parameters**                |
 late_abort                          | When the cow was long enough pregnant so that the cow is lactating then `late_abort` is `true`.
