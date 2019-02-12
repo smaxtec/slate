@@ -646,7 +646,7 @@ create_ts       | Time when the event was created.
 event_ts        | Time when the event happened.
 event_type      | Type of the event.
 ||
-**Heat Parameters**
+**Heat Parameters**                 |
 cycle_length                        | Length of the current cycle
 ||
 **Insemination Parameters**         |
