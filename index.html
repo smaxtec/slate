@@ -235,6 +235,9 @@
                   <li>
                     <a href="#common-tasks" class="toc-h2 toc-link" data-title="Common Tasks">Common Tasks</a>
                   </li>
+                  <li>
+                    <a href="#placeholder" class="toc-h2 toc-link" data-title="Placeholder">Placeholder</a>
+                  </li>
               </ul>
           </li>
           <li>
@@ -309,7 +312,7 @@
 
 <p>For updating an animal the <code>organisation_id</code> and the <code>official_id</code> of the animal, which should be updated, need to be in the route. Write all changing parameters in the data and use the <a href="#create-update-single-animal">animal PUT</a> methode. The response of the animal calls can be put in as data to the animal put call. Changes are detected and are applied.</p>
 <h3 id='add-insemination-pregnancy-result-calving-confirmation-and-abort'>Add insemination, pregnancy result, calving confirmation and abort</h3>
-<p>These occurrence are stored as events where insemination, pregnancy result, calving confirmation and abort are the event types. To add an event the event type (<code>event_type</code>) and the event time (<code>event_ts</code>) need to be provided to the <a href="#create-events">event PUT methode</a>. Regarding of the type additional information can be added which is listed in the parameter list.</p>
+<p>These occurrences are stored as <a href="#events">events</a> where insemination, pregnancy result, calving confirmation and abort are the event types. To add an event the event type (<code>event_type</code>) and the event time (<code>event_ts</code>) need to be provided to the <a href="#create-events">event PUT methode</a>. Regarding of the type additional information can be added which is listed in the parameter list.</p>
 
 <p>The cronical order of an animal life and how the events happen is the following:</p>
 
@@ -318,6 +321,47 @@
 <p>or</p>
 
 <p><code>-&gt; insemination -&gt; pregnancy_result -&gt; abort -&gt;</code></p>
+<h2 id='placeholder'>Placeholder</h2>
+<p>Several placeholders are used in this document.</p>
+
+<table><thead>
+<tr>
+<th>Placeholder</th>
+<th>Description</th>
+<th>Example</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>[token]</td>
+<td><a href="#authentication">Authentication</a> token which can be get over the API</td>
+<td>yx2zvuB8JD8ppwGti84OT8Muq5eiB2b2EZqsqC-HOXUvLSg</td>
+</tr>
+<tr>
+<td>[endpoint]</td>
+<td>Endpoint to the integration API</td>
+<td>https://api-staging.smaxtec.com/integration/v2</td>
+</tr>
+<tr>
+<td>[email]</td>
+<td>E-mail adress from the registered user</td>
+<td>user@smaxtec.com</td>
+</tr>
+<tr>
+<td>[password]</td>
+<td>Password from the registered user</td>
+<td>super_secret_password</td>
+</tr>
+<tr>
+<td>[organisation_id]</td>
+<td>smaXtec intern ID of the organisation. Can be <a href="#get-all-organisations">get</a> over the API</td>
+<td>123456qwertz</td>
+</tr>
+<tr>
+<td>[official_id]</td>
+<td>The official id of the animal. This is in the most cases the eartag of the animal.</td>
+<td>AT111111112</td>
+</tr>
+</tbody></table>
 <h1 id='authentication'>Authentication</h1>
 <blockquote>
 <p>Request</p>
@@ -426,7 +470,7 @@
 </tr>
 <tr>
 <td>organisation_id</td>
-<td>ID of the organisation of which the animals should be retrived.</td>
+<td>ID of the organisation where the animal belongs to.</td>
 </tr>
 <tr>
 <td>permissions</td>
@@ -485,7 +529,6 @@
     </span><span class="s2">"official_id_rule"</span><span class="p">:</span><span class="w"> </span><span class="s2">"AT"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"organisation_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"123456qwertz"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"race"</span><span class="p">:</span><span class="w"> </span><span class="s2">"mixed"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"sensor"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0700000001"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"tags"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"sold"</span><span class="p">]</span><span class="w">
   </span><span class="p">}</span><span class="w">
 </span><span class="p">]</span><span class="w">
@@ -507,7 +550,7 @@
 </thead><tbody>
 <tr>
 <td>organisation_id</td>
-<td>The ID of the organisation of which the animals should be retrived.</td>
+<td>ID of the organisation where the animal belongs to.</td>
 <td><code>required</code></td>
 </tr>
 </tbody></table>
@@ -555,7 +598,6 @@
   </span><span class="s2">"official_id_rule"</span><span class="p">:</span><span class="w"> </span><span class="s2">"AT"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"organisation_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"123456qwertz"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"race"</span><span class="p">:</span><span class="w"> </span><span class="s2">"mixed"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"sensor"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0700000001"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"tags"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"sold"</span><span class="p">]</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
@@ -576,7 +618,7 @@
 </thead><tbody>
 <tr>
 <td>organisation_id</td>
-<td>The ID of the organisation of which the animals should be retrived.</td>
+<td>ID of the organisation where the animal belongs to.</td>
 <td><code>required</code></td>
 </tr>
 <tr>
@@ -596,7 +638,6 @@
 <span class="n">route</span> <span class="o">=</span> <span class="n">endpoint</span> <span class="o">+</span> <span class="s">'/organisations/'</span> <span class="o">+</span> <span class="n">organisation_id</span> <span class="o">+</span> <span class="s">'/animals/'</span> <span class="o">+</span> <span class="n">official_id</span>
 <span class="n">data</span> <span class="o">=</span> <span class="p">{</span>
     <span class="s">"name"</span><span class="p">:</span> <span class="s">"Strolcha"</span><span class="p">,</span>
-    <span class="s">"sensor"</span><span class="p">:</span> <span class="s">"0700000001"</span><span class="p">,</span>
     <span class="s">"group_id"</span><span class="p">:</span> <span class="s">"57920fca506d993asdfgh123"</span><span class="p">,</span>
     <span class="s">"birthday"</span><span class="p">:</span> <span class="s">"2019-01-10T13:04:52+00:00"</span><span class="p">,</span>
     <span class="s">"race"</span><span class="p">:</span> <span class="s">"mixed"</span><span class="p">,</span>
@@ -628,7 +669,7 @@
         -H  <span class="s2">"accept: application/json"</span> <span class="se">\</span>
         -H  <span class="s2">"Authorization: bearer [token]"</span> <span class="se">\</span>
         -H  <span class="s2">"Content-Type: application/json"</span> <span class="se">\</span>
-        -d <span class="s2">"{  </span><span class="se">\"</span><span class="s2">name</span><span class="se">\"</span><span class="s2">: </span><span class="se">\"</span><span class="s2">Strolcha</span><span class="se">\"</span><span class="s2">,  </span><span class="se">\"</span><span class="s2">sensor</span><span class="se">\"</span><span class="s2">: </span><span class="se">\"</span><span class="s2">0700000001</span><span class="se">\"</span><span class="s2">,  </span><span class="se">\"</span><span class="s2">group_id</span><span class="se">\"</span><span class="s2">: </span><span class="se">\"</span><span class="s2">57920fca506d993asdfgh123</span><span class="se">\"</span><span class="s2">,  </span><span class="se">\"</span><span class="s2">birthday</span><span class="se">\"</span><span class="s2">: </span><span class="se">\"</span><span class="s2">2019-01-10T13:04:52+00:00</span><span class="se">\"</span><span class="s2">,  </span><span class="se">\"</span><span class="s2">race</span><span class="se">\"</span><span class="s2">: </span><span class="se">\"</span><span class="s2">mixed</span><span class="se">\"</span><span class="s2">,  </span><span class="se">\"</span><span class="s2">location</span><span class="se">\"</span><span class="s2">: </span><span class="se">\"</span><span class="s2">stall</span><span class="se">\"</span><span class="s2">,  </span><span class="se">\"</span><span class="s2">_id</span><span class="se">\"</span><span class="s2">: </span><span class="se">\"</span><span class="s2">5c480ab3314724e123456789</span><span class="se">\"</span><span class="s2">,  </span><span class="se">\"</span><span class="s2">official_id_rule</span><span class="se">\"</span><span class="s2">: </span><span class="se">\"</span><span class="s2">AT</span><span class="se">\"</span><span class="s2">,  </span><span class="se">\"</span><span class="s2">display_name</span><span class="se">\"</span><span class="s2">: </span><span class="se">\"</span><span class="s2">AT111111112 - susi</span><span class="se">\"</span><span class="s2">,  </span><span class="se">\"</span><span class="s2">archived</span><span class="se">\"</span><span class="s2">: false,  </span><span class="se">\"</span><span class="s2">created_at</span><span class="se">\"</span><span class="s2">: </span><span class="se">\"</span><span class="s2">2019-01-23T06:33:24+00:00</span><span class="se">\"</span><span class="s2">,  </span><span class="se">\"</span><span class="s2">official_id</span><span class="se">\"</span><span class="s2">: </span><span class="se">\"</span><span class="s2">AT111111112</span><span class="se">\"</span><span class="s2">,  </span><span class="se">\"</span><span class="s2">lactation_status</span><span class="se">\"</span><span class="s2">: </span><span class="se">\"</span><span class="s2">Young_Cow</span><span class="se">\"</span><span class="s2">,  </span><span class="se">\"</span><span class="s2">current_device_id</span><span class="se">\"</span><span class="s2">: </span><span class="se">\"</span><span class="s2">0700000001</span><span class="se">\"</span><span class="s2">,  </span><span class="se">\"</span><span class="s2">mark</span><span class="se">\"</span><span class="s2">: </span><span class="se">\"</span><span class="s2">AT111111112</span><span class="se">\"</span><span class="s2">,  </span><span class="se">\"</span><span class="s2">tags</span><span class="se">\"</span><span class="s2">: [</span><span class="se">\"</span><span class="s2">sold</span><span class="se">\"</span><span class="s2">],  </span><span class="se">\"</span><span class="s2">mixed_race</span><span class="se">\"</span><span class="s2">: [{</span><span class="se">\"</span><span class="s2">race</span><span class="se">\"</span><span class="s2">: </span><span class="se">\"</span><span class="s2">ANGLER</span><span class="se">\"</span><span class="s2">, </span><span class="se">\"</span><span class="s2">percent</span><span class="se">\"</span><span class="s2">: 22}, {</span><span class="se">\"</span><span class="s2">race</span><span class="se">\"</span><span class="s2">: </span><span class="se">\"</span><span class="s2">FLECKVIEW</span><span class="se">\"</span><span class="s2">, </span><span class="se">\"</span><span class="s2">percent</span><span class="se">\"</span><span class="s2">: 78}],,  </span><span class="se">\"</span><span class="s2">organisation_id</span><span class="se">\"</span><span class="s2">: </span><span class="se">\"</span><span class="s2">123456qwertz</span><span class="se">\"</span><span class="s2">}"</span>
+        -d <span class="s2">"{  </span><span class="se">\"</span><span class="s2">name</span><span class="se">\"</span><span class="s2">: </span><span class="se">\"</span><span class="s2">Strolcha</span><span class="se">\"</span><span class="s2">,  </span><span class="se">\"</span><span class="s2">group_id</span><span class="se">\"</span><span class="s2">: </span><span class="se">\"</span><span class="s2">57920fca506d993asdfgh123</span><span class="se">\"</span><span class="s2">,  </span><span class="se">\"</span><span class="s2">birthday</span><span class="se">\"</span><span class="s2">: </span><span class="se">\"</span><span class="s2">2019-01-10T13:04:52+00:00</span><span class="se">\"</span><span class="s2">,  </span><span class="se">\"</span><span class="s2">race</span><span class="se">\"</span><span class="s2">: </span><span class="se">\"</span><span class="s2">mixed</span><span class="se">\"</span><span class="s2">,  </span><span class="se">\"</span><span class="s2">location</span><span class="se">\"</span><span class="s2">: </span><span class="se">\"</span><span class="s2">stall</span><span class="se">\"</span><span class="s2">,  </span><span class="se">\"</span><span class="s2">_id</span><span class="se">\"</span><span class="s2">: </span><span class="se">\"</span><span class="s2">5c480ab3314724e123456789</span><span class="se">\"</span><span class="s2">,  </span><span class="se">\"</span><span class="s2">official_id_rule</span><span class="se">\"</span><span class="s2">: </span><span class="se">\"</span><span class="s2">AT</span><span class="se">\"</span><span class="s2">,  </span><span class="se">\"</span><span class="s2">display_name</span><span class="se">\"</span><span class="s2">: </span><span class="se">\"</span><span class="s2">AT111111112 - susi</span><span class="se">\"</span><span class="s2">,  </span><span class="se">\"</span><span class="s2">archived</span><span class="se">\"</span><span class="s2">: false,  </span><span class="se">\"</span><span class="s2">created_at</span><span class="se">\"</span><span class="s2">: </span><span class="se">\"</span><span class="s2">2019-01-23T06:33:24+00:00</span><span class="se">\"</span><span class="s2">,  </span><span class="se">\"</span><span class="s2">official_id</span><span class="se">\"</span><span class="s2">: </span><span class="se">\"</span><span class="s2">AT111111112</span><span class="se">\"</span><span class="s2">,  </span><span class="se">\"</span><span class="s2">lactation_status</span><span class="se">\"</span><span class="s2">: </span><span class="se">\"</span><span class="s2">Young_Cow</span><span class="se">\"</span><span class="s2">,  </span><span class="se">\"</span><span class="s2">current_device_id</span><span class="se">\"</span><span class="s2">: </span><span class="se">\"</span><span class="s2">0700000001</span><span class="se">\"</span><span class="s2">,  </span><span class="se">\"</span><span class="s2">mark</span><span class="se">\"</span><span class="s2">: </span><span class="se">\"</span><span class="s2">AT111111112</span><span class="se">\"</span><span class="s2">,  </span><span class="se">\"</span><span class="s2">tags</span><span class="se">\"</span><span class="s2">: [</span><span class="se">\"</span><span class="s2">sold</span><span class="se">\"</span><span class="s2">],  </span><span class="se">\"</span><span class="s2">mixed_race</span><span class="se">\"</span><span class="s2">: [{</span><span class="se">\"</span><span class="s2">race</span><span class="se">\"</span><span class="s2">: </span><span class="se">\"</span><span class="s2">ANGLER</span><span class="se">\"</span><span class="s2">, </span><span class="se">\"</span><span class="s2">percent</span><span class="se">\"</span><span class="s2">: 22}, {</span><span class="se">\"</span><span class="s2">race</span><span class="se">\"</span><span class="s2">: </span><span class="se">\"</span><span class="s2">FLECKVIEW</span><span class="se">\"</span><span class="s2">, </span><span class="se">\"</span><span class="s2">percent</span><span class="se">\"</span><span class="s2">: 78}],,  </span><span class="se">\"</span><span class="s2">organisation_id</span><span class="se">\"</span><span class="s2">: </span><span class="se">\"</span><span class="s2">123456qwertz</span><span class="se">\"</span><span class="s2">}"</span>
 </code></pre>
 <blockquote>
 <p>Response example</p>
@@ -650,11 +691,10 @@
   </span><span class="s2">"official_id_rule"</span><span class="p">:</span><span class="w"> </span><span class="s2">"AT"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"organisation_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"123456qwertz"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"race"</span><span class="p">:</span><span class="w"> </span><span class="s2">"mixed"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"sensor"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0700000001"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"tags"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"sold"</span><span class="p">]</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
-<p>This endpoint creates/updates an animal which is in the organisation with <code>organisation_id</code> and the <code>official_id</code>. If the animal is created or updated depents. If the animal with the provided <code>official_id</code> in the organisation exists, it gets updated. Otherwise the animal is created. The animal response can be used as a input for thes call and just the parameters that are needed to be updated can be replaced.</p>
+<p>This endpoint creates/updates an animal which is in the organisation with <code>organisation_id</code> and the <code>official_id</code>. If the animal is created or updated depends. If the animal with the provided <code>official_id</code> exists in the organisation, it gets updated. Otherwise the animal gets created. The animal response can be used as a input for thes call and just the parameters that are needed to be updated can be replaced.</p>
 
 <p><strong>HTTP Request</strong></p>
 
@@ -671,7 +711,7 @@
 </thead><tbody>
 <tr>
 <td>organisation_id</td>
-<td>The ID of the organisation of which the animals should be retrived.</td>
+<td>ID of the organisation where the animal belongs to.</td>
 <td><code>required</code></td>
 </tr>
 <tr>
@@ -701,7 +741,7 @@
 </tr>
 <tr>
 <td>created_at</td>
-<td>The creation time of the animal in the smaXtec system.</td>
+<td>The creation time of the animal in the smaXtec system. Can&#39;t be changed.</td>
 <td></td>
 </tr>
 <tr>
@@ -711,7 +751,7 @@
 </tr>
 <tr>
 <td>display_name</td>
-<td>Official ID and the Name of the animal.</td>
+<td>Composition of the official ID and the name of the animal.</td>
 <td></td>
 </tr>
 <tr>
@@ -721,7 +761,7 @@
 </tr>
 <tr>
 <td>lactation_status</td>
-<td>Status of the cow. Possible parameters: <code>Young_Cow</code>, <code>Lactating_Cow</code>, <code>Dry_Cow</code></td>
+<td>Status of the cow. Possible parameters: <code>Young_Cow</code>, <code>Lactating_Cow</code>, <code>Dry_Cow</code>. Changes according to events.</td>
 <td></td>
 </tr>
 <tr>
@@ -765,18 +805,13 @@
 <td></td>
 </tr>
 <tr>
-<td>sensor</td>
-<td>The ID of the sonsor which is currently active in the animal.</td>
-<td></td>
-</tr>
-<tr>
 <td>tags</td>
 <td>Tags which can be given to the animals. Example: <code>&quot;tags&quot;: [&quot;sold&quot;]</code>.</td>
 <td></td>
 </tr>
 </tbody></table>
 <h1 id='events'>Events</h1>
-<p>Occurrences which arise for an animal are stored in the <strong>events</strong>. These events include reproduction events, health events and feeding events. All events can be fetched but just events of the type <code>insemination</code>, <code>pregnancy_result</code>, <code>calving_confirmation</code> and <code>abort</code> can be created via the API. Additional information regarding the event type can be added (TODO link to parameters). All other events are generated by the smaXtec system.</p>
+<p>Occurrences which arise for an animal are stored in the <strong>events</strong>. These events include reproduction events, health events, feeding events etc.. All events can be fetched but just events of the type <code>insemination</code>, <code>pregnancy_result</code>, <code>calving_confirmation</code> and <code>abort</code> can be created via the API. Additional information regarding the event type can be added. All other events are generated by the smaXtec system.</p>
 <h2 id='get-all-events'>Get All Events</h2>
 <blockquote>
 <p>Request</p>
@@ -811,22 +846,14 @@
     </span><span class="s2">"create_ts"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2018-08-01T16:54:21+00:00"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"event_ts"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2015-03-23T00:00:00+00:00"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"event_type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"calving_confirmation"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"information"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-      </span><span class="s2">"legacy_lactation_info"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
-    </span><span class="p">}</span><span class="w">
+    </span><span class="s2">"calving_number"</span><span class="p">:</span><span class="w"> </span><span class="mi">3</span><span class="w">
   </span><span class="p">},</span><span class="w">
   </span><span class="p">{</span><span class="w">
     </span><span class="s2">"_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"5b61e5bdb493c3931a260123"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"animal_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"5c480ab3314724e123456789"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"create_ts"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2018-08-01T16:54:21+00:00"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"event_ts"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2015-03-23T01:00:00+00:00"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"event_type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"information_update"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"information"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-      </span><span class="s2">"milk_yield"</span><span class="p">:</span><span class="w"> </span><span class="mi">11000</span><span class="p">,</span><span class="w">
-      </span><span class="s2">"dry_off_date"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
-      </span><span class="s2">"calving_number"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
-      </span><span class="s2">"legacy_lactation_info"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
-    </span><span class="p">}</span><span class="w">
+    </span><span class="s2">"event_type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"information_update"</span><span class="w">
   </span><span class="p">},</span><span class="w">
   </span><span class="p">{</span><span class="w">
     </span><span class="s2">"_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"5b61eb7e2782f75791c5e123"</span><span class="p">,</span><span class="w">
@@ -834,9 +861,7 @@
     </span><span class="s2">"create_ts"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2018-08-01T17:18:54+00:00"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"event_ts"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2017-05-15T00:00:00+00:00"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"event_type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"heat"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"information"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-      </span><span class="s2">"legacy_heat"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
-    </span><span class="p">}</span><span class="w">
+    </span><span class="s2">"cycle_length"</span><span class="p">:</span><span class="w"> </span><span class="mi">300</span><span class="w">
   </span><span class="p">},</span><span class="w">
   </span><span class="p">{</span><span class="w">
     </span><span class="s2">"_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"5b61ed2c19cd8518817d6123"</span><span class="p">,</span><span class="w">
@@ -844,10 +869,7 @@
     </span><span class="s2">"create_ts"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2018-08-01T17:26:04+00:00"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"event_ts"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2017-07-22T20:13:00+00:00"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"event_type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"insemination"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"information"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-      </span><span class="s2">"legacy_heat"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
-      </span><span class="s2">"days_to_calving"</span><span class="p">:</span><span class="w"> </span><span class="mi">-1</span><span class="w">
-    </span><span class="p">}</span><span class="w">
+    </span><span class="s2">"days_to_calving"</span><span class="p">:</span><span class="w"> </span><span class="mi">275</span><span class="w">
   </span><span class="p">},</span><span class="w">
   </span><span class="p">{</span><span class="w">
     </span><span class="s2">"_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"5b61ed2c041922c1f7030123"</span><span class="p">,</span><span class="w">
@@ -855,24 +877,16 @@
     </span><span class="s2">"create_ts"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2018-08-01T17:26:04+00:00"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"event_ts"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2017-07-22T23:13:00+00:00"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"event_type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"pregnancy_result"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"information"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-      </span><span class="s2">"pregnant"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
-      </span><span class="s2">"legacy_heat"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
-    </span><span class="p">}</span><span class="w">
+    </span><span class="s2">"pregnant"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"expected_calving_date"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2018-04-23T12:00:00+00:00"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"insemination_date"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2017-07-22T20:13:00+00:00"</span><span class="w">
   </span><span class="p">},</span><span class="w">
   </span><span class="p">{</span><span class="w">
     </span><span class="s2">"_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"5ae62c4ad591117f095f4123"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"animal_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"5c480ab3314724e123456789"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"create_ts"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2018-04-29 21:00:00"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"event_ts"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2018-04-29 21:00:00"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"event_type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"health_106"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"information"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-      </span><span class="s2">"threshold"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.75</span><span class="p">,</span><span class="w">
-      </span><span class="s2">"calving_enabled"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
-      </span><span class="s2">"temp_dec_index"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.759</span><span class="p">,</span><span class="w">
-      </span><span class="s2">"value"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.759</span><span class="p">,</span><span class="w">
-      </span><span class="s2">"sensor_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0700006489"</span><span class="w">
-    </span><span class="p">}</span><span class="w">
+    </span><span class="s2">"event_type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"health_106"</span><span class="w">
   </span><span class="p">}</span><span class="w">
 </span><span class="p">]</span><span class="w">
 </span></code></pre>
@@ -892,13 +906,141 @@
 </thead><tbody>
 <tr>
 <td>organisation_id</td>
-<td>The ID of the organisation of which the animals should be retrived.</td>
+<td>ID of the organisation where the animal belongs to.</td>
 <td><code>required</code></td>
 </tr>
 <tr>
-<td>animal_id</td>
-<td>The ID of the organisation of which the animals should be retrived.</td>
+<td>official_id</td>
+<td>The official id of the animal. This is in the most cases the eartag of the animal.</td>
 <td><code>required</code></td>
+</tr>
+</tbody></table>
+
+<p><strong>Event Types</strong></p>
+
+<p>The smaXtec system has the following event types.</p>
+
+<table><thead>
+<tr>
+<th>Event Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>heat</td>
+<td>Detection of a heat</td>
+</tr>
+<tr>
+<td>insemination</td>
+<td>Inseminated of an animal</td>
+</tr>
+<tr>
+<td>pregnancy_result</td>
+<td>A positive or negative pregnancy result</td>
+</tr>
+<tr>
+<td>calving_detection</td>
+<td>Detection of a calving</td>
+</tr>
+<tr>
+<td>dry_off</td>
+<td>Dry off</td>
+</tr>
+<tr>
+<td>calving_confirmation</td>
+<td>Confirmation of a calving</td>
+</tr>
+<tr>
+<td>waiting_for_calving</td>
+<td>Few days before calving</td>
+</tr>
+<tr>
+<td>abort</td>
+<td>Abortion of a pregnancy which can be a late abort</td>
+</tr>
+<tr>
+<td>information_update</td>
+<td>Updating information</td>
+</tr>
+<tr>
+<td>diagnosis</td>
+<td>Diagnose</td>
+</tr>
+<tr>
+<td>health_101</td>
+<td>Insufficient water intake</td>
+</tr>
+<tr>
+<td>health_102</td>
+<td>Increase in drinking cycles</td>
+</tr>
+<tr>
+<td>health_103</td>
+<td>Reduced drinking cycles</td>
+</tr>
+<tr>
+<td>health_104</td>
+<td>Temperature increase</td>
+</tr>
+<tr>
+<td>health_106</td>
+<td>Temperature drop</td>
+</tr>
+<tr>
+<td>health_601</td>
+<td>THI ≥ 72 Heat stress</td>
+</tr>
+<tr>
+<td>health_602</td>
+<td>THI ≥ 78 Heat stress</td>
+</tr>
+<tr>
+<td>health_603</td>
+<td>THI ≥ 82 Heat stress</td>
+</tr>
+<tr>
+<td>health_703</td>
+<td>Drop in activity</td>
+</tr>
+<tr>
+<td>feeding_201</td>
+<td>Feed efficiency</td>
+</tr>
+<tr>
+<td>feeding_202</td>
+<td>Risk of acidosis</td>
+</tr>
+<tr>
+<td>feeding_203</td>
+<td>Increase in average pH</td>
+</tr>
+<tr>
+<td>feeding_204</td>
+<td>Drop in average pH</td>
+</tr>
+<tr>
+<td>feeding_205</td>
+<td>Increase in 12h pH</td>
+</tr>
+<tr>
+<td>feeding_206</td>
+<td>Drop in 12h pH</td>
+</tr>
+<tr>
+<td>fertility_105</td>
+<td>Indication of imminent calving</td>
+</tr>
+<tr>
+<td>fertility_702</td>
+<td>Oestrus</td>
+</tr>
+<tr>
+<td>actincrease_701</td>
+<td>Increase in activity</td>
+</tr>
+<tr>
+<td>actincrease_704</td>
+<td>Increase in activity</td>
 </tr>
 </tbody></table>
 <h2 id='create-events'>Create Events</h2>
@@ -916,9 +1058,7 @@
         <span class="p">{</span>
             <span class="s">"event_type"</span><span class="p">:</span> <span class="s">"insemination"</span><span class="p">,</span>
             <span class="s">"event_ts"</span><span class="p">:</span> <span class="s">"2019-01-18T12:00:00+00:00"</span><span class="p">,</span>
-            <span class="s">"information"</span><span class="p">:</span> <span class="p">{</span>
-                <span class="s">"days_to_calving"</span><span class="p">:</span> <span class="mi">275</span>
-            <span class="p">}</span>
+            <span class="s">"days_to_calving"</span><span class="p">:</span> <span class="mi">275</span>
         <span class="p">}</span>
     <span class="p">]</span>
 <span class="p">}</span>
@@ -935,7 +1075,7 @@
 </code></pre><pre class="highlight shell"><code>curl -X PUT <span class="s2">"[endpoint]/organisations/[organisation_id]/animals/[official_id]/events"</span> <span class="se">\</span>
         -H  <span class="s2">"accept: application/json"</span> <span class="se">\</span>
         -H  <span class="s2">"Authorization: bearer [token]"</span>
-        -d <span class="s2">"{  </span><span class="se">\"</span><span class="s2">events</span><span class="se">\"</span><span class="s2">: [    {    </span><span class="se">\"</span><span class="s2">event_type</span><span class="se">\"</span><span class="s2">: </span><span class="se">\"</span><span class="s2">insemination</span><span class="se">\"</span><span class="s2">,    </span><span class="se">\"</span><span class="s2">event_ts</span><span class="se">\"</span><span class="s2">: </span><span class="se">\"</span><span class="s2">2019-01-18T12:00:00+00:00</span><span class="se">\"</span><span class="s2">,    </span><span class="se">\"</span><span class="s2">information</span><span class="se">\"</span><span class="s2">: {      </span><span class="se">\"</span><span class="s2">days_to_calving</span><span class="se">\"</span><span class="s2">: 275    }    }  ]}"</span>
+        -d <span class="s2">"{</span><span class="se">\"</span><span class="s2">events</span><span class="se">\"</span><span class="s2">: [{</span><span class="se">\"</span><span class="s2">event_type</span><span class="se">\"</span><span class="s2">: </span><span class="se">\"</span><span class="s2">insemination</span><span class="se">\"</span><span class="s2">, </span><span class="se">\"</span><span class="s2">event_ts</span><span class="se">\"</span><span class="s2">: </span><span class="se">\"</span><span class="s2">2019-01-18T12:00:00+00:00</span><span class="se">\"</span><span class="s2">, </span><span class="se">\"</span><span class="s2">days_to_calving</span><span class="se">\"</span><span class="s2">: 275}]}"</span>
 </code></pre>
 <blockquote>
 <p>Response example (will change)</p>
@@ -947,15 +1087,14 @@
     </span><span class="s2">"create_ts"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2019-02-04T14:26:46+00:00"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"event_ts"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2019-01-18T12:00:00+00:00"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"event_type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"insemination"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"information"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-      </span><span class="s2">"integration"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
-      </span><span class="s2">"days_to_calving"</span><span class="p">:</span><span class="w"> </span><span class="mi">275</span><span class="w">
-    </span><span class="p">}</span><span class="w">
+    </span><span class="s2">"days_to_calving"</span><span class="p">:</span><span class="w"> </span><span class="mi">275</span><span class="w">
   </span><span class="p">}</span><span class="w">
 </span><span class="p">]</span><span class="w">
 </span></code></pre>
 <p>This endpoint creates events for an animal with the given <code>official_id</code> which belongs to the organisation with the given <code>organisation_id</code>. If the event is created depents on the <code>event_type</code> and the <code>event_ts</code>. If the event with this two parameters does not exist, it gets created. Otherwise the event is skipped.
 It is possible to add just the events to the data which should be added to the smaXtec system or add just all events from your system and the smaXtec system adds those which are not in the system.</p>
+
+<aside class="notice">Just events of the type <b>insemination</b>, <b>pregnancy_result</b>, <b>calving_confirmation</b> and <b>abort</b> can be created via the API.</aside>
 
 <p><strong>HTTP Request</strong></p>
 
@@ -972,7 +1111,7 @@ It is possible to add just the events to the data which should be added to the s
 </thead><tbody>
 <tr>
 <td>organisation_id</td>
-<td>The ID of the organisation of which the animals should be retrived.</td>
+<td>The ID of the organisation which the animals belong to.</td>
 <td><code>required</code></td>
 </tr>
 <tr>
@@ -1007,80 +1146,32 @@ It is possible to add just the events to the data which should be added to the s
 </tr>
 <tr>
 <td>event_type</td>
-<td>Type of the event. Just events of the type <code>insemination</code>, <code>pregnancy_result</code>, <code>calving_confirmation</code> and <code>abort</code> can be created.</td>
-<td></td>
-</tr>
-<tr>
-<td>information</td>
-<td>Additional information to the event depending on the event type.</td>
+<td>Type of the event.</td>
 <td></td>
 </tr>
 <tr>
 <td></td>
 <td></td>
-<td></td>
-</tr>
-<tr>
-<td><strong>Insemination Parameters</strong></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>days_to_calving</td>
-<td>Days from the insamination untill the expected calving date. Default: <code>280</code></td>
-<td></td>
-</tr>
-<tr>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td><strong>Pregnancy Result Parameters</strong></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>expected_calving_date</td>
-<td>Date when the calving is expected.</td>
-<td></td>
-</tr>
-<tr>
-<td>insemination_date</td>
-<td>Date of the insamination which led to the pregnancy result. If no prior insemination on that date is saved an insemination event on that date will be created.</td>
-<td></td>
-</tr>
-<tr>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td><strong>Calving Confirmation Parameters</strong></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>calving_number</td>
-<td>Number of calving.</td>
-<td></td>
-</tr>
-<tr>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td><strong>Abort Parameters</strong></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>late_abort</td>
-<td>When the cow was long enough pregnant so that the cow is lactating then <code>late_abort</code> is <code>true</code>.</td>
 <td></td>
 </tr>
 </tbody></table>
+
+<p><strong>Heat Parameters</strong>
+cycle_length                        | Length of the current cycle
+||
+<strong>Insemination Parameters</strong>         |
+days_to_calving                     | Days from the insamination untill the expected calving date. Default: <code>280</code>
+||
+<strong>Pregnancy Result Parameters</strong>     |
+expected_calving_date               | Date when the calving is expected.
+insemination_date                   | Date of the insamination which led to the pregnancy result. If no prior insemination on that date is saved an insemination event on that date will be created.
+pregnant                            | If the pregnancy resutl was positive (true) or negative (false).
+||
+<strong>Calving Confirmation Parameters</strong> |
+calving_number                      | Number of calvings.
+||
+<strong>Abort Parameters</strong>                |
+late_abort                          | When the cow was long enough pregnant so that the cow is lactating then <code>late_abort</code> is <code>true</code>.</p>
 <h1 id='errors'>Errors</h1>
 <p>The smaXtec Intern API uses the following error codes:</p>
 
