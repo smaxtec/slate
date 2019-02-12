@@ -1154,24 +1154,87 @@ It is possible to add just the events to the data which should be added to the s
 <td></td>
 <td></td>
 </tr>
+<tr>
+<td><strong>Heat Parameters</strong></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>cycle_length</td>
+<td>Length of the current cycle</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><strong>Insemination Parameters</strong></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>days_to_calving</td>
+<td>Days from the insamination untill the expected calving date. Default: <code>280</code></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><strong>Pregnancy Result Parameters</strong></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>expected_calving_date</td>
+<td>Date when the calving is expected.</td>
+<td></td>
+</tr>
+<tr>
+<td>insemination_date</td>
+<td>Date of the insamination which led to the pregnancy result. If no prior insemination on that date is saved an insemination event on that date will be created.</td>
+<td></td>
+</tr>
+<tr>
+<td>pregnant</td>
+<td>If the pregnancy resutl was positive (true) or negative (false).</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><strong>Calving Confirmation Parameters</strong></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>calving_number</td>
+<td>Number of calvings.</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><strong>Abort Parameters</strong></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>late_abort</td>
+<td>When the cow was long enough pregnant so that the cow is lactating then <code>late_abort</code> is <code>true</code>.</td>
+<td></td>
+</tr>
 </tbody></table>
-
-<p><strong>Heat Parameters</strong>
-cycle_length                        | Length of the current cycle
-||
-<strong>Insemination Parameters</strong>         |
-days_to_calving                     | Days from the insamination untill the expected calving date. Default: <code>280</code>
-||
-<strong>Pregnancy Result Parameters</strong>     |
-expected_calving_date               | Date when the calving is expected.
-insemination_date                   | Date of the insamination which led to the pregnancy result. If no prior insemination on that date is saved an insemination event on that date will be created.
-pregnant                            | If the pregnancy resutl was positive (true) or negative (false).
-||
-<strong>Calving Confirmation Parameters</strong> |
-calving_number                      | Number of calvings.
-||
-<strong>Abort Parameters</strong>                |
-late_abort                          | When the cow was long enough pregnant so that the cow is lactating then <code>late_abort</code> is <code>true</code>.</p>
 <h1 id='errors'>Errors</h1>
 <p>The smaXtec Intern API uses the following error codes:</p>
 
