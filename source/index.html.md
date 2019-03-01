@@ -85,10 +85,14 @@ import requests
 email='user@smaxtec.com'
 password='super_secret_password'
 endpoint = 'https://api-staging.smaxtec.com/integration/v2'
-route = endpoint + '/users/session_token?email=' + email + '&password=' + password
+route = endpoint + '/users/session_token'
 headers = {'accept': 'application/json'}
+data = {
+   "user": email,
+   "password": password
+}
 
-r = requests.get(route, headers=headers)
+r = requests.post(route, headers=headers, json=data)
 
 status_code = r.status_code
 authentication = r.json()
@@ -432,6 +436,36 @@ official_id_rule  | The rule how the official_id should be formated/stored. Poss
 organisation_id   | ID of the organisation where the animal belongs to.
 race              | Race of the animal.
 tags              | Tags which can be given to the animals. Example: `"tags": ["sold"]`.
+
+
+## Get Animal Metrics
+
+> Request
+
+This Endpoint retrieves all metrics and the corresponding availlable units from an animal which is in the organisation with `organisation_id` and the `official_id`.
+
+**HTTP Request**
+
+`GET "[endpoint]/organisations/[organisation_id]/animals/[official_id]/metrics"`
+
+**URL Parameters**
+
+Parameter | Description ||
+--------- | ----------- | ---
+organisation_id | ID of the organisation where the animal belongs to. | `required`
+official_id | The official id of the animal. This is in the most cases the eartag of the animal. | `required`
+
+
+## Get Animal Data
+
+> Request
+
+This endpoint retrieves from a provided `organisation_id` and `official_id` data from its sensor. The response depends on the provided list of `metrics` and the period.
+
+**HTTP Request**
+
+`GET "[endpoint]/organisations/[organisation_id]/animals/[official_id]/data.json"`
+
 
 
 # Events
