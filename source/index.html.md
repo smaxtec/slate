@@ -85,10 +85,14 @@ import requests
 email='user@smaxtec.com'
 password='super_secret_password'
 endpoint = 'https://api-staging.smaxtec.com/integration/v2'
-route = endpoint + '/users/session_token?email=' + email + '&password=' + password
+route = endpoint + '/users/session_token'
 headers = {'accept': 'application/json'}
+data = {
+   "user": email,
+   "password": password
+}
 
-r = requests.get(route, headers=headers)
+r = requests.post(route, headers=headers, json=data)
 
 status_code = r.status_code
 authentication = r.json()
@@ -432,6 +436,183 @@ official_id_rule  | The rule how the official_id should be formated/stored. Poss
 organisation_id   | ID of the organisation where the animal belongs to.
 race              | Race of the animal.
 tags              | Tags which can be given to the animals. Example: `"tags": ["sold"]`.
+
+
+## Get Animal Metrics
+
+> Request
+
+```python
+
+import requests
+
+endpoint = 'https://api-staging.smaxtec.com/integration/v2'
+organisation_id = '123456qwertz'
+official_id = 'AT111111112'
+route = endpoint + '/organisations/' + organisation_id + '/animals/' + official_id + '/metrics'
+
+token = 'yx2zvuB8JD8ppwGti84OT8Muq5eiB2b2EZqsqC-HOXUvLSg'
+headers = {
+    'accept': 'application/json',
+    'Authorization': 'bearer ' + token
+}
+
+r = requests.get(route, headers=headers)
+
+status_code = r.status_code
+animal = r.json()
+
+```
+
+```bash
+curl -X GET "[endpoint]/organisations/[organisation_id]/animals/[official_id]/metrics" \
+        -H  "accept: application/json" \
+        -H  "Authorization: bearer [token]" \
+        -H  "Content-Type: application/json"
+```
+
+
+> Response example
+
+```json
+[
+    {
+        "metric": "temp",
+        "available_units": [
+            "degree_celsius",
+            "degree_fahrenheit"
+        ]
+    },
+    {
+        "metric": "act",
+        "available_units": [
+            "act"
+        ]
+    },
+    {
+        "metric": "act_index",
+        "available_units": [
+            "percent"
+        ]
+    }
+]
+```
+
+This Endpoint retrieves all metrics and the corresponding availlable units from an animal which is in the organisation with `organisation_id` and the `official_id`.
+
+**HTTP Request**
+
+`GET "[endpoint]/organisations/[organisation_id]/animals/[official_id]/metrics"`
+
+**URL Parameters**
+
+Parameter | Description ||
+--------- | ----------- | ---
+organisation_id | ID of the organisation where the animal belongs to. | `required`
+official_id | The official id of the animal. This is in the most cases the eartag of the animal. | `required`
+
+
+## Get Animal Data
+
+> Request
+
+```python
+
+import requests
+
+endpoint = 'https://api-staging.smaxtec.com/integration/v2'
+organisation_id = '123456qwertz'
+official_id = 'AT111111112'
+route = endpoint + '/organisations/' + organisation_id + '/animals/' + official_id + '/data.json'
+
+token = 'yx2zvuB8JD8ppwGti84OT8Muq5eiB2b2EZqsqC-HOXUvLSg'
+headers = {
+    'accept': 'application/json',
+    'Authorization': 'bearer ' + token
+}
+
+data = {
+    "metrics": ["temp", "act"],
+    "from_date": "2019-02-01T08:21:33+0000",
+    "to_date": "2019-02-01T12:22:16+0000"
+}
+
+r = requests.get(route, data=data, headers=headers)
+
+status_code = r.status_code
+animal = r.json()
+
+```
+
+```bash
+curl -X GET "[endpoint]/organisations/[organisation_id]/animals/[official_id]/data.json" \
+        -H  "accept: application/json" \
+        -H  "Authorization: bearer [token]" \
+        -H  "Content-Type: application/json" \
+        -d "{  \"metrics\": [\"temp\", \"act\"],  \"from_date\": \"2019-02-01T08:21:33+0000\",  \"to_date\": \"2019-02-01T12:22:16+0000\"}"
+```
+
+> Response example
+
+```json
+[
+    {"metric": "temp", "data": [
+            ["2019-02-01T09: 00: 00+01: 00",
+                38.13
+            ],
+            ["2019-02-01T10: 00: 00+01: 00",
+                38.52
+            ],
+            ["2019-02-01T11: 00: 00+01: 00",
+                38.85
+            ],
+            ["2019-02-01T12: 00: 00+01: 00",
+                36.89
+            ],
+            ["2019-02-01T13: 00: 00+01: 00",
+                37.6
+            ]
+        ], "unit": "degree_celsius"
+    },
+    {"metric": "act", "data": [
+            ["2019-02-01T09: 00: 00+01: 00",
+                3.35
+            ],
+            ["2019-02-01T10: 00: 00+01: 00",
+                3.31
+            ],
+            ["2019-02-01T11: 00: 00+01: 00",
+                3.46
+            ],
+            ["2019-02-01T12: 00: 00+01: 00",
+                3.99
+            ],
+            ["2019-02-01T13: 00: 00+01: 00",
+                4.3
+            ]
+        ], "unit": "act"
+    }
+]
+```
+
+This endpoint retrieves from a provided `organisation_id` and `official_id` data from its sensor. The response depends on the provided list of `metrics` and the period.
+
+**HTTP Request**
+
+`GET "[endpoint]/organisations/[organisation_id]/animals/[official_id]/data.json"`
+
+**URL Parameters**
+
+Parameter | Description ||
+--------- | ----------- | ---
+organisation_id | ID of the organisation where the animal belongs to. | `required`
+official_id | The official id of the animal. This is in the most cases the eartag of the animal. | `required`
+||
+metrics | The list of metrics where data is wanted. | `required`
+from_date | The start date from the period where data is wanted. | `required`
+to_date | The end date from the period where data is wanted. | `required`
+aggregation_period | The period of data points. Either 10 minutes or 1 hour.
+preferred_units | The units which are prefered. For example: "act", "degree_celsius", "degree_fahrenheit".
 
 
 # Events
