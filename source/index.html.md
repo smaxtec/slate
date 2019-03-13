@@ -465,7 +465,7 @@ animal = r.json()
 ```
 
 ```bash
-curl -X PUT "[endpoint]/organisations/[organisation_id]/animals/[official_id]/metrics" \
+curl -X GET "[endpoint]/organisations/[organisation_id]/animals/[official_id]/metrics" \
         -H  "accept: application/json" \
         -H  "Authorization: bearer [token]" \
         -H  "Content-Type: application/json"
@@ -534,8 +534,7 @@ headers = {
 data = {
     "metrics": ["temp", "act"],
     "from_date": "2019-02-01T08:21:33+0000",
-    "to_date": "2019-02-01T12:22:16+0000",
-    "aggregation_period": "hourly"
+    "to_date": "2019-02-01T12:22:16+0000"
 }
 
 r = requests.get(route, data=data, headers=headers)
@@ -546,11 +545,11 @@ animal = r.json()
 ```
 
 ```bash
-curl -X PUT "[endpoint]/organisations/[organisation_id]/animals/[official_id]/data.json" \
+curl -X GET "[endpoint]/organisations/[organisation_id]/animals/[official_id]/data.json" \
         -H  "accept: application/json" \
         -H  "Authorization: bearer [token]" \
         -H  "Content-Type: application/json" \
-        -d "{  \"metrics\": [\"temp\", \"act\"],  \"from_date\": \"2019-02-01T08:21:33+0000\",  \"to_date\": \"2019-02-01T12:22:16+0000\",  \"aggregation_period\": \"hourly\"}"
+        -d "{  \"metrics\": [\"temp\", \"act\"],  \"from_date\": \"2019-02-01T08:21:33+0000\",  \"to_date\": \"2019-02-01T12:22:16+0000\"}"
 ```
 
 > Response example
