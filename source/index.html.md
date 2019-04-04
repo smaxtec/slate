@@ -66,14 +66,15 @@ or
 
 Several placeholders are used in this document.
 
-Placeholder       | Description                                                                              | Example
------------       | -----------                                                                              | -------
-[token]           | [Authentication](#authentication) token which can be get over the API                    | yx2zvuB8JD8ppwGti84OT8Muq5eiB2b2EZqsqC-HOXUvLSg
-[endpoint]        | Endpoint to the integration API                                                          | https://api-staging.smaxtec.com/integration/v2
-[email]           | E-mail adress from the registered user                                                   | user@smaxtec.com
-[password]        | Password from the registered user                                                        | super_secret_password
-[organisation_id] | smaXtec intern ID of the organisation. Can be [get](#get-all-organisations) over the API | 123456qwertz
-[official_id]     | The official id of the animal. This is in the most cases the eartag of the animal.       | AT111111112
+Placeholder        | Description                                                                              | Example
+-----------        | -----------                                                                              | -------
+[token]            | [Authentication](#authentication) token which can be get over the API                    | yx2zvuB8JD8ppwGti84OT8Muq5eiB2b2EZqsqC-HOXUvLSg
+[endpoint]         | Endpoint to the integration API                                                          | https://api-staging.smaxtec.com/integration/v2
+[email]            | E-mail adress from the registered user                                                   | user@smaxtec.com
+[password]         | Password from the registered user                                                        | super_secret_password
+[organisation_id]  | smaXtec intern ID of the organisation. Can be [get](#get-all-organisations) over the API | 123456qwertz
+[official_id]      | The official id of the animal. This is in the most cases the eartag of the animal.       | AT111111112
+[integration_name] | The name of the integrating application.                                                 | HerdmanagerXYZ
 
 # Authentication
 
@@ -84,12 +85,14 @@ import requests
 
 email='user@smaxtec.com'
 password='super_secret_password'
+integration_name='my-integration-app-name'
 endpoint = 'https://api-staging.smaxtec.com/integration/v2'
 route = endpoint + '/users/session_token'
 headers = {'accept': 'application/json'}
 data = {
    "user": email,
-   "password": password
+   "password": password,
+   "integration_name": integration_name
 }
 
 r = requests.post(route, headers=headers, json=data)
@@ -99,7 +102,7 @@ authentication = r.json()
 ```
 
 ```bash
-curl -X GET "[endpoint]/users/session_token?email=[email]&password=[password]" \
+curl -X POST "[endpoint]/users/session_token?email=[email]&password=[password]&integration_name=[integration_name]" \
         -H  "accept: application/json"
 ```
 
@@ -124,7 +127,7 @@ For example:
 
 **HTTP Request**
 
-`GET "[endpoint]/users/session_token?email=[email]&password=[password]"`
+`POST "[endpoint]/users/session_token?email=[email]&password=[password]&integration_name=[integration_name]"`
 
 # Organisations
 
