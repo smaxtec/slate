@@ -2,8 +2,8 @@
 title: smaXtec Integration API Reference
 
 language_tabs:
-  - python
   - bash
+  - python
 
 toc_footers:
   - <a href='https://messenger-staging.smaxtec.com/'>smaXtec Messenger (staging)</a>
@@ -75,6 +75,8 @@ Placeholder        | Description                                                
 [organisation_id]  | smaXtec intern ID of the organisation. Can be [get](#get-all-organisations) over the API | 123456qwertz
 [official_id]      | The official id of the animal. This is in the most cases the eartag of the animal.       | AT111111112
 [integration_name] | The name of the integrating application.                                                 | HerdmanagerXYZ
+[language]         | Language of the wanted translated text.                                                  | en
+[event_type]       | [Event type](#get-all-events) of an animal event.                                        | HEALTH_102
 
 # Authentication
 
@@ -709,6 +711,7 @@ curl -X GET "[endpoint]/organisations/[organisation_id]/animals/[official_id]/ev
 This endpoint retrieves from a provided `organisation_id` and `official_id` the events of an animal.
 
 **HTTP Request**
+
 `GET "[endpoint]/organisations/[organisation_id]/animals/[official_id]/events"`
 
 **URL Parameters**
@@ -852,3 +855,117 @@ late_abort                          | When the cow was long enough pregnant so t
 icar_key                            | ICAR key for the diagnosis.
 diagnosis_key                       | If an own key for diagnosis is used, it should be set here.
 diagnosis_key_type                  | If an own key for diagnosis is used, a type of the diagnosis_key should be defined. eg.: `MY_OWN_KEY_DEFENITION_SYSTEM`
+
+# Translations
+
+The translated text for events or specific events can be accessed over the integration API.
+
+## Get all Event Translations
+
+> Request
+
+```python
+import requests
+
+endpoint = 'https://api-staging.smaxtec.com/integration/v2'
+language = 'en'
+route = endpoint + '/translations/' + language + '/events'
+token = 'yx2zvuB8JD8ppwGti84OT8Muq5eiB2b2EZqsqC-HOXUvLSg'
+headers = {
+    'accept': 'application/json',
+    'Authorization': 'bearer ' + token
+}
+
+r = requests.get(route, headers=headers)
+
+status_code = r.status_code
+event_text = r.json()
+```
+
+```bash
+curl -X GET "[endpoint]/translations/[language]/events" \
+        -H  "accept: application/json" \
+        -H  "Authorization: bearer [token]"
+```
+
+> Response example
+
+```json
+{
+    "EVENT": {
+        "HEALTH_101": {
+            "TITLE": "Indication of too few daily drinking cycles ({{value | number:0}})",
+            "DESCRIPTION": "On {{event_ts | timestamp:'dddd, ll'}} the number of drinking cycles was {{value | number:0}}. <br \/>Please check provision of water and state of health (e.g. heat stress).",
+            "KEYWORD": "Insufficient water intake"
+        },
+        "HEALTH_102": {
+            "TITLE": "Indication of an increase in number of drinking cycles compared with the previous day by {{value | number: 0}}",
+            "DESCRIPTION": "On {{event_ts | timestamp:'dddd, ll'}} the animal drank {{value | number:0}} times more than the previous day. <br \/>Please check animal's state of health and possible heat stress.",
+            "KEYWORD": "Increase in drinking cycles"
+        }
+    }
+}
+```
+
+With this call translations for the animal events can be accessed for various languages. The translations contain for each event a `KEYWORD`, a `TITLE` and a `DESCRIPTION`.
+
+<aside class="notice">Current available languages: <b>de, en-au, en, es, fr, hr, hu, it, ko, lv, nl, pl, pt, ro, ru, sl, tr, uk, zh-cn</b></aside>
+
+**HTTP Request**
+
+`GET "[endpoint]/translations/[language]/events"`
+
+Key           | Descrition
+---           | ----------
+`KEYWORD`     | Keywords for the event translation.
+`TITLE`       | Short description.
+`DESCRIPTION` | Detailed information about the event.
+
+## Get single Event Translations
+
+> Request
+
+```python
+import requests
+
+endpoint = 'https://api-staging.smaxtec.com/integration/v2'
+language = 'en'
+event_type = 'health_102'
+route = endpoint + '/translations/' + language + '/events/' + event_type
+token = 'yx2zvuB8JD8ppwGti84OT8Muq5eiB2b2EZqsqC-HOXUvLSg'
+headers = {
+    'accept': 'application/json',
+    'Authorization': 'bearer ' + token
+}
+
+r = requests.get(route, headers=headers)
+
+status_code = r.status_code
+health_102_text = r.json()
+```
+
+```bash
+curl -X GET "[endpoint]/translations/[language]/events/[event_type]" \
+        -H  "accept: application/json" \
+        -H  "Authorization: bearer [token]"
+```
+
+> Response example
+
+```json
+{
+    "EVENT": {
+        "health_102": {
+            "DESCRIPTION": "On {{event_ts | timestamp:'dddd, ll'}} the animal drank {{value | number:0}} times more than the previous day. <br />Please check animal's state of health and possible heat stress.",
+            "KEYWORD": "Increase in drinking cycles",
+            "TITLE": "Indication of an increase in number of drinking cycles compared with the previous day by {{value | number: 0}}"
+        }
+    }
+}
+```
+
+It is also possible to access the translation for just a single event.
+
+**HTTP Request**
+
+`GET "[endpoint]/translations/[language]/events/[event_type]"`
