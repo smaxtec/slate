@@ -531,7 +531,8 @@
 
 <span class="n">endpoint</span> <span class="o">=</span> <span class="s">'https://api-staging.smaxtec.com/integration/v2'</span>
 <span class="n">organisation_id</span> <span class="o">=</span> <span class="s">'123456qwertz'</span>
-<span class="n">route</span> <span class="o">=</span> <span class="n">endpoint</span> <span class="o">+</span> <span class="s">'/organisations/'</span> <span class="o">+</span> <span class="n">organisation_id</span> <span class="o">+</span> <span class="s">'/animals'</span>
+<span class="n">optional_parameters</span> <span class="o">=</span> <span class="s">'?include_archived=false'</span>
+<span class="n">route</span> <span class="o">=</span> <span class="n">endpoint</span> <span class="o">+</span> <span class="s">'/organisations/'</span> <span class="o">+</span> <span class="n">organisation_id</span> <span class="o">+</span> <span class="s">'/animals'</span> <span class="o">+</span> <span class="n">optional_parameters</span>
 <span class="n">token</span> <span class="o">=</span> <span class="s">'yx2zvuB8JD8ppwGti84OT8Muq5eiB2b2EZqsqC-HOXUvLSg'</span>
 <span class="n">headers</span> <span class="o">=</span> <span class="p">{</span>
     <span class="s">'accept'</span><span class="p">:</span> <span class="s">'application/json'</span><span class="p">,</span>
@@ -590,6 +591,11 @@
 <td>organisation_id</td>
 <td>ID of the organisation where the animal belongs to.</td>
 <td><code>required</code></td>
+</tr>
+<tr>
+<td>include_archived</td>
+<td>Include archived animals.</td>
+<td>default: <code>false</code></td>
 </tr>
 </tbody></table>
 <h2 id='get-single-animal'>Get Single Animal</h2>
