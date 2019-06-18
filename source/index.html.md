@@ -215,7 +215,8 @@ import requests
 
 endpoint = 'https://api-staging.smaxtec.com/integration/v2'
 organisation_id = '123456qwertz'
-route = endpoint + '/organisations/' + organisation_id + '/animals'
+optional_parameters = '?include_archived=false'
+route = endpoint + '/organisations/' + organisation_id + '/animals' + optional_parameters
 token = 'yx2zvuB8JD8ppwGti84OT8Muq5eiB2b2EZqsqC-HOXUvLSg'
 headers = {
     'accept': 'application/json',
@@ -271,6 +272,7 @@ This endpoint retrieves from a provided `organisation_id` all animals.
 Parameter         | Description ||
 ---------         | ----------- | ---
 organisation_id   | ID of the organisation where the animal belongs to. | `required`
+include_archived  | Include archived animals. | default: `false`
 
 ## Get Single Animal
 
