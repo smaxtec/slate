@@ -28,6 +28,8 @@ The Integration API offer the following advantages:
 
 The *live* `[endpoint]` is `https://api.smaxtec.com/integration/v2` and the *staging* is `https://api-staging.smaxtec.com/integration/v2`.
 
+The *staging* endpoint can be used for **testing**.
+
 ## Parameters and Responses
 
 The parameters in the data of the PUT API calls and the response of the GET/PUT API calls are the same. This means that the output can be taken and provided to a PUT methode.
@@ -35,6 +37,8 @@ The parameters in the data of the PUT API calls and the response of the GET/PUT 
 ## User Registration
 
 The registration is done via the [smaXtec messenger](https://messenger.smaxtec.com).
+
+If the user is registered over the [smaXtec staging messenger](https://messenger-staging.smaxtec.com) no registration e-mail is sent. You need to contact us so we can activate your user.
 
 ## Common Tasks
 
@@ -50,17 +54,19 @@ For adding an animal to an organisation (`organisation_id`) at least the require
 
 For updating an animal the `organisation_id` and the `official_id` of the animal, which should be updated, need to be in the route. Write all changing parameters in the data and use the [animal PUT](#create-update-single-animal) methode. The response of the animal calls can be put in as data to the animal put call. Changes are detected and are applied.
 
-### Add insemination, pregnancy result, calving confirmation and abort
+### Add heat, insemination, pregnancy result, dry off, calving confirmation, abort and diagnosis
 
 These occurrences are stored as [events](#events) where insemination, pregnancy result, calving confirmation and abort are the event types. To add an event the event type (`event_type`) and the event time (`event_ts`) need to be provided to the [event PUT methode](#create-events). Regarding of the type additional information can be added which is listed in the parameter list.
 
 The cronical order of an animal life and how the events happen is the following:
 
-`-> insemination -> pregnancy_result -> calving_confirmation ->`
+`-> heat -> insemination -> pregnancy_result -> dry_off -> calving_confirmation ->`
 
 or
 
-`-> insemination -> pregnancy_result -> abort ->`
+`-> heat -> insemination -> pregnancy_result -> abort ->`
+
+A `diagnosis` can be made and added at any time in the life of the cow.
 
 ## Placeholder
 
@@ -74,6 +80,7 @@ Placeholder        | Description                                                
 [password]         | Password from the registered user                                                        | super_secret_password
 [organisation_id]  | smaXtec intern ID of the organisation. Can be [get](#get-all-organisations) over the API | 123456qwertz
 [official_id]      | The official id of the animal. This is in the most cases the eartag of the animal.       | AT111111112
+[device_id]        | The id of a device.                                                                      | 0600000001
 [integration_name] | The name of the integrating application.                                                 | HerdmanagerXYZ
 [language]         | Language of the wanted translated text.                                                  | en
 [event_type]       | [Event type](#get-all-events) of an animal event.                                        | HEALTH_102
@@ -203,6 +210,110 @@ organisation_id | ID of the organisation where the animal belongs to.
 permissions     | Permission the user has for this organisation.
 role            | Role the user has for this organisation.
 timezone        | Timezone of the organisation.
+
+## Create An Organisation
+
+> Request
+
+```python
+import requests
+
+endpoint = 'https://api-staging.smaxtec.com/integration/v2'
+route = endpoint + '/organisations'
+data = {
+    "name": "Farm XY",
+    "timezone": "Europe/Vienna",
+    "account": {
+        "name": "Farm XY",
+        "vat_number": "ATU99999999",
+        "address": {
+            "line1": "Farmer Joe",
+            "line2": "Streetname 25",
+            "line3": "Block 4",
+            "country_code": "AT",
+            "region": "Steiermark",
+            "city": "Graz",
+            "postal_code": "8020",
+            "address_type": "default"
+        }
+    }
+}
+token = 'yx2zvuB8JD8ppwGti84OT8Muq5eiB2b2EZqsqC-HOXUvLSg'
+headers = {
+    'accept': 'application/json',
+    'Authorization': 'bearer ' + token
+}
+
+r = requests.post(route, json=data, headers=headers)
+
+status_code = r.status_code
+organisation = r.json()
+```
+
+```bash
+curl -X POST "[endpoint]/integration/v2/organisations" \
+        -H   "accept: application/json" \
+        -H   "Authorization: bearer [token]" \
+        -H   "Content-Type: application/json" \
+        -d  "{\"account\": {\"name\": \"Farm XY\", \"vat_number\": \"ATU99999999\", \"address\": {\"line1\": \"Farmer Joe\", \"line2\": \"Streetname 25\", \"line3\": \"Block 4\", \"country_code\": \"AT\", \"region\": \"Steiermark\", \"city\": \"Graz\", \"postal_code\": \"8020\", \"address_type\": \"default\" } }, \"name\": \"Farm XY\", \"timezone\": \"Europe/Vienna\"}"
+```
+
+> Response example
+
+```json
+{
+    "account_id": "5dasdfasdfasdf1234567890",
+    "_id": "5dasdfasdfasdf1234567890",
+    "devices": [],
+    "timezone": "Europe/Vienna",
+    "name": "Farm XY",
+    "organisation_settings": {
+        "algorithms": {
+            "105_threshold": 0.5,
+            "105_sigmoid_threshold": 0.3,
+            "106_threshold": 0.75,
+            "104_svm_sensitivity": "normal",
+            "704_threshold": 50.0,
+            "703_threshold": 60.0,
+            "702_threshold": 50.0,
+            "101_threshold": 2.0,
+            "104_svm_threshold": 0.5,
+            "104_threshold": 0.75,
+            "estrus_algo": "HeatIndexStable50"
+        }
+    },
+    "metadata": {},
+    "features": [],
+    "animal_groups": [],
+    "created_by": "5aasdfasdfasdf1234567890"
+}
+```
+
+This endpoint creates an organisation and its billing address. The smaXtec intern organisation_id is returned as `_id`.
+
+**HTTP Request**
+
+`GET "[endpoint]/organisations/[organisation_id]/animals"`
+
+**URL Parameters**
+
+Parameter       | Description                                   ||
+---------       | -----------                                   | ---
+name            | Name of the farm                              | `required`
+timezone        | Timezone of the farm                          | `required`
+**account**||
+name            | Name of the account                           | `required`
+vat_number      | Value added tax identification number         |
+**address**||
+line1           | First line of the address                     | `required`
+line2           | Second line of the address                    | `required`
+line3           | Third line of the address                     |
+country_code    | Country code                                  | `required`
+region          | Region                                        |
+city            | City                                          |
+postal_code     | Postal code / ZIP                             |
+address_type    | Type of the adress. (`default` or `primary`)  |
+
 
 # Animals
 
@@ -858,6 +969,145 @@ icar_key                            | ICAR key for the diagnosis.
 diagnosis_key                       | If an own key for diagnosis is used, it should be set here.
 diagnosis_key_type                  | If an own key for diagnosis is used, a type of the diagnosis_key should be defined. eg.: `MY_OWN_KEY_DEFENITION_SYSTEM`
 
+
+# Devices
+
+Devices are all sensors which measure data and are not in the animal. In most cases this is the climate sensore.
+
+## Get All Devices
+
+> Request
+
+```python
+import requests
+
+endpoint = 'https://api-staging.smaxtec.com/integration/v2'
+organisation_id = '123456qwertz'
+route = endpoint + '/organisations/' + organisation_id + '/devices'
+token = 'yx2zvuB8JD8ppwGti84OT8Muq5eiB2b2EZqsqC-HOXUvLSg'
+headers = {
+    'accept': 'application/json',
+    'Authorization': 'bearer ' + token
+}
+
+r = requests.get(route, headers=headers)
+
+status_code = r.status_code
+all_devices = r.json()
+```
+
+```bash
+curl -X GET "[endpoint]/organisations/[organisation_id]/devices" \
+        -H  "accept: application/json" \
+        -H  "Authorization: bearer [token]"
+```
+
+> Response example
+
+```json
+[
+  "0600000001",
+  "0600000002"
+]
+```
+
+This call delivers all devices of the given organisation.
+
+**HTTP Request**
+
+`GET "[endpoint]/organisations/[organisation_id]/devices"`
+
+**URL Parameters**
+
+Parameter         | Description ||
+---------         | ----------- | ---
+organisation_id   | ID of the organisation where the animal belongs to. | `required`
+
+## Get Device Data
+
+> Request
+
+```python
+import requests
+
+endpoint = 'https://api-staging.smaxtec.com/integration/v2'
+organisation_id = '123456qwertz'
+device_id = '0600000001'
+route = endpoint + '/organisations/' + organisation_id + '/devices/' + device_id + '/data.json'
+
+token = 'yx2zvuB8JD8ppwGti84OT8Muq5eiB2b2EZqsqC-HOXUvLSg'
+headers = {
+    'accept': 'application/json',
+    'Authorization': 'bearer ' + token
+}
+
+data = {
+    "metrics": ["temp"],
+    "preferred_units": ["degree_celsius"],
+    "from_date": "2019-06-01T12:22:16",
+    "to_date": "2019-06-02T12:22:16",
+    "timestamp_format": "iso",
+    "aggregation_period": "hourly"
+}
+
+r = requests.get(route, data=data, headers=headers)
+
+status_code = r.status_code
+device_data = r.json()
+```
+
+```bash
+curl -X GET "[endpoint]/organisations/[organisation_id]/devices/[device_id]/data.json?to_date=2019-06-20T13%3A04%3A52&aggregation_period=hourly&metrics=temp&timestamp_format=iso&from_date=2019-04-20T13%3A04%3A52" \
+        -H  "accept: application/json" \
+        -H  "Authorization: bearer [token]"
+```
+
+> Response example
+
+```json
+[
+    {
+        "metric": "temp",
+        "unit": "degree_celsius",
+        "data": [
+            [
+                "2019-06-01T12:23:00+00:00",
+                20.77
+            ],
+            [
+                "2019-06-01T12:33:00+00:00",
+                21.34
+            ],
+            [
+                "2019-06-01T12:43:00+00:00",
+                21.66
+            ]
+        ]
+    }
+]
+```
+
+This endpoint retrives from a specific `organisation_id` and `device_id` the corresponding data. The response depends furthermore on the list of provided `metrics` and the period of time.
+
+**HTTP Request**
+
+`GET "[endpoint]/organisations/[organisation_id]/devices/[device_id]/data.json"`
+
+**URL Parameters**
+
+Parameter | Description ||
+--------- | ----------- | ---
+organisation_id     | ID of the organisation where the animal belongs to.   | `required`
+device_id           | The ID of the device.                                 | `required`
+||
+metrics             | The list of metrics which are wanted.                 | `required`
+from_date           | The start date from the period of data.               | `required`
+to_date             | The end date from the period of data.                 | `required`
+timestamp_format    | The format of the provided time stamps. (`iso`, `utc`, `local` or `tuple`)
+aggregation_period  | The period of data points. Either 10 minutes or 1 hour. (`10minutes` or `hourly`)
+preferred_units     | The units which are prefered. For example: `act`, `degree_celsius`, `degree_fahrenheit`.
+
+
 # Translations
 
 The translated text for events or specific events can be accessed over the integration API.
@@ -916,6 +1166,8 @@ With this call translations for the animal events can be accessed for various la
 **HTTP Request**
 
 `GET "[endpoint]/translations/[language]/events"`
+
+**Response**
 
 Key           | Descrition
 ---           | ----------
