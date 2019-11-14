@@ -1011,7 +1011,7 @@ curl -X GET "[endpoint]/organisations/[organisation_id]/devices" \
 ]
 ```
 
-This call delivers all devices of the given organisation.
+This call delivers all devices of the given organisation if the parameter 'all' is used, Otherwise this call returns just the climate sensors (06) for the given organisation.
 
 **HTTP Request**
 
@@ -1022,6 +1022,63 @@ This call delivers all devices of the given organisation.
 Parameter         | Description ||
 ---------         | ----------- | ---
 organisation_id   | ID of the organisation where the animal belongs to. | `required`
+
+
+## Get Device stats
+
+> Request
+
+```python
+import requests
+
+endpoint = 'https://api-staging.smaxtec.com/integration/v2'
+organisation_id = '123456qwertz'
+route = endpoint + '/organisations/' + organisation_id + '/devices'
+token = 'yx2zvuB8JD8ppwGti84OT8Muq5eiB2b2EZqsqC-HOXUvLSg'
+headers = {
+    'accept': 'application/json',
+    'Authorization': 'bearer ' + token
+}
+
+r = requests.get(route, headers=headers)
+
+status_code = r.status_code
+all_devices = r.json()
+```
+
+```bash
+curl -X GET "[endpoint]/organisations/[organisation_id]/devices[device_id]" \
+        -H  "accept: application/json" \
+        -H  "Authorization: bearer [token]"
+```
+
+> Response example
+
+```json
+[
+  "organisation_id": "569e0bcea80a5f1c07b5430f",
+  "_id": "0700007154",
+  "last_readout": [
+    "timestamp": 1564517249,
+    "readout_id": "0200000041",
+    "basestation_id": "0200000041"
+  ]
+]
+```
+
+This call delivers data about the last readout.
+
+**HTTP Request**
+
+`GET "[endpoint]/organisations/[organisation_id]/devices/[device_id]"`
+
+**URL Parameters**
+
+Parameter         | Description ||
+---------         | ----------- | ---
+organisation_id   | ID of the organisation where the animal belongs to. | `required`
+device_id         | ID of the device | `required`
+
 
 ## Get Device Data
 
