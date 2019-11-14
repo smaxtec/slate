@@ -972,7 +972,7 @@ diagnosis_key_type                  | If an own key for diagnosis is used, a typ
 
 # Devices
 
-Devices are all sensors which measure data and are not in the animal. In most cases this is the climate sensore.
+Devices are all sensors which measure data.
 
 ## Get All Devices
 
@@ -1008,7 +1008,9 @@ curl -X GET "[endpoint]/organisations/[organisation_id]/devices" \
 ```json
 [
   "0600000001",
-  "0600000002"
+  "0600000002",
+  "0200000001",
+  "0700000001"
 ]
 ```
 
@@ -1023,6 +1025,7 @@ This call delivers all devices of the given organisation if the parameter 'all' 
 Parameter         | Description ||
 ---------         | ----------- | ---
 organisation_id   | ID of the organisation where the animal belongs to. | `required`
+device_type   | at the moment 'all' represents all devices.
 
 
 ## Get Device stats
@@ -1061,7 +1064,7 @@ curl -X GET "[endpoint]/organisations/[organisation_id]/devices[device_id]" \
   "organisation_id": "569e0bcea80a5f1c07b5430f",
   "_id": "0700007154",
   "last_readout": [
-    "timestamp": 1564517249,
+    "timestamp": "2019-11-14T12:22:16",
     "readout_id": "0200000041",
     "basestation_id": "0200000041"
   ]
