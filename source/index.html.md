@@ -984,13 +984,14 @@ import requests
 endpoint = 'https://api-staging.smaxtec.com/integration/v2'
 organisation_id = '123456qwertz'
 route = endpoint + '/organisations/' + organisation_id + '/devices'
+data = 'all'
 token = 'yx2zvuB8JD8ppwGti84OT8Muq5eiB2b2EZqsqC-HOXUvLSg'
 headers = {
     'accept': 'application/json',
     'Authorization': 'bearer ' + token
 }
 
-r = requests.get(route, headers=headers)
+r = requests.put(route, json=data, headers=headers)
 
 status_code = r.status_code
 all_devices = r.json()
@@ -1033,7 +1034,8 @@ import requests
 
 endpoint = 'https://api-staging.smaxtec.com/integration/v2'
 organisation_id = '123456qwertz'
-route = endpoint + '/organisations/' + organisation_id + '/devices'
+device_id = '0200000001'
+route = endpoint + '/organisations/' + organisation_id + '/devices/' + device_id
 token = 'yx2zvuB8JD8ppwGti84OT8Muq5eiB2b2EZqsqC-HOXUvLSg'
 headers = {
     'accept': 'application/json',
