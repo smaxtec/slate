@@ -1030,7 +1030,7 @@ organisation_id   | ID of the organisation where the animal belongs to. | `requi
 device_type   | 'all' represents all devices.
 
 
-## Get Device stats
+## Get Device Stats
 
 > Request
 
