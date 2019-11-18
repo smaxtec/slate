@@ -972,7 +972,7 @@ diagnosis_key_type                  | If an own key for diagnosis is used, a typ
 
 # Devices
 
-Devices are all sensors which measure data and are not in the animal. In most cases this is the climate sensore.
+Devices are all sensors which measure data.
 
 ## Get All Devices
 
@@ -984,20 +984,23 @@ import requests
 endpoint = 'https://api-staging.smaxtec.com/integration/v2'
 organisation_id = '123456qwertz'
 route = endpoint + '/organisations/' + organisation_id + '/devices'
+data = {
+    'device_type': 'all'
+}
 token = 'yx2zvuB8JD8ppwGti84OT8Muq5eiB2b2EZqsqC-HOXUvLSg'
 headers = {
     'accept': 'application/json',
     'Authorization': 'bearer ' + token
 }
 
-r = requests.get(route, headers=headers)
+r = requests.get(route, json=data, headers=headers)
 
 status_code = r.status_code
 all_devices = r.json()
 ```
 
 ```bash
-curl -X GET "[endpoint]/organisations/[organisation_id]/devices" \
+curl -X GET "[endpoint]/organisations/[organisation_id]/devices?device_type=all" \
         -H  "accept: application/json" \
         -H  "Authorization: bearer [token]"
 ```
@@ -1007,11 +1010,13 @@ curl -X GET "[endpoint]/organisations/[organisation_id]/devices" \
 ```json
 [
   "0600000001",
-  "0600000002"
+  "0600000002",
+  "0200000001",
+  "0700000001"
 ]
 ```
 
-This call delivers all devices of the given organisation.
+This call delivers all devices of the given organisation if the parameter 'all' is used, Otherwise this call returns just the climate sensors (06) for the given organisation.
 
 **HTTP Request**
 
@@ -1022,6 +1027,65 @@ This call delivers all devices of the given organisation.
 Parameter         | Description ||
 ---------         | ----------- | ---
 organisation_id   | ID of the organisation where the animal belongs to. | `required`
+device_type   | 'all' represents all devices.
+
+
+## Get Device Stats
+
+> Request
+
+```python
+import requests
+
+endpoint = 'https://api-staging.smaxtec.com/integration/v2'
+organisation_id = '123456qwertz'
+device_id = '0200000001'
+route = endpoint + '/organisations/' + organisation_id + '/devices/' + device_id
+token = 'yx2zvuB8JD8ppwGti84OT8Muq5eiB2b2EZqsqC-HOXUvLSg'
+headers = {
+    'accept': 'application/json',
+    'Authorization': 'bearer ' + token
+}
+
+r = requests.get(route, headers=headers)
+
+status_code = r.status_code
+device = r.json()
+```
+
+```bash
+curl -X GET "[endpoint]/organisations/[organisation_id]/devices/[device_id]" \
+        -H  "accept: application/json" \
+        -H  "Authorization: bearer [token]"
+```
+
+> Response example
+
+```json
+{
+  "organisation_id": "569e0bcea80a5f1c07b5430f",
+  "_id": "0700007154",
+  "last_readout": {
+    "timestamp": "2019-11-14T12:22:16",
+    "readout_id": "0200000041",
+    "basestation_id": "0200000041"
+  }
+}
+```
+
+This call delivers data about the last readout.
+
+**HTTP Request**
+
+`GET "[endpoint]/organisations/[organisation_id]/devices/[device_id]"`
+
+**URL Parameters**
+
+Parameter         | Description ||
+---------         | ----------- | ---
+organisation_id   | ID of the organisation where the animal belongs to. | `required`
+device_id         | ID of the device | `required`
+
 
 ## Get Device Data
 
