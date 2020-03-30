@@ -140,71 +140,6 @@ For example:
 
 # Organisations
 
-## Create Organisation
-
-> Request
-
-```python
-import requests
-
-address = {"line1": "my street 1", "line2": "8010 Graz", "country_code": "AT"}
-acc = {"name": "my-account", "vat_number": "1234", "address": address}
-organisation_name = "my-organisation-name"
-timezone = "Europe/Vienna"
-orga = {"name": organisation_name,
-        "timezone": timezone, "account": acc}
-endpoint = 'https://api-staging.smaxtec.com/integration/v2'
-route = endpoint + '/organisations'
-token = 'yx2zvuB8JD8ppwGti84OT8Muq5eiB2b2EZqsqC-HOXUvLSg'
-headers = {
-    'accept': 'application/json',
-    'Authorization': 'bearer ' + token
-}
-
-r = requests.post(route, headers=headers, json=orga)
-
-status_code = r.status_code
-organisation = r.json()
-```
-
-```bash
-curl -X POST "[endpoint]/organisations?name=[organisation_name]&timezone=[timezone]&account=[acc]" \
-        -H  "accept: application/json"
-```
-
-> Response example
-
-```json
-{
-    "timezone": "Europe/Vienna",
-    "devices": [],
-    "_id": "123456qwertz",
-    "metadata": {},
-    "name": "my-organisation-name",
-    "features": [],
-    "created_by": "5cbef360cee96ca398082975",
-    "animal_groups": [],
-    "organisation_settings": {},
-    "account_id": "5cbef36323e10a81ab0cffe5"
-}
-```
-
-This endpoint creates an organisation and, if no already created, an account for the user. If the account already exists, the organisation will be created with the same (already existing) account.
-
-**HTTP Request**
-
-`POST "[endpoint]/organisations?name=[organisation_name]&timezone=[timezone]&account=[acc]"`
-
-**URL Parameters**
-
-Parameter         | Description ||
----------         | ----------- | ---
-name   | The name of the new organisation. | `required`
-timezone   | The timezone of the new organisation. | `required`
-account   | The account to which the new organisation belongs to. | `required`
-
-
-
 ## Get All Organisations
 
 > Request
@@ -358,7 +293,7 @@ This endpoint creates an organisation and its billing address. The smaXtec inter
 
 **HTTP Request**
 
-`GET "[endpoint]/organisations/[organisation_id]/animals"`
+`GET "[endpoint]/organisations"`
 
 **URL Parameters**
 
@@ -796,169 +731,6 @@ from_date | The start date from the period where data is wanted. | `required`
 to_date | The end date from the period where data is wanted. | `required`
 aggregation_period | The period of data points. Either 10 minutes or 1 hour.
 preferred_units | The units which are prefered. For example: "act", "degree_celsius", "degree_fahrenheit".
-
-
-# Devices
-
-## Get All Climate Sensors
-
-
-> Request
-
-```python
-import requests
-
-endpoint = 'https://api-staging.smaxtec.com/integration/v2'
-organisation_id = '123456qwertz'
-route = endpoint + '/organisations/' + organisation_id + '/devices'
-token = 'yx2zvuB8JD8ppwGti84OT8Muq5eiB2b2EZqsqC-HOXUvLSg'
-headers = {
-    'accept': 'application/json',
-    'Authorization': 'bearer ' + token
-}
-
-r = requests.get(route, headers=headers)
-
-status_code = r.status_code
-all_climate_sensors = r.json()
-```
-
-```bash
-curl -X GET "[endpoint]/organisations/[organisation_id]/devices" \
-        -H  "accept: application/json" \
-        -H  "Authorization: bearer [token]"
-```
-
-> Response example
-
-```json
-[
-  "0600000001",
-  "0600000002"
-]
-```
-
-This endpoint retrieves from a provided `organisation_id` all climate sensors.
-
-**HTTP Request**
-
-`GET "[endpoint]/organisations/[organisation_id]/devices"`
-
-**URL Parameters**
-
-Parameter | Description ||
---------- | ----------- | ---
-organisation_id | ID of the organisation where the climate sensors belong to. | `required`
-
-## Get Device Data
-
-> Request
-
-```python
-
-import requests
-
-endpoint = 'https://api-staging.smaxtec.com/integration/v2'
-organisation_id = '123456qwertz'
-device_id = '0600000001'
-route = endpoint + '/organisations/' + organisation_id + '/devices/' + device_id + '/data.json'
-
-token = 'yx2zvuB8JD8ppwGti84OT8Muq5eiB2b2EZqsqC-HOXUvLSg'
-headers = {
-    'accept': 'application/json',
-    'Authorization': 'bearer ' + token
-}
-
-data = {
-    "metrics": ["temp", "hum"],
-    "from_date": "2019-04-20T00:00:00+00:00",
-    "to_date": "2019-04-20T02:00:00+00:00"
-}
-
-r = requests.get(route, data=data, headers=headers)
-
-status_code = r.status_code
-climate_sensor_data = r.json()
-
-```
-
-```bash
-curl -X GET "[endpoint]/organisations/[organisation_id]/devices/[device_id]/data.json" \
-        -H  "accept: application/json" \
-        -H  "Authorization: bearer [token]" \
-        -H  "Content-Type: application/json" \
-        -d "{  \"metrics\": [\"temp\", \"act\"],  \"from_date\": \"2019-04-20T00:00:00+00:00\",  \"to_date\": \"2019-04-20T02:00:00+00:00\"}"
-```
-
-> Response example
-
-```json
-[
-  {
-    "metric": "temp",
-    "data": [
-      [
-        "2019-04-20T00:08:00+00:00",
-        13.12
-      ],
-      [
-        "2019-04-20T00:18:00+00:00",
-        13.57
-      ],
-      [
-        "2019-04-20T00:28:00+00:00",
-        13.17
-      ],
-      [
-        "2019-04-20T00:38:00+00:00",
-        13.21
-      ]
-    ],
-    "unit": "degree_celsius"
-  },
-  {
-    "metric": "hum",
-    "data": [
-      [
-        "2019-04-20T00:08:00+00:00",
-        87.1
-      ],
-      [
-        "2019-04-20T00:18:00+00:00",
-        83.6
-      ],
-      [
-        "2019-04-20T00:28:00+00:00",
-        84.9
-      ],
-      [
-        "2019-04-20T00:38:00+00:00",
-        85
-      ]
-    ],
-    "unit": "percent"
-  }
-]
-```
-This endpoint retrieves from a provided `organisation_id` and `device_id` data from its sensor. The response depends on the provided list of `metrics` and the period.
-
-**HTTP Request**
-
-`GET "[endpoint]/organisations/[organisation_id]/devices/[device_id]/data.json"`
-
-**URL Parameters**
-
-Parameter | Description ||
---------- | ----------- | ---
-organisation_id | ID of the organisation where the animal belongs to. | `required`
-device_id | The id of the climate sensor. | `required`
-||
-metrics | The list of metrics where data is wanted. | `required`
-from_date | The start date from the period where data is wanted. | `required`
-to_date | The end date from the period where data is wanted. | `required`
-aggregation_period | The period of data points. Either 10 minutes or 1 hour.
-preferred_units | The units which are prefered. For example: "act", "degree_celsius", "degree_fahrenheit".
-
 
 # Events
 
@@ -1437,7 +1209,7 @@ headers = {
 }
 
 data = {
-    "metrics": ["temp"],
+    "metrics": ["temp", "hum"],
     "preferred_units": ["degree_celsius"],
     "from_date": "2019-06-01T12:22:16",
     "to_date": "2019-06-02T12:22:16",
@@ -1476,6 +1248,24 @@ curl -X GET "[endpoint]/organisations/[organisation_id]/devices/[device_id]/data
             [
                 "2019-06-01T12:43:00+00:00",
                 21.66
+            ]
+        ]
+    },
+    {
+        "metric": "hum",
+        "unit": "percent",
+        "data": [
+            [
+                "2019-06-01T12:23:00+00:00",
+                87.1
+            ],
+            [
+                "2019-06-01T12:33:00+00:00",
+                83.6
+            ],
+            [
+                "2019-06-01T12:43:00+00:00",
+                84.9
             ]
         ]
     }
