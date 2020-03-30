@@ -140,6 +140,71 @@ For example:
 
 # Organisations
 
+## Create Organisation
+
+> Request
+
+```python
+import requests
+
+address = {"line1": "my street 1", "line2": "8010 Graz", "country_code": "AT"}
+acc = {"name": "my-account", "vat_number": "1234", "address": address}
+organisation_name = "my-organisation-name"
+timezone = "Europe/Vienna"
+orga = {"name": organisation_name,
+        "timezone": timezone, "account": acc}
+endpoint = 'https://api-staging.smaxtec.com/integration/v2'
+route = endpoint + '/organisations'
+token = 'yx2zvuB8JD8ppwGti84OT8Muq5eiB2b2EZqsqC-HOXUvLSg'
+headers = {
+    'accept': 'application/json',
+    'Authorization': 'bearer ' + token
+}
+
+r = requests.post(route, headers=headers, json=orga)
+
+status_code = r.status_code
+organisation = r.json()
+```
+
+```bash
+curl -X POST "[endpoint]/organisations?name=[organisation_name]&timezone=[timezone]&account=[acc]" \
+        -H  "accept: application/json"
+```
+
+> Response example
+
+```json
+{
+    "timezone": "Europe/Vienna",
+    "devices": [],
+    "_id": "123456qwertz",
+    "metadata": {},
+    "name": "my-organisation-name",
+    "features": [],
+    "created_by": "5cbef360cee96ca398082975",
+    "animal_groups": [],
+    "organisation_settings": {},
+    "account_id": "5cbef36323e10a81ab0cffe5"
+}
+```
+
+This endpoint creates an organisation and, if no already created, an account for the user. If the account already exists, the organisation will be created with the same (already existing) account.
+
+**HTTP Request**
+
+`POST "[endpoint]/organisations?name=[organisation_name]&timezone=[timezone]&account=[acc]"`
+
+**URL Parameters**
+
+Parameter         | Description ||
+---------         | ----------- | ---
+name   | The name of the new organisation. | `required`
+timezone   | The timezone of the new organisation. | `required`
+account   | The account to which the new organisation belongs to. | `required`
+
+
+
 ## Get All Organisations
 
 > Request
