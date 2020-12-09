@@ -958,6 +958,11 @@ health_102           | Increase in drinking cycles
 health_103           | Reduced drinking cycles
 health_104           | Temperature increase
 health_106           | Temperature drop
+health_301           | Rumination decrease and cow is dry
+health_302           | Rumination decrease and cow is close up
+health_303           | Rumination decrease and cow is around calving
+health_304           | Rumination decrease and cow is a fresh cow
+health_305           | Rumination decrease and cow is lactating
 health_601           | THI ≥ 72 Heat stress
 health_602           | THI ≥ 78 Heat stress
 health_603           | THI ≥ 82 Heat stress
