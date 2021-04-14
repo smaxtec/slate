@@ -633,19 +633,19 @@ official_id | The official id of the animal. This is in the most cases the earta
 
 Metric | Visible in messenger | Short description |
 --------- | ----------- | --------- |
-act_index | ✓ `default` | none
-temp | ✓ `default` | none
-temp_normal_index | ✓ `default` | none
-heat_index | ✓ `optional` | none
-ph | ✓ `premium only` | none
-rum_index | ✓ `SX.2 only` | none
-act |  ✕ | none
-act_heat_index_smart | ✕| none
-drink_cycles_v2 | ✕ | none
-temp_dec_index | ✕ | none
-temp_height_index | ✕ | none
-temp_inc_index | ✕ | none
-temp_without_drink_cycles | ✕ | none
+act_index | ✓ `default` | Smoothed version of act (rolling mean)
+temp | ✓ `default` | Temperature
+temp_normal_index | ✓ `default` | Normal temperature of the animal calculated by 70% of `temp_without_drink_cycles` in the last 5d.
+heat_index | ✓ `optional` | Used for thresholding for the heat events
+ph | ✓ `premium only` | Show the ph value
+rum_index | ✓ `SX.2 only` | The sums up boolean indicators whether that cow has possibly ruminated at a given time or not
+act |  ✕ | Activity
+act_heat_index_smart | ✕| Smoothes of the current selected heat algorithm
+drink_cycles_v2 | ✕ | Detect a spike in the temperature that is considered as a drinking phase
+temp_dec_index | ✕ | A simple outlier detection based on the difference between two moving avarager filters od different lengths
+temp_height_index | ✕ | The difference between `temp_normal_index` and `temp_without_drink_cycles`
+temp_inc_index | ✕ | Not available anymore
+temp_without_drink_cycles | ✕ | Fast decreases in the temperature signal (drink spikes)
 
 
 
