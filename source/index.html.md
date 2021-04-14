@@ -21,7 +21,7 @@ Welcome to the smaXtec Integration API! 🐮 You can use our API to access inter
 
 The Integration API offer the following advantages:
 
-- The animals are identified with the eratag/EID and not the smaXtec internal IDs.
+- The animals are identified with the eartag/EID and not the smaXtec internal IDs.
 - External partners do not need to choose to update or create. They can simply send the current state of all objects and smaXtec will do the synchronisation.
 
 ## Endpoints
@@ -111,7 +111,7 @@ authentication = r.json()
 ```
 
 ```bash
-curl -X POST "[endpoint]/users/session_token?email=[email]&password=[password]&integration_name=[integration_name]" \
+curl -X POST "[endpoint]/users/session_token?user=[email]&password=[password]" \
         -H  "accept: application/json"
 ```
 
@@ -136,7 +136,7 @@ For example:
 
 **HTTP Request**
 
-`POST "[endpoint]/users/session_token?email=[email]&password=[password]&integration_name=[integration_name]"`
+`POST "[endpoint]/users/session_token?user=[email]&password=[password]"`
 
 # Organisations
 
@@ -628,6 +628,25 @@ Parameter | Description ||
 --------- | ----------- | ---
 organisation_id | ID of the organisation where the animal belongs to. | `required`
 official_id | The official id of the animal. This is in the most cases the eartag of the animal. | `required`
+
+**Available Metrics**
+
+Metric | Visible in messenger | Short description |
+--------- | ----------- | --------- |
+act_index | ✓ `default` | none
+temp | ✓ `default` | none
+temp_normal_index | ✓ `default` | none
+heat_index | ✓ `optional` | none
+ph | ✓ `premium only` | none
+rum_index | ✓ `SX.2 only` | none
+act |  ✕ | none
+act_heat_index_smart | ✕| none
+drink_cycles_v2 | ✕ | none
+temp_dec_index | ✕ | none
+temp_height_index | ✕ | none
+temp_inc_index | ✕ | none
+temp_without_drink_cycles | ✕ | none
+
 
 
 ## Get Animal Data
@@ -1180,8 +1199,10 @@ curl -X GET "[endpoint]/organisations/[organisation_id]/devices/[device_id]" \
   }
 }
 ```
-
 This call delivers data about the last readout.
+<aside class="warning">
+    To get the last readout you must use live smaXtec system!
+</aside>
 
 **HTTP Request**
 
