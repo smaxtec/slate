@@ -21,7 +21,7 @@ Welcome to the smaXtec Integration API! 🐮 You can use our API to access inter
 
 The Integration API offer the following advantages:
 
-- The animals are identified with the eratag/EID and not the smaXtec internal IDs.
+- The animals are identified with the eartag/EID and not the smaXtec internal IDs.
 - External partners do not need to choose to update or create. They can simply send the current state of all objects and smaXtec will do the synchronisation.
 
 ## Endpoints
@@ -67,7 +67,10 @@ or
 `-> heat -> insemination -> pregnancy_result -> abort ->`
 
 A `diagnosis` can be made and added at any time in the life of the cow.
+## User-Agent
 
+The *user-agent* should be used so that we know which client is requesting or sending data to us.
+It should contain the name of your software and the version. e.g.: 'HerdManagerSoftwareXYZ/2.4'
 ## Placeholder
 
 Several placeholders are used in this document.
@@ -81,7 +84,7 @@ Placeholder        | Description                                                
 [organisation_id]  | smaXtec intern ID of the organisation. Can be [get](#get-all-organisations) over the API | 123456qwertz
 [official_id]      | The official id of the animal. This is in the most cases the eartag of the animal.       | AT111111112
 [device_id]        | The id of a device.                                                                      | 0600000001
-[integration_name] | The name of the integrating application.                                                 | HerdmanagerXYZ
+[user_agent] | User - Agent                                               | HerdManagerSoftwareXYZ/2.4
 [language]         | Language of the wanted translated text.                                                  | en
 [event_type]       | [Event type](#get-all-events) of an animal event.                                        | HEALTH_102
 
@@ -97,7 +100,9 @@ password='super_secret_password'
 integration_name='my-integration-app-name'
 endpoint = 'https://api-staging.smaxtec.com/integration/v2'
 route = endpoint + '/users/session_token'
-headers = {'accept': 'application/json'}
+user_agent = 'HerdManagerSoftwareXYZ/2.4'
+headers = {'accept': 'application/json',
+           'User-Agent': user_agent}
 data = {
    "user": email,
    "password": password,
@@ -111,8 +116,9 @@ authentication = r.json()
 ```
 
 ```bash
-curl -X POST "[endpoint]/users/session_token?email=[email]&password=[password]&integration_name=[integration_name]" \
-        -H  "accept: application/json"
+curl -X POST "[endpoint]/users/session_token?user=[email]&password=[password]" \
+        -H  "accept: application/json" \
+        -H  "User-Agent: [user_agent]"
 ```
 
 > Response example
@@ -136,7 +142,7 @@ For example:
 
 **HTTP Request**
 
-`POST "[endpoint]/users/session_token?email=[email]&password=[password]&integration_name=[integration_name]"`
+`POST "[endpoint]/users/session_token?user=[email]&password=[password]"`
 
 # Organisations
 
@@ -150,8 +156,10 @@ import requests
 endpoint = 'https://api-staging.smaxtec.com/integration/v2'
 route = endpoint + '/organisations'
 token = 'yx2zvuB8JD8ppwGti84OT8Muq5eiB2b2EZqsqC-HOXUvLSg'
+user_agent = 'HerdManagerSoftwareXYZ/2.4'
 headers = {
     'accept': 'application/json',
+    'User-Agent': user_agent,
     'Authorization': 'bearer ' + token
 }
 
@@ -164,7 +172,8 @@ all_user_organisations = r.json()
 ```bash
 curl -X GET "[endpoint]/organisations" \
         -H  "accept: application/json" \
-        -H  "Authorization: bearer [token]"
+        -H  "Authorization: bearer [token]" \
+        -H  "User-Agent: [user_agent]"
 ```
 
 > Response example
@@ -239,8 +248,10 @@ data = {
     }
 }
 token = 'yx2zvuB8JD8ppwGti84OT8Muq5eiB2b2EZqsqC-HOXUvLSg'
+user_agent = 'HerdManagerSoftwareXYZ/2.4'
 headers = {
     'accept': 'application/json',
+    'User-Agent': user_agent,
     'Authorization': 'bearer ' + token
 }
 
@@ -255,6 +266,7 @@ curl -X POST "[endpoint]/integration/v2/organisations" \
         -H   "accept: application/json" \
         -H   "Authorization: bearer [token]" \
         -H   "Content-Type: application/json" \
+        -H  "User-Agent: [user_agent]" \
         -d  "{\"account\": {\"name\": \"Farm XY\", \"vat_number\": \"ATU99999999\", \"address\": {\"line1\": \"Farmer Joe\", \"line2\": \"Streetname 25\", \"line3\": \"Block 4\", \"country_code\": \"AT\", \"region\": \"Steiermark\", \"city\": \"Graz\", \"postal_code\": \"8020\", \"address_type\": \"default\" } }, \"name\": \"Farm XY\", \"timezone\": \"Europe/Vienna\"}"
 ```
 
@@ -329,9 +341,12 @@ organisation_id = '123456qwertz'
 optional_parameters = '?include_archived=false'
 route = endpoint + '/organisations/' + organisation_id + '/animals' + optional_parameters
 token = 'yx2zvuB8JD8ppwGti84OT8Muq5eiB2b2EZqsqC-HOXUvLSg'
+user_agent = 'HerdManagerSoftwareXYZ/2.4'
 headers = {
     'accept': 'application/json',
+    'User-Agent': user_agent,
     'Authorization': 'bearer ' + token
+  
 }
 
 r = requests.get(route, headers=headers)
@@ -343,7 +358,8 @@ all_animals = r.json()
 ```bash
 curl -X GET "[endpoint]/organisations/[organisation_id]/animals" \
         -H  "accept: application/json" \
-        -H  "Authorization: bearer [token]"
+        -H  "Authorization: bearer [token]" \
+        -H  "User-Agent: [user_agent]"
 ```
 
 > Response example
@@ -388,7 +404,7 @@ include_archived  | Include archived animals. | default: `false`
 ## Get Single Animal
 
 > Request
-
+  
 ```python
 import requests
 
@@ -397,8 +413,10 @@ organisation_id = '123456qwertz'
 official_id = 'AT111111112'
 route = endpoint + '/organisations/' + organisation_id + '/animals/' + official_id
 token = 'yx2zvuB8JD8ppwGti84OT8Muq5eiB2b2EZqsqC-HOXUvLSg'
+user_agent = 'HerdManagerSoftwareXYZ/2.4'
 headers = {
     'accept': 'application/json',
+    'User-Agent': user_agent,
     'Authorization': 'bearer ' + token
 }
 
@@ -411,7 +429,8 @@ animal = r.json()
 ```bash
 curl -X GET "[endpoint]/organisations/[organisation_id]/animals/[official_id]" \
         -H  "accept: application/json" \
-        -H  "Authorization: bearer [token]"
+        -H  "Authorization: bearer [token]" \
+        -H  "User-Agent: [user_agent]"
 ```
 
 > Response example
@@ -481,8 +500,10 @@ data = {
     "organisation_id": "123456qwertz"
 }
 token = 'yx2zvuB8JD8ppwGti84OT8Muq5eiB2b2EZqsqC-HOXUvLSg'
+user_agent = 'HerdManagerSoftwareXYZ/2.4'
 headers = {
     'accept': 'application/json',
+    'User-Agent': user_agent,
     'Authorization': 'bearer ' + token
 }
 
@@ -497,6 +518,7 @@ curl -X PUT "[endpoint]/organisations/[organisation_id]/animals/[official_id]" \
         -H  "accept: application/json" \
         -H  "Authorization: bearer [token]" \
         -H  "Content-Type: application/json" \
+        -H  "User-Agent: [user_agent]"\
         -d "{  \"name\": \"Strolcha\",  \"group_id\": \"57920fca506d993asdfgh123\",  \"birthday\": \"2019-01-10T13:04:52+00:00\",  \"race\": \"mixed\",  \"location\": \"stall\",  \"_id\": \"5c480ab3314724e123456789\",  \"official_id_rule\": \"AT\",  \"display_name\": \"AT111111112 - susi\",  \"archived\": false,  \"created_at\": \"2019-01-23T06:33:24+00:00\",  \"official_id\": \"AT111111112\",  \"lactation_status\": \"Young_Cow\",  \"current_device_id\": \"0700000001\",  \"mark\": \"AT111111112\",  \"tags\": [\"sold\"],  \"mixed_race\": [{\"race\": \"ANGLER\", \"percent\": 22}, {\"race\": \"FLECKVIEW\", \"percent\": 78}],,  \"organisation_id\": \"123456qwertz\"}"
 ```
 
@@ -570,8 +592,10 @@ official_id = 'AT111111112'
 route = endpoint + '/organisations/' + organisation_id + '/animals/' + official_id + '/metrics'
 
 token = 'yx2zvuB8JD8ppwGti84OT8Muq5eiB2b2EZqsqC-HOXUvLSg'
+user_agent = 'HerdManagerSoftwareXYZ/2.4'
 headers = {
     'accept': 'application/json',
+    'User-Agent': user_agent,
     'Authorization': 'bearer ' + token
 }
 
@@ -586,7 +610,8 @@ animal = r.json()
 curl -X GET "[endpoint]/organisations/[organisation_id]/animals/[official_id]/metrics" \
         -H  "accept: application/json" \
         -H  "Authorization: bearer [token]" \
-        -H  "Content-Type: application/json"
+        -H  "Content-Type: application/json" \
+        -H  "User-Agent: [user_agent]"
 ```
 
 
@@ -629,6 +654,25 @@ Parameter | Description ||
 organisation_id | ID of the organisation where the animal belongs to. | `required`
 official_id | The official id of the animal. This is in the most cases the eartag of the animal. | `required`
 
+**Available Metrics**
+
+Metric | Visible in messenger | Short description |
+--------- | ----------- | --------- |
+act_index | ✓ `default` | Smoothed version of act (rolling mean)
+temp | ✓ `default` | Temperature
+temp_normal_index | ✓ `default` | Normal temperature of the animal calculated by 70% of `temp_without_drink_cycles` in the last 5d.
+heat_index | ✓ `optional` | Used for thresholding for the heat events
+ph | ✓ `premium only` | Show the ph value
+rum_index | ✓ `SX.2 only` | The sums up boolean indicators whether that cow has possibly ruminated at a given time or not
+act |  ✕ | Activity
+act_heat_index_smart | ✕| Smoothes of the current selected heat algorithm
+drink_cycles_v2 | ✕ | Detect a spike in the temperature that is considered as a drinking phase
+temp_dec_index | ✕ | A simple outlier detection based on the difference between two moving avarager filters od different lengths
+temp_height_index | ✕ | The difference between `temp_normal_index` and `temp_without_drink_cycles`
+temp_inc_index | ✕ | Not available anymore
+temp_without_drink_cycles | ✕ | Fast decreases in the temperature signal (drink spikes)
+
+
 
 ## Get Animal Data
 
@@ -644,8 +688,10 @@ official_id = 'AT111111112'
 route = endpoint + '/organisations/' + organisation_id + '/animals/' + official_id + '/data.json'
 
 token = 'yx2zvuB8JD8ppwGti84OT8Muq5eiB2b2EZqsqC-HOXUvLSg'
+user_agent = 'HerdManagerSoftwareXYZ/2.4'
 headers = {
     'accept': 'application/json',
+    'User-Agent': user_agent,
     'Authorization': 'bearer ' + token
 }
 
@@ -667,6 +713,7 @@ curl -X GET "[endpoint]/organisations/[organisation_id]/animals/[official_id]/da
         -H  "accept: application/json" \
         -H  "Authorization: bearer [token]" \
         -H  "Content-Type: application/json" \
+        -H  "User-Agent: [user_agent]" \
         -d "{  \"metrics\": [\"temp\", \"act\"],  \"from_date\": \"2019-02-01T08:21:33+0000\",  \"to_date\": \"2019-02-01T12:22:16+0000\"}"
 ```
 
@@ -748,8 +795,10 @@ organisation_id = '123456qwertz'
 official_id = 'AT111111112'
 route = endpoint + '/organisations/' + organisation_id + '/events'
 token = 'yx2zvuB8JD8ppwGti84OT8Muq5eiB2b2EZqsqC-HOXUvLSg'
+user_agent = 'HerdManagerSoftwareXYZ/2.4'
 headers = {
     'accept': 'application/json',
+    'User-Agent': user_agent,
     'Authorization': 'bearer ' + token
 }
 
@@ -767,7 +816,8 @@ all_animal_events = r.json()
 ```bash
 curl -X GET "[endpoint]/organisations/[organisation_id]/events?min_create_ts=2019-07-30T13%3A04%3A52&min_event_ts=2019-07-21T13%3A04%3A52" \
         -H  "accept: application/json" \
-        -H  "Authorization: bearer [token]"
+        -H  "Authorization: bearer [token]" \
+        -H  "User-Agent: [user_agent]"
 ```
 
 > Response example
@@ -852,8 +902,10 @@ organisation_id = '123456qwertz'
 official_id = 'AT111111112'
 route = endpoint + '/organisations/' + organisation_id + '/animals/' + official_id + '/events'
 token = 'yx2zvuB8JD8ppwGti84OT8Muq5eiB2b2EZqsqC-HOXUvLSg'
+user_agent = 'HerdManagerSoftwareXYZ/2.4'
 headers = {
     'accept': 'application/json',
+    'User-Agent': user_agent,
     'Authorization': 'bearer ' + token
 }
 
@@ -866,7 +918,8 @@ all_animal_events = r.json()
 ```bash
 curl -X GET "[endpoint]/organisations/[organisation_id]/animals/[official_id]/events" \
         -H  "accept: application/json" \
-        -H  "Authorization: bearer [token]"
+        -H  "Authorization: bearer [token]" \
+        -H  "User-Agent: [user_agent]"
 ```
 
 > Response example
@@ -999,8 +1052,10 @@ data = {
     ]
 }
 token = 'yx2zvuB8JD8ppwGti84OT8Muq5eiB2b2EZqsqC-HOXUvLSg'
+user_agent = 'HerdManagerSoftwareXYZ/2.4'
 headers = {
     'accept': 'application/json',
+    'User-Agent': user_agent,
     'Authorization': 'bearer ' + token
 }
 
@@ -1013,7 +1068,8 @@ all_animal_events = r.json()
 ```bash
 curl -X PUT "[endpoint]/organisations/[organisation_id]/animals/[official_id]/events" \
         -H  "accept: application/json" \
-        -H  "Authorization: bearer [token]"
+        -H  "Authorization: bearer [token]" \
+        -H  "User-Agent: [user_agent]" \
         -d "{\"events\": [{\"event_type\": \"insemination\", \"event_ts\": \"2019-01-18T12:00:00+00:00\", \"days_to_calving\": 275}]}"
 ```
 
@@ -1096,8 +1152,10 @@ data = {
     'device_type': 'all'
 }
 token = 'yx2zvuB8JD8ppwGti84OT8Muq5eiB2b2EZqsqC-HOXUvLSg'
+user_agent = 'HerdManagerSoftwareXYZ/2.4'
 headers = {
     'accept': 'application/json',
+    'User-Agent': user_agent,
     'Authorization': 'bearer ' + token
 }
 
@@ -1110,7 +1168,8 @@ all_devices = r.json()
 ```bash
 curl -X GET "[endpoint]/organisations/[organisation_id]/devices?device_type=all" \
         -H  "accept: application/json" \
-        -H  "Authorization: bearer [token]"
+        -H  "Authorization: bearer [token]" \
+        -H  "User-Agent: [user_agent]"
 ```
 
 > Response example
@@ -1150,8 +1209,10 @@ organisation_id = '123456qwertz'
 device_id = '0200000001'
 route = endpoint + '/organisations/' + organisation_id + '/devices/' + device_id
 token = 'yx2zvuB8JD8ppwGti84OT8Muq5eiB2b2EZqsqC-HOXUvLSg'
+user_agent = 'HerdManagerSoftwareXYZ/2.4'
 headers = {
     'accept': 'application/json',
+    'User-Agent': user_agent,
     'Authorization': 'bearer ' + token
 }
 
@@ -1164,7 +1225,8 @@ device = r.json()
 ```bash
 curl -X GET "[endpoint]/organisations/[organisation_id]/devices/[device_id]" \
         -H  "accept: application/json" \
-        -H  "Authorization: bearer [token]"
+        -H  "Authorization: bearer [token]" \
+        -H  "User-Agent: [user_agent]"
 ```
 
 > Response example
@@ -1180,8 +1242,10 @@ curl -X GET "[endpoint]/organisations/[organisation_id]/devices/[device_id]" \
   }
 }
 ```
-
 This call delivers data about the last readout.
+<aside class="warning">
+    To get the last readout you must use live smaXtec system!
+</aside>
 
 **HTTP Request**
 
@@ -1208,8 +1272,10 @@ device_id = '0600000001'
 route = endpoint + '/organisations/' + organisation_id + '/devices/' + device_id + '/data.json'
 
 token = 'yx2zvuB8JD8ppwGti84OT8Muq5eiB2b2EZqsqC-HOXUvLSg'
+user_agent = 'HerdManagerSoftwareXYZ/2.4'
 headers = {
     'accept': 'application/json',
+    'User-Agent': user_agent,
     'Authorization': 'bearer ' + token
 }
 
@@ -1231,7 +1297,8 @@ device_data = r.json()
 ```bash
 curl -X GET "[endpoint]/organisations/[organisation_id]/devices/[device_id]/data.json?to_date=2019-06-20T13%3A04%3A52&aggregation_period=hourly&metrics=temp&timestamp_format=iso&from_date=2019-04-20T13%3A04%3A52" \
         -H  "accept: application/json" \
-        -H  "Authorization: bearer [token]"
+        -H  "Authorization: bearer [token]" \
+        -H  "User-Agent: [user_agent]"
 ```
 
 > Response example
@@ -1313,8 +1380,10 @@ endpoint = 'https://api-staging.smaxtec.com/integration/v2'
 language = 'en'
 route = endpoint + '/translations/' + language + '/events'
 token = 'yx2zvuB8JD8ppwGti84OT8Muq5eiB2b2EZqsqC-HOXUvLSg'
+user_agent = 'HerdManagerSoftwareXYZ/2.4'
 headers = {
     'accept': 'application/json',
+    'User-Agent': user_agent,
     'Authorization': 'bearer ' + token
 }
 
@@ -1327,7 +1396,8 @@ event_text = r.json()
 ```bash
 curl -X GET "[endpoint]/translations/[language]/events" \
         -H  "accept: application/json" \
-        -H  "Authorization: bearer [token]"
+        -H  "Authorization: bearer [token]" \
+        -H  "User-Agent: [user_agent]"
 ```
 
 > Response example
@@ -1377,8 +1447,10 @@ language = 'en'
 event_type = 'health_102'
 route = endpoint + '/translations/' + language + '/events/' + event_type
 token = 'yx2zvuB8JD8ppwGti84OT8Muq5eiB2b2EZqsqC-HOXUvLSg'
+user_agent = 'HerdManagerSoftwareXYZ/2.4'
 headers = {
     'accept': 'application/json',
+     'User-Agent': user_agent,
     'Authorization': 'bearer ' + token
 }
 
@@ -1391,7 +1463,8 @@ health_102_text = r.json()
 ```bash
 curl -X GET "[endpoint]/translations/[language]/events/[event_type]" \
         -H  "accept: application/json" \
-        -H  "Authorization: bearer [token]"
+        -H  "Authorization: bearer [token]" \
+        -H  "User-Agent: [user_agent]"
 ```
 
 > Response example
