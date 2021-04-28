@@ -236,6 +236,9 @@
                     <a href="#common-tasks" class="toc-h2 toc-link" data-title="Common Tasks">Common Tasks</a>
                   </li>
                   <li>
+                    <a href="#user-agent" class="toc-h2 toc-link" data-title="User-Agent">User-Agent</a>
+                  </li>
+                  <li>
                     <a href="#placeholder" class="toc-h2 toc-link" data-title="Placeholder">Placeholder</a>
                   </li>
               </ul>
@@ -331,7 +334,7 @@
 <p>The Integration API offer the following advantages:</p>
 
 <ul>
-<li>The animals are identified with the eratag/EID and not the smaXtec internal IDs.</li>
+<li>The animals are identified with the eartag/EID and not the smaXtec internal IDs.</li>
 <li>External partners do not need to choose to update or create. They can simply send the current state of all objects and smaXtec will do the synchronisation.</li>
 </ul>
 <h2 id='endpoints'>Endpoints</h2>
@@ -364,6 +367,9 @@
 <p><code>-&gt; heat -&gt; insemination -&gt; pregnancy_result -&gt; abort -&gt;</code></p>
 
 <p>A <code>diagnosis</code> can be made and added at any time in the life of the cow.</p>
+<h2 id='user-agent'>User-Agent</h2>
+<p>The <em>user-agent</em> should be used so that we know which client is requesting or sending data to us.
+It should contain the name of your software and the version. e.g.: &#39;HerdManagerSoftwareXYZ/2.4&#39;</p>
 <h2 id='placeholder'>Placeholder</h2>
 <p>Several placeholders are used in this document.</p>
 
@@ -410,9 +416,9 @@
 <td>0600000001</td>
 </tr>
 <tr>
-<td>[integration_name]</td>
-<td>The name of the integrating application.</td>
-<td>HerdmanagerXYZ</td>
+<td>[user_agent]</td>
+<td>User - Agent</td>
+<td>HerdManagerSoftwareXYZ/2.4</td>
 </tr>
 <tr>
 <td>[language]</td>
@@ -436,7 +442,9 @@
 <span class="n">integration_name</span><span class="o">=</span><span class="s">'my-integration-app-name'</span>
 <span class="n">endpoint</span> <span class="o">=</span> <span class="s">'https://api-staging.smaxtec.com/integration/v2'</span>
 <span class="n">route</span> <span class="o">=</span> <span class="n">endpoint</span> <span class="o">+</span> <span class="s">'/users/session_token'</span>
-<span class="n">headers</span> <span class="o">=</span> <span class="p">{</span><span class="s">'accept'</span><span class="p">:</span> <span class="s">'application/json'</span><span class="p">}</span>
+<span class="n">user_agent</span> <span class="o">=</span> <span class="s">'HerdManagerSoftwareXYZ/2.4'</span>
+<span class="n">headers</span> <span class="o">=</span> <span class="p">{</span><span class="s">'accept'</span><span class="p">:</span> <span class="s">'application/json'</span><span class="p">,</span>
+           <span class="s">'User-Agent'</span><span class="p">:</span> <span class="n">user_agent</span><span class="p">}</span>
 <span class="n">data</span> <span class="o">=</span> <span class="p">{</span>
    <span class="s">"user"</span><span class="p">:</span> <span class="n">email</span><span class="p">,</span>
    <span class="s">"password"</span><span class="p">:</span> <span class="n">password</span><span class="p">,</span>
@@ -447,8 +455,9 @@
 
 <span class="n">status_code</span> <span class="o">=</span> <span class="n">r</span><span class="o">.</span><span class="n">status_code</span>
 <span class="n">authentication</span> <span class="o">=</span> <span class="n">r</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
-</code></pre><pre class="highlight shell"><code>curl -X POST <span class="s2">"[endpoint]/users/session_token?email=[email]&amp;password=[password]&amp;integration_name=[integration_name]"</span> <span class="se">\</span>
-        -H  <span class="s2">"accept: application/json"</span>
+</code></pre><pre class="highlight shell"><code>curl -X POST <span class="s2">"[endpoint]/users/session_token?user=[email]&amp;password=[password]"</span> <span class="se">\</span>
+        -H  <span class="s2">"accept: application/json"</span> <span class="se">\</span>
+        -H  <span class="s2">"User-Agent: [user_agent]"</span>
 </code></pre>
 <blockquote>
 <p>Response example</p>
@@ -469,7 +478,7 @@
 
 <p><strong>HTTP Request</strong></p>
 
-<p><code>POST &quot;[endpoint]/users/session_token?email=[email]&amp;password=[password]&amp;integration_name=[integration_name]&quot;</code></p>
+<p><code>POST &quot;[endpoint]/users/session_token?user=[email]&amp;password=[password]&quot;</code></p>
 <h1 id='organisations'>Organisations</h1><h2 id='get-all-organisations'>Get All Organisations</h2>
 <blockquote>
 <p>Request</p>
@@ -479,8 +488,10 @@
 <span class="n">endpoint</span> <span class="o">=</span> <span class="s">'https://api-staging.smaxtec.com/integration/v2'</span>
 <span class="n">route</span> <span class="o">=</span> <span class="n">endpoint</span> <span class="o">+</span> <span class="s">'/organisations'</span>
 <span class="n">token</span> <span class="o">=</span> <span class="s">'yx2zvuB8JD8ppwGti84OT8Muq5eiB2b2EZqsqC-HOXUvLSg'</span>
+<span class="n">user_agent</span> <span class="o">=</span> <span class="s">'HerdManagerSoftwareXYZ/2.4'</span>
 <span class="n">headers</span> <span class="o">=</span> <span class="p">{</span>
     <span class="s">'accept'</span><span class="p">:</span> <span class="s">'application/json'</span><span class="p">,</span>
+    <span class="s">'User-Agent'</span><span class="p">:</span> <span class="n">user_agent</span><span class="p">,</span>
     <span class="s">'Authorization'</span><span class="p">:</span> <span class="s">'bearer '</span> <span class="o">+</span> <span class="n">token</span>
 <span class="p">}</span>
 
@@ -490,7 +501,8 @@
 <span class="n">all_user_organisations</span> <span class="o">=</span> <span class="n">r</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
 </code></pre><pre class="highlight shell"><code>curl -X GET <span class="s2">"[endpoint]/organisations"</span> <span class="se">\</span>
         -H  <span class="s2">"accept: application/json"</span> <span class="se">\</span>
-        -H  <span class="s2">"Authorization: bearer [token]"</span>
+        -H  <span class="s2">"Authorization: bearer [token]"</span> <span class="se">\</span>
+        -H  <span class="s2">"User-Agent: [user_agent]"</span>
 </code></pre>
 <blockquote>
 <p>Response example</p>
@@ -581,8 +593,10 @@
     <span class="p">}</span>
 <span class="p">}</span>
 <span class="n">token</span> <span class="o">=</span> <span class="s">'yx2zvuB8JD8ppwGti84OT8Muq5eiB2b2EZqsqC-HOXUvLSg'</span>
+<span class="n">user_agent</span> <span class="o">=</span> <span class="s">'HerdManagerSoftwareXYZ/2.4'</span>
 <span class="n">headers</span> <span class="o">=</span> <span class="p">{</span>
     <span class="s">'accept'</span><span class="p">:</span> <span class="s">'application/json'</span><span class="p">,</span>
+    <span class="s">'User-Agent'</span><span class="p">:</span> <span class="n">user_agent</span><span class="p">,</span>
     <span class="s">'Authorization'</span><span class="p">:</span> <span class="s">'bearer '</span> <span class="o">+</span> <span class="n">token</span>
 <span class="p">}</span>
 
@@ -594,6 +608,7 @@
         -H   <span class="s2">"accept: application/json"</span> <span class="se">\</span>
         -H   <span class="s2">"Authorization: bearer [token]"</span> <span class="se">\</span>
         -H   <span class="s2">"Content-Type: application/json"</span> <span class="se">\</span>
+        -H  <span class="s2">"User-Agent: [user_agent]"</span> <span class="se">\</span>
         -d  <span class="s2">"{</span><span class="se">\"</span><span class="s2">account</span><span class="se">\"</span><span class="s2">: {</span><span class="se">\"</span><span class="s2">name</span><span class="se">\"</span><span class="s2">: </span><span class="se">\"</span><span class="s2">Farm XY</span><span class="se">\"</span><span class="s2">, </span><span class="se">\"</span><span class="s2">vat_number</span><span class="se">\"</span><span class="s2">: </span><span class="se">\"</span><span class="s2">ATU99999999</span><span class="se">\"</span><span class="s2">, </span><span class="se">\"</span><span class="s2">address</span><span class="se">\"</span><span class="s2">: {</span><span class="se">\"</span><span class="s2">line1</span><span class="se">\"</span><span class="s2">: </span><span class="se">\"</span><span class="s2">Farmer Joe</span><span class="se">\"</span><span class="s2">, </span><span class="se">\"</span><span class="s2">line2</span><span class="se">\"</span><span class="s2">: </span><span class="se">\"</span><span class="s2">Streetname 25</span><span class="se">\"</span><span class="s2">, </span><span class="se">\"</span><span class="s2">line3</span><span class="se">\"</span><span class="s2">: </span><span class="se">\"</span><span class="s2">Block 4</span><span class="se">\"</span><span class="s2">, </span><span class="se">\"</span><span class="s2">country_code</span><span class="se">\"</span><span class="s2">: </span><span class="se">\"</span><span class="s2">AT</span><span class="se">\"</span><span class="s2">, </span><span class="se">\"</span><span class="s2">region</span><span class="se">\"</span><span class="s2">: </span><span class="se">\"</span><span class="s2">Steiermark</span><span class="se">\"</span><span class="s2">, </span><span class="se">\"</span><span class="s2">city</span><span class="se">\"</span><span class="s2">: </span><span class="se">\"</span><span class="s2">Graz</span><span class="se">\"</span><span class="s2">, </span><span class="se">\"</span><span class="s2">postal_code</span><span class="se">\"</span><span class="s2">: </span><span class="se">\"</span><span class="s2">8020</span><span class="se">\"</span><span class="s2">, </span><span class="se">\"</span><span class="s2">address_type</span><span class="se">\"</span><span class="s2">: </span><span class="se">\"</span><span class="s2">default</span><span class="se">\"</span><span class="s2"> } }, </span><span class="se">\"</span><span class="s2">name</span><span class="se">\"</span><span class="s2">: </span><span class="se">\"</span><span class="s2">Farm XY</span><span class="se">\"</span><span class="s2">, </span><span class="se">\"</span><span class="s2">timezone</span><span class="se">\"</span><span class="s2">: </span><span class="se">\"</span><span class="s2">Europe/Vienna</span><span class="se">\"</span><span class="s2">}"</span>
 </code></pre>
 <blockquote>
@@ -723,9 +738,12 @@
 <span class="n">optional_parameters</span> <span class="o">=</span> <span class="s">'?include_archived=false'</span>
 <span class="n">route</span> <span class="o">=</span> <span class="n">endpoint</span> <span class="o">+</span> <span class="s">'/organisations/'</span> <span class="o">+</span> <span class="n">organisation_id</span> <span class="o">+</span> <span class="s">'/animals'</span> <span class="o">+</span> <span class="n">optional_parameters</span>
 <span class="n">token</span> <span class="o">=</span> <span class="s">'yx2zvuB8JD8ppwGti84OT8Muq5eiB2b2EZqsqC-HOXUvLSg'</span>
+<span class="n">user_agent</span> <span class="o">=</span> <span class="s">'HerdManagerSoftwareXYZ/2.4'</span>
 <span class="n">headers</span> <span class="o">=</span> <span class="p">{</span>
     <span class="s">'accept'</span><span class="p">:</span> <span class="s">'application/json'</span><span class="p">,</span>
+    <span class="s">'User-Agent'</span><span class="p">:</span> <span class="n">user_agent</span><span class="p">,</span>
     <span class="s">'Authorization'</span><span class="p">:</span> <span class="s">'bearer '</span> <span class="o">+</span> <span class="n">token</span>
+
 <span class="p">}</span>
 
 <span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">route</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">)</span>
@@ -734,7 +752,8 @@
 <span class="n">all_animals</span> <span class="o">=</span> <span class="n">r</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
 </code></pre><pre class="highlight shell"><code>curl -X GET <span class="s2">"[endpoint]/organisations/[organisation_id]/animals"</span> <span class="se">\</span>
         -H  <span class="s2">"accept: application/json"</span> <span class="se">\</span>
-        -H  <span class="s2">"Authorization: bearer [token]"</span>
+        -H  <span class="s2">"Authorization: bearer [token]"</span> <span class="se">\</span>
+        -H  <span class="s2">"User-Agent: [user_agent]"</span>
 </code></pre>
 <blockquote>
 <p>Response example</p>
@@ -798,8 +817,10 @@
 <span class="n">official_id</span> <span class="o">=</span> <span class="s">'AT111111112'</span>
 <span class="n">route</span> <span class="o">=</span> <span class="n">endpoint</span> <span class="o">+</span> <span class="s">'/organisations/'</span> <span class="o">+</span> <span class="n">organisation_id</span> <span class="o">+</span> <span class="s">'/animals/'</span> <span class="o">+</span> <span class="n">official_id</span>
 <span class="n">token</span> <span class="o">=</span> <span class="s">'yx2zvuB8JD8ppwGti84OT8Muq5eiB2b2EZqsqC-HOXUvLSg'</span>
+<span class="n">user_agent</span> <span class="o">=</span> <span class="s">'HerdManagerSoftwareXYZ/2.4'</span>
 <span class="n">headers</span> <span class="o">=</span> <span class="p">{</span>
     <span class="s">'accept'</span><span class="p">:</span> <span class="s">'application/json'</span><span class="p">,</span>
+    <span class="s">'User-Agent'</span><span class="p">:</span> <span class="n">user_agent</span><span class="p">,</span>
     <span class="s">'Authorization'</span><span class="p">:</span> <span class="s">'bearer '</span> <span class="o">+</span> <span class="n">token</span>
 <span class="p">}</span>
 
@@ -809,7 +830,8 @@
 <span class="n">animal</span> <span class="o">=</span> <span class="n">r</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
 </code></pre><pre class="highlight shell"><code>curl -X GET <span class="s2">"[endpoint]/organisations/[organisation_id]/animals/[official_id]"</span> <span class="se">\</span>
         -H  <span class="s2">"accept: application/json"</span> <span class="se">\</span>
-        -H  <span class="s2">"Authorization: bearer [token]"</span>
+        -H  <span class="s2">"Authorization: bearer [token]"</span> <span class="se">\</span>
+        -H  <span class="s2">"User-Agent: [user_agent]"</span>
 </code></pre>
 <blockquote>
 <p>Response example</p>
@@ -889,8 +911,10 @@
     <span class="s">"organisation_id"</span><span class="p">:</span> <span class="s">"123456qwertz"</span>
 <span class="p">}</span>
 <span class="n">token</span> <span class="o">=</span> <span class="s">'yx2zvuB8JD8ppwGti84OT8Muq5eiB2b2EZqsqC-HOXUvLSg'</span>
+<span class="n">user_agent</span> <span class="o">=</span> <span class="s">'HerdManagerSoftwareXYZ/2.4'</span>
 <span class="n">headers</span> <span class="o">=</span> <span class="p">{</span>
     <span class="s">'accept'</span><span class="p">:</span> <span class="s">'application/json'</span><span class="p">,</span>
+    <span class="s">'User-Agent'</span><span class="p">:</span> <span class="n">user_agent</span><span class="p">,</span>
     <span class="s">'Authorization'</span><span class="p">:</span> <span class="s">'bearer '</span> <span class="o">+</span> <span class="n">token</span>
 <span class="p">}</span>
 
@@ -902,6 +926,7 @@
         -H  <span class="s2">"accept: application/json"</span> <span class="se">\</span>
         -H  <span class="s2">"Authorization: bearer [token]"</span> <span class="se">\</span>
         -H  <span class="s2">"Content-Type: application/json"</span> <span class="se">\</span>
+        -H  <span class="s2">"User-Agent: [user_agent]"</span><span class="se">\</span>
         -d <span class="s2">"{  </span><span class="se">\"</span><span class="s2">name</span><span class="se">\"</span><span class="s2">: </span><span class="se">\"</span><span class="s2">Strolcha</span><span class="se">\"</span><span class="s2">,  </span><span class="se">\"</span><span class="s2">group_id</span><span class="se">\"</span><span class="s2">: </span><span class="se">\"</span><span class="s2">57920fca506d993asdfgh123</span><span class="se">\"</span><span class="s2">,  </span><span class="se">\"</span><span class="s2">birthday</span><span class="se">\"</span><span class="s2">: </span><span class="se">\"</span><span class="s2">2019-01-10T13:04:52+00:00</span><span class="se">\"</span><span class="s2">,  </span><span class="se">\"</span><span class="s2">race</span><span class="se">\"</span><span class="s2">: </span><span class="se">\"</span><span class="s2">mixed</span><span class="se">\"</span><span class="s2">,  </span><span class="se">\"</span><span class="s2">location</span><span class="se">\"</span><span class="s2">: </span><span class="se">\"</span><span class="s2">stall</span><span class="se">\"</span><span class="s2">,  </span><span class="se">\"</span><span class="s2">_id</span><span class="se">\"</span><span class="s2">: </span><span class="se">\"</span><span class="s2">5c480ab3314724e123456789</span><span class="se">\"</span><span class="s2">,  </span><span class="se">\"</span><span class="s2">official_id_rule</span><span class="se">\"</span><span class="s2">: </span><span class="se">\"</span><span class="s2">AT</span><span class="se">\"</span><span class="s2">,  </span><span class="se">\"</span><span class="s2">display_name</span><span class="se">\"</span><span class="s2">: </span><span class="se">\"</span><span class="s2">AT111111112 - susi</span><span class="se">\"</span><span class="s2">,  </span><span class="se">\"</span><span class="s2">archived</span><span class="se">\"</span><span class="s2">: false,  </span><span class="se">\"</span><span class="s2">created_at</span><span class="se">\"</span><span class="s2">: </span><span class="se">\"</span><span class="s2">2019-01-23T06:33:24+00:00</span><span class="se">\"</span><span class="s2">,  </span><span class="se">\"</span><span class="s2">official_id</span><span class="se">\"</span><span class="s2">: </span><span class="se">\"</span><span class="s2">AT111111112</span><span class="se">\"</span><span class="s2">,  </span><span class="se">\"</span><span class="s2">lactation_status</span><span class="se">\"</span><span class="s2">: </span><span class="se">\"</span><span class="s2">Young_Cow</span><span class="se">\"</span><span class="s2">,  </span><span class="se">\"</span><span class="s2">current_device_id</span><span class="se">\"</span><span class="s2">: </span><span class="se">\"</span><span class="s2">0700000001</span><span class="se">\"</span><span class="s2">,  </span><span class="se">\"</span><span class="s2">mark</span><span class="se">\"</span><span class="s2">: </span><span class="se">\"</span><span class="s2">AT111111112</span><span class="se">\"</span><span class="s2">,  </span><span class="se">\"</span><span class="s2">tags</span><span class="se">\"</span><span class="s2">: [</span><span class="se">\"</span><span class="s2">sold</span><span class="se">\"</span><span class="s2">],  </span><span class="se">\"</span><span class="s2">mixed_race</span><span class="se">\"</span><span class="s2">: [{</span><span class="se">\"</span><span class="s2">race</span><span class="se">\"</span><span class="s2">: </span><span class="se">\"</span><span class="s2">ANGLER</span><span class="se">\"</span><span class="s2">, </span><span class="se">\"</span><span class="s2">percent</span><span class="se">\"</span><span class="s2">: 22}, {</span><span class="se">\"</span><span class="s2">race</span><span class="se">\"</span><span class="s2">: </span><span class="se">\"</span><span class="s2">FLECKVIEW</span><span class="se">\"</span><span class="s2">, </span><span class="se">\"</span><span class="s2">percent</span><span class="se">\"</span><span class="s2">: 78}],,  </span><span class="se">\"</span><span class="s2">organisation_id</span><span class="se">\"</span><span class="s2">: </span><span class="se">\"</span><span class="s2">123456qwertz</span><span class="se">\"</span><span class="s2">}"</span>
 </code></pre>
 <blockquote>
@@ -1056,8 +1081,10 @@
 <span class="n">route</span> <span class="o">=</span> <span class="n">endpoint</span> <span class="o">+</span> <span class="s">'/organisations/'</span> <span class="o">+</span> <span class="n">organisation_id</span> <span class="o">+</span> <span class="s">'/animals/'</span> <span class="o">+</span> <span class="n">official_id</span> <span class="o">+</span> <span class="s">'/metrics'</span>
 
 <span class="n">token</span> <span class="o">=</span> <span class="s">'yx2zvuB8JD8ppwGti84OT8Muq5eiB2b2EZqsqC-HOXUvLSg'</span>
+<span class="n">user_agent</span> <span class="o">=</span> <span class="s">'HerdManagerSoftwareXYZ/2.4'</span>
 <span class="n">headers</span> <span class="o">=</span> <span class="p">{</span>
     <span class="s">'accept'</span><span class="p">:</span> <span class="s">'application/json'</span><span class="p">,</span>
+    <span class="s">'User-Agent'</span><span class="p">:</span> <span class="n">user_agent</span><span class="p">,</span>
     <span class="s">'Authorization'</span><span class="p">:</span> <span class="s">'bearer '</span> <span class="o">+</span> <span class="n">token</span>
 <span class="p">}</span>
 
@@ -1069,7 +1096,8 @@
 </code></pre><pre class="highlight shell"><code>curl -X GET <span class="s2">"[endpoint]/organisations/[organisation_id]/animals/[official_id]/metrics"</span> <span class="se">\</span>
         -H  <span class="s2">"accept: application/json"</span> <span class="se">\</span>
         -H  <span class="s2">"Authorization: bearer [token]"</span> <span class="se">\</span>
-        -H  <span class="s2">"Content-Type: application/json"</span>
+        -H  <span class="s2">"Content-Type: application/json"</span> <span class="se">\</span>
+        -H  <span class="s2">"User-Agent: [user_agent]"</span>
 </code></pre>
 <blockquote>
 <p>Response example</p>
@@ -1122,6 +1150,82 @@
 <td><code>required</code></td>
 </tr>
 </tbody></table>
+
+<p><strong>Available Metrics</strong></p>
+
+<table><thead>
+<tr>
+<th>Metric</th>
+<th>Visible in messenger</th>
+<th>Short description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>act_index</td>
+<td>✓ <code>default</code></td>
+<td>Smoothed version of act (rolling mean)</td>
+</tr>
+<tr>
+<td>temp</td>
+<td>✓ <code>default</code></td>
+<td>Temperature</td>
+</tr>
+<tr>
+<td>temp_normal_index</td>
+<td>✓ <code>default</code></td>
+<td>Normal temperature of the animal calculated by 70% of <code>temp_without_drink_cycles</code> in the last 5d.</td>
+</tr>
+<tr>
+<td>heat_index</td>
+<td>✓ <code>optional</code></td>
+<td>Used for thresholding for the heat events</td>
+</tr>
+<tr>
+<td>ph</td>
+<td>✓ <code>premium only</code></td>
+<td>Show the ph value</td>
+</tr>
+<tr>
+<td>rum_index</td>
+<td>✓ <code>SX.2 only</code></td>
+<td>The sums up boolean indicators whether that cow has possibly ruminated at a given time or not</td>
+</tr>
+<tr>
+<td>act</td>
+<td>✕</td>
+<td>Activity</td>
+</tr>
+<tr>
+<td>act_heat_index_smart</td>
+<td>✕</td>
+<td>Smoothes of the current selected heat algorithm</td>
+</tr>
+<tr>
+<td>drink_cycles_v2</td>
+<td>✕</td>
+<td>Detect a spike in the temperature that is considered as a drinking phase</td>
+</tr>
+<tr>
+<td>temp_dec_index</td>
+<td>✕</td>
+<td>A simple outlier detection based on the difference between two moving avarager filters od different lengths</td>
+</tr>
+<tr>
+<td>temp_height_index</td>
+<td>✕</td>
+<td>The difference between <code>temp_normal_index</code> and <code>temp_without_drink_cycles</code></td>
+</tr>
+<tr>
+<td>temp_inc_index</td>
+<td>✕</td>
+<td>Not available anymore</td>
+</tr>
+<tr>
+<td>temp_without_drink_cycles</td>
+<td>✕</td>
+<td>Fast decreases in the temperature signal (drink spikes)</td>
+</tr>
+</tbody></table>
 <h2 id='get-animal-data'>Get Animal Data</h2>
 <blockquote>
 <p>Request</p>
@@ -1135,8 +1239,10 @@
 <span class="n">route</span> <span class="o">=</span> <span class="n">endpoint</span> <span class="o">+</span> <span class="s">'/organisations/'</span> <span class="o">+</span> <span class="n">organisation_id</span> <span class="o">+</span> <span class="s">'/animals/'</span> <span class="o">+</span> <span class="n">official_id</span> <span class="o">+</span> <span class="s">'/data.json'</span>
 
 <span class="n">token</span> <span class="o">=</span> <span class="s">'yx2zvuB8JD8ppwGti84OT8Muq5eiB2b2EZqsqC-HOXUvLSg'</span>
+<span class="n">user_agent</span> <span class="o">=</span> <span class="s">'HerdManagerSoftwareXYZ/2.4'</span>
 <span class="n">headers</span> <span class="o">=</span> <span class="p">{</span>
     <span class="s">'accept'</span><span class="p">:</span> <span class="s">'application/json'</span><span class="p">,</span>
+    <span class="s">'User-Agent'</span><span class="p">:</span> <span class="n">user_agent</span><span class="p">,</span>
     <span class="s">'Authorization'</span><span class="p">:</span> <span class="s">'bearer '</span> <span class="o">+</span> <span class="n">token</span>
 <span class="p">}</span>
 
@@ -1155,6 +1261,7 @@
         -H  <span class="s2">"accept: application/json"</span> <span class="se">\</span>
         -H  <span class="s2">"Authorization: bearer [token]"</span> <span class="se">\</span>
         -H  <span class="s2">"Content-Type: application/json"</span> <span class="se">\</span>
+        -H  <span class="s2">"User-Agent: [user_agent]"</span> <span class="se">\</span>
         -d <span class="s2">"{  </span><span class="se">\"</span><span class="s2">metrics</span><span class="se">\"</span><span class="s2">: [</span><span class="se">\"</span><span class="s2">temp</span><span class="se">\"</span><span class="s2">, </span><span class="se">\"</span><span class="s2">act</span><span class="se">\"</span><span class="s2">],  </span><span class="se">\"</span><span class="s2">from_date</span><span class="se">\"</span><span class="s2">: </span><span class="se">\"</span><span class="s2">2019-02-01T08:21:33+0000</span><span class="se">\"</span><span class="s2">,  </span><span class="se">\"</span><span class="s2">to_date</span><span class="se">\"</span><span class="s2">: </span><span class="se">\"</span><span class="s2">2019-02-01T12:22:16+0000</span><span class="se">\"</span><span class="s2">}"</span>
 </code></pre>
 <blockquote>
@@ -1268,8 +1375,10 @@
 <span class="n">official_id</span> <span class="o">=</span> <span class="s">'AT111111112'</span>
 <span class="n">route</span> <span class="o">=</span> <span class="n">endpoint</span> <span class="o">+</span> <span class="s">'/organisations/'</span> <span class="o">+</span> <span class="n">organisation_id</span> <span class="o">+</span> <span class="s">'/events'</span>
 <span class="n">token</span> <span class="o">=</span> <span class="s">'yx2zvuB8JD8ppwGti84OT8Muq5eiB2b2EZqsqC-HOXUvLSg'</span>
+<span class="n">user_agent</span> <span class="o">=</span> <span class="s">'HerdManagerSoftwareXYZ/2.4'</span>
 <span class="n">headers</span> <span class="o">=</span> <span class="p">{</span>
     <span class="s">'accept'</span><span class="p">:</span> <span class="s">'application/json'</span><span class="p">,</span>
+    <span class="s">'User-Agent'</span><span class="p">:</span> <span class="n">user_agent</span><span class="p">,</span>
     <span class="s">'Authorization'</span><span class="p">:</span> <span class="s">'bearer '</span> <span class="o">+</span> <span class="n">token</span>
 <span class="p">}</span>
 
@@ -1284,7 +1393,8 @@
 <span class="n">all_animal_events</span> <span class="o">=</span> <span class="n">r</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
 </code></pre><pre class="highlight shell"><code>curl -X GET <span class="s2">"[endpoint]/organisations/[organisation_id]/events?min_create_ts=2019-07-30T13%3A04%3A52&amp;min_event_ts=2019-07-21T13%3A04%3A52"</span> <span class="se">\</span>
         -H  <span class="s2">"accept: application/json"</span> <span class="se">\</span>
-        -H  <span class="s2">"Authorization: bearer [token]"</span>
+        -H  <span class="s2">"Authorization: bearer [token]"</span> <span class="se">\</span>
+        -H  <span class="s2">"User-Agent: [user_agent]"</span>
 </code></pre>
 <blockquote>
 <p>Response example</p>
@@ -1387,8 +1497,10 @@
 <span class="n">official_id</span> <span class="o">=</span> <span class="s">'AT111111112'</span>
 <span class="n">route</span> <span class="o">=</span> <span class="n">endpoint</span> <span class="o">+</span> <span class="s">'/organisations/'</span> <span class="o">+</span> <span class="n">organisation_id</span> <span class="o">+</span> <span class="s">'/animals/'</span> <span class="o">+</span> <span class="n">official_id</span> <span class="o">+</span> <span class="s">'/events'</span>
 <span class="n">token</span> <span class="o">=</span> <span class="s">'yx2zvuB8JD8ppwGti84OT8Muq5eiB2b2EZqsqC-HOXUvLSg'</span>
+<span class="n">user_agent</span> <span class="o">=</span> <span class="s">'HerdManagerSoftwareXYZ/2.4'</span>
 <span class="n">headers</span> <span class="o">=</span> <span class="p">{</span>
     <span class="s">'accept'</span><span class="p">:</span> <span class="s">'application/json'</span><span class="p">,</span>
+    <span class="s">'User-Agent'</span><span class="p">:</span> <span class="n">user_agent</span><span class="p">,</span>
     <span class="s">'Authorization'</span><span class="p">:</span> <span class="s">'bearer '</span> <span class="o">+</span> <span class="n">token</span>
 <span class="p">}</span>
 
@@ -1398,7 +1510,8 @@
 <span class="n">all_animal_events</span> <span class="o">=</span> <span class="n">r</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
 </code></pre><pre class="highlight shell"><code>curl -X GET <span class="s2">"[endpoint]/organisations/[organisation_id]/animals/[official_id]/events"</span> <span class="se">\</span>
         -H  <span class="s2">"accept: application/json"</span> <span class="se">\</span>
-        -H  <span class="s2">"Authorization: bearer [token]"</span>
+        -H  <span class="s2">"Authorization: bearer [token]"</span> <span class="se">\</span>
+        -H  <span class="s2">"User-Agent: [user_agent]"</span>
 </code></pre>
 <blockquote>
 <p>Response example</p>
@@ -1648,8 +1761,10 @@
     <span class="p">]</span>
 <span class="p">}</span>
 <span class="n">token</span> <span class="o">=</span> <span class="s">'yx2zvuB8JD8ppwGti84OT8Muq5eiB2b2EZqsqC-HOXUvLSg'</span>
+<span class="n">user_agent</span> <span class="o">=</span> <span class="s">'HerdManagerSoftwareXYZ/2.4'</span>
 <span class="n">headers</span> <span class="o">=</span> <span class="p">{</span>
     <span class="s">'accept'</span><span class="p">:</span> <span class="s">'application/json'</span><span class="p">,</span>
+    <span class="s">'User-Agent'</span><span class="p">:</span> <span class="n">user_agent</span><span class="p">,</span>
     <span class="s">'Authorization'</span><span class="p">:</span> <span class="s">'bearer '</span> <span class="o">+</span> <span class="n">token</span>
 <span class="p">}</span>
 
@@ -1659,7 +1774,8 @@
 <span class="n">all_animal_events</span> <span class="o">=</span> <span class="n">r</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
 </code></pre><pre class="highlight shell"><code>curl -X PUT <span class="s2">"[endpoint]/organisations/[organisation_id]/animals/[official_id]/events"</span> <span class="se">\</span>
         -H  <span class="s2">"accept: application/json"</span> <span class="se">\</span>
-        -H  <span class="s2">"Authorization: bearer [token]"</span>
+        -H  <span class="s2">"Authorization: bearer [token]"</span> <span class="se">\</span>
+        -H  <span class="s2">"User-Agent: [user_agent]"</span> <span class="se">\</span>
         -d <span class="s2">"{</span><span class="se">\"</span><span class="s2">events</span><span class="se">\"</span><span class="s2">: [{</span><span class="se">\"</span><span class="s2">event_type</span><span class="se">\"</span><span class="s2">: </span><span class="se">\"</span><span class="s2">insemination</span><span class="se">\"</span><span class="s2">, </span><span class="se">\"</span><span class="s2">event_ts</span><span class="se">\"</span><span class="s2">: </span><span class="se">\"</span><span class="s2">2019-01-18T12:00:00+00:00</span><span class="se">\"</span><span class="s2">, </span><span class="se">\"</span><span class="s2">days_to_calving</span><span class="se">\"</span><span class="s2">: 275}]}"</span>
 </code></pre>
 <blockquote>
@@ -1865,8 +1981,10 @@ It is possible to add just the events to the data which should be added to the s
     <span class="s">'device_type'</span><span class="p">:</span> <span class="s">'all'</span>
 <span class="p">}</span>
 <span class="n">token</span> <span class="o">=</span> <span class="s">'yx2zvuB8JD8ppwGti84OT8Muq5eiB2b2EZqsqC-HOXUvLSg'</span>
+<span class="n">user_agent</span> <span class="o">=</span> <span class="s">'HerdManagerSoftwareXYZ/2.4'</span>
 <span class="n">headers</span> <span class="o">=</span> <span class="p">{</span>
     <span class="s">'accept'</span><span class="p">:</span> <span class="s">'application/json'</span><span class="p">,</span>
+    <span class="s">'User-Agent'</span><span class="p">:</span> <span class="n">user_agent</span><span class="p">,</span>
     <span class="s">'Authorization'</span><span class="p">:</span> <span class="s">'bearer '</span> <span class="o">+</span> <span class="n">token</span>
 <span class="p">}</span>
 
@@ -1876,7 +1994,8 @@ It is possible to add just the events to the data which should be added to the s
 <span class="n">all_devices</span> <span class="o">=</span> <span class="n">r</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
 </code></pre><pre class="highlight shell"><code>curl -X GET <span class="s2">"[endpoint]/organisations/[organisation_id]/devices?device_type=all"</span> <span class="se">\</span>
         -H  <span class="s2">"accept: application/json"</span> <span class="se">\</span>
-        -H  <span class="s2">"Authorization: bearer [token]"</span>
+        -H  <span class="s2">"Authorization: bearer [token]"</span> <span class="se">\</span>
+        -H  <span class="s2">"User-Agent: [user_agent]"</span>
 </code></pre>
 <blockquote>
 <p>Response example</p>
@@ -1925,8 +2044,10 @@ It is possible to add just the events to the data which should be added to the s
 <span class="n">device_id</span> <span class="o">=</span> <span class="s">'0200000001'</span>
 <span class="n">route</span> <span class="o">=</span> <span class="n">endpoint</span> <span class="o">+</span> <span class="s">'/organisations/'</span> <span class="o">+</span> <span class="n">organisation_id</span> <span class="o">+</span> <span class="s">'/devices/'</span> <span class="o">+</span> <span class="n">device_id</span>
 <span class="n">token</span> <span class="o">=</span> <span class="s">'yx2zvuB8JD8ppwGti84OT8Muq5eiB2b2EZqsqC-HOXUvLSg'</span>
+<span class="n">user_agent</span> <span class="o">=</span> <span class="s">'HerdManagerSoftwareXYZ/2.4'</span>
 <span class="n">headers</span> <span class="o">=</span> <span class="p">{</span>
     <span class="s">'accept'</span><span class="p">:</span> <span class="s">'application/json'</span><span class="p">,</span>
+    <span class="s">'User-Agent'</span><span class="p">:</span> <span class="n">user_agent</span><span class="p">,</span>
     <span class="s">'Authorization'</span><span class="p">:</span> <span class="s">'bearer '</span> <span class="o">+</span> <span class="n">token</span>
 <span class="p">}</span>
 
@@ -1936,7 +2057,8 @@ It is possible to add just the events to the data which should be added to the s
 <span class="n">device</span> <span class="o">=</span> <span class="n">r</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
 </code></pre><pre class="highlight shell"><code>curl -X GET <span class="s2">"[endpoint]/organisations/[organisation_id]/devices/[device_id]"</span> <span class="se">\</span>
         -H  <span class="s2">"accept: application/json"</span> <span class="se">\</span>
-        -H  <span class="s2">"Authorization: bearer [token]"</span>
+        -H  <span class="s2">"Authorization: bearer [token]"</span> <span class="se">\</span>
+        -H  <span class="s2">"User-Agent: [user_agent]"</span>
 </code></pre>
 <blockquote>
 <p>Response example</p>
@@ -1951,7 +2073,10 @@ It is possible to add just the events to the data which should be added to the s
   </span><span class="p">}</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
-<p>This call delivers data about the last readout.</p>
+<p>This call delivers data about the last readout.
+<aside class="warning">
+    To get the last readout you must use live smaXtec system!
+</aside></p>
 
 <p><strong>HTTP Request</strong></p>
 
@@ -1989,8 +2114,10 @@ It is possible to add just the events to the data which should be added to the s
 <span class="n">route</span> <span class="o">=</span> <span class="n">endpoint</span> <span class="o">+</span> <span class="s">'/organisations/'</span> <span class="o">+</span> <span class="n">organisation_id</span> <span class="o">+</span> <span class="s">'/devices/'</span> <span class="o">+</span> <span class="n">device_id</span> <span class="o">+</span> <span class="s">'/data.json'</span>
 
 <span class="n">token</span> <span class="o">=</span> <span class="s">'yx2zvuB8JD8ppwGti84OT8Muq5eiB2b2EZqsqC-HOXUvLSg'</span>
+<span class="n">user_agent</span> <span class="o">=</span> <span class="s">'HerdManagerSoftwareXYZ/2.4'</span>
 <span class="n">headers</span> <span class="o">=</span> <span class="p">{</span>
     <span class="s">'accept'</span><span class="p">:</span> <span class="s">'application/json'</span><span class="p">,</span>
+    <span class="s">'User-Agent'</span><span class="p">:</span> <span class="n">user_agent</span><span class="p">,</span>
     <span class="s">'Authorization'</span><span class="p">:</span> <span class="s">'bearer '</span> <span class="o">+</span> <span class="n">token</span>
 <span class="p">}</span>
 
@@ -2009,7 +2136,8 @@ It is possible to add just the events to the data which should be added to the s
 <span class="n">device_data</span> <span class="o">=</span> <span class="n">r</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
 </code></pre><pre class="highlight shell"><code>curl -X GET <span class="s2">"[endpoint]/organisations/[organisation_id]/devices/[device_id]/data.json?to_date=2019-06-20T13%3A04%3A52&amp;aggregation_period=hourly&amp;metrics=temp&amp;timestamp_format=iso&amp;from_date=2019-04-20T13%3A04%3A52"</span> <span class="se">\</span>
         -H  <span class="s2">"accept: application/json"</span> <span class="se">\</span>
-        -H  <span class="s2">"Authorization: bearer [token]"</span>
+        -H  <span class="s2">"Authorization: bearer [token]"</span> <span class="se">\</span>
+        -H  <span class="s2">"User-Agent: [user_agent]"</span>
 </code></pre>
 <blockquote>
 <p>Response example</p>
@@ -2126,8 +2254,10 @@ It is possible to add just the events to the data which should be added to the s
 <span class="n">language</span> <span class="o">=</span> <span class="s">'en'</span>
 <span class="n">route</span> <span class="o">=</span> <span class="n">endpoint</span> <span class="o">+</span> <span class="s">'/translations/'</span> <span class="o">+</span> <span class="n">language</span> <span class="o">+</span> <span class="s">'/events'</span>
 <span class="n">token</span> <span class="o">=</span> <span class="s">'yx2zvuB8JD8ppwGti84OT8Muq5eiB2b2EZqsqC-HOXUvLSg'</span>
+<span class="n">user_agent</span> <span class="o">=</span> <span class="s">'HerdManagerSoftwareXYZ/2.4'</span>
 <span class="n">headers</span> <span class="o">=</span> <span class="p">{</span>
     <span class="s">'accept'</span><span class="p">:</span> <span class="s">'application/json'</span><span class="p">,</span>
+    <span class="s">'User-Agent'</span><span class="p">:</span> <span class="n">user_agent</span><span class="p">,</span>
     <span class="s">'Authorization'</span><span class="p">:</span> <span class="s">'bearer '</span> <span class="o">+</span> <span class="n">token</span>
 <span class="p">}</span>
 
@@ -2137,7 +2267,8 @@ It is possible to add just the events to the data which should be added to the s
 <span class="n">event_text</span> <span class="o">=</span> <span class="n">r</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
 </code></pre><pre class="highlight shell"><code>curl -X GET <span class="s2">"[endpoint]/translations/[language]/events"</span> <span class="se">\</span>
         -H  <span class="s2">"accept: application/json"</span> <span class="se">\</span>
-        -H  <span class="s2">"Authorization: bearer [token]"</span>
+        -H  <span class="s2">"Authorization: bearer [token]"</span> <span class="se">\</span>
+        -H  <span class="s2">"User-Agent: [user_agent]"</span>
 </code></pre>
 <blockquote>
 <p>Response example</p>
@@ -2197,8 +2328,10 @@ It is possible to add just the events to the data which should be added to the s
 <span class="n">event_type</span> <span class="o">=</span> <span class="s">'health_102'</span>
 <span class="n">route</span> <span class="o">=</span> <span class="n">endpoint</span> <span class="o">+</span> <span class="s">'/translations/'</span> <span class="o">+</span> <span class="n">language</span> <span class="o">+</span> <span class="s">'/events/'</span> <span class="o">+</span> <span class="n">event_type</span>
 <span class="n">token</span> <span class="o">=</span> <span class="s">'yx2zvuB8JD8ppwGti84OT8Muq5eiB2b2EZqsqC-HOXUvLSg'</span>
+<span class="n">user_agent</span> <span class="o">=</span> <span class="s">'HerdManagerSoftwareXYZ/2.4'</span>
 <span class="n">headers</span> <span class="o">=</span> <span class="p">{</span>
     <span class="s">'accept'</span><span class="p">:</span> <span class="s">'application/json'</span><span class="p">,</span>
+     <span class="s">'User-Agent'</span><span class="p">:</span> <span class="n">user_agent</span><span class="p">,</span>
     <span class="s">'Authorization'</span><span class="p">:</span> <span class="s">'bearer '</span> <span class="o">+</span> <span class="n">token</span>
 <span class="p">}</span>
 
@@ -2208,7 +2341,8 @@ It is possible to add just the events to the data which should be added to the s
 <span class="n">health_102_text</span> <span class="o">=</span> <span class="n">r</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
 </code></pre><pre class="highlight shell"><code>curl -X GET <span class="s2">"[endpoint]/translations/[language]/events/[event_type]"</span> <span class="se">\</span>
         -H  <span class="s2">"accept: application/json"</span> <span class="se">\</span>
-        -H  <span class="s2">"Authorization: bearer [token]"</span>
+        -H  <span class="s2">"Authorization: bearer [token]"</span> <span class="se">\</span>
+        -H  <span class="s2">"User-Agent: [user_agent]"</span>
 </code></pre>
 <blockquote>
 <p>Response example</p>
