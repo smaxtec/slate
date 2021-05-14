@@ -743,7 +743,6 @@ It should contain the name of your software and the version. e.g.: &#39;HerdMana
     <span class="s">'accept'</span><span class="p">:</span> <span class="s">'application/json'</span><span class="p">,</span>
     <span class="s">'User-Agent'</span><span class="p">:</span> <span class="n">user_agent</span><span class="p">,</span>
     <span class="s">'Authorization'</span><span class="p">:</span> <span class="s">'bearer '</span> <span class="o">+</span> <span class="n">token</span>
-
 <span class="p">}</span>
 
 <span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">route</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">)</span>
@@ -1406,7 +1405,7 @@ It should contain the name of your software and the version. e.g.: &#39;HerdMana
     </span><span class="s2">"create_ts"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2020-03-23T16:54:21+00:00"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"event_ts"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2020-03-23T00:00:00+00:00"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"event_type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"calving_confirmation"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"calving_number"</span><span class="p">:</span><span class="w"> </span><span class="mi">3</span><span class="w">
+    </span><span class="s2">"number"</span><span class="p">:</span><span class="w"> </span><span class="mi">3</span><span class="w">
   </span><span class="p">},</span><span class="w">
   </span><span class="p">{</span><span class="w">
     </span><span class="s2">"_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"5b61e5bdb493c3931a260123"</span><span class="p">,</span><span class="w">
@@ -1523,7 +1522,7 @@ It should contain the name of your software and the version. e.g.: &#39;HerdMana
     </span><span class="s2">"create_ts"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2018-08-01T16:54:21+00:00"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"event_ts"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2015-03-23T00:00:00+00:00"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"event_type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"calving_confirmation"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"calving_number"</span><span class="p">:</span><span class="w"> </span><span class="mi">3</span><span class="w">
+    </span><span class="s2">"number"</span><span class="p">:</span><span class="w"> </span><span class="mi">3</span><span class="w">
   </span><span class="p">},</span><span class="w">
   </span><span class="p">{</span><span class="w">
     </span><span class="s2">"_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"5b61e5bdb493c3931a260123"</span><span class="p">,</span><span class="w">
@@ -1921,7 +1920,7 @@ It is possible to add just the events to the data which should be added to the s
 <td></td>
 </tr>
 <tr>
-<td>calving_number</td>
+<td>number</td>
 <td>Number of calvings.</td>
 <td></td>
 </tr>
