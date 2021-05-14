@@ -75,18 +75,18 @@ It should contain the name of your software and the version. e.g.: 'HerdManagerS
 
 Several placeholders are used in this document.
 
-Placeholder        | Description                                                                              | Example
------------        | -----------                                                                              | -------
-[token]            | [Authentication](#authentication) token which can be get over the API                    | yx2zvuB8JD8ppwGti84OT8Muq5eiB2b2EZqsqC-HOXUvLSg
-[endpoint]         | Endpoint to the integration API                                                          | https://api-staging.smaxtec.com/integration/v2
-[email]            | E-mail adress from the registered user                                                   | user@smaxtec.com
-[password]         | Password from the registered user                                                        | super_secret_password
-[organisation_id]  | smaXtec intern ID of the organisation. Can be [get](#get-all-organisations) over the API | 123456qwertz
-[official_id]      | The official id of the animal. This is in the most cases the eartag of the animal.       | AT111111112
-[device_id]        | The id of a device.                                                                      | 0600000001
-[user_agent] | User - Agent                                               | HerdManagerSoftwareXYZ/2.4
-[language]         | Language of the wanted translated text.                                                  | en
-[event_type]       | [Event type](#get-all-events) of an animal event.                                        | HEALTH_102
+| Placeholder       | Description                                                                              | Example                                         |
+| ----------------- | ---------------------------------------------------------------------------------------- | ----------------------------------------------- |
+| [token]           | [Authentication](#authentication) token which can be get over the API                    | yx2zvuB8JD8ppwGti84OT8Muq5eiB2b2EZqsqC-HOXUvLSg |
+| [endpoint]        | Endpoint to the integration API                                                          | https://api-staging.smaxtec.com/integration/v2  |
+| [email]           | E-mail adress from the registered user                                                   | user@smaxtec.com                                |
+| [password]        | Password from the registered user                                                        | super_secret_password                           |
+| [organisation_id] | smaXtec intern ID of the organisation. Can be [get](#get-all-organisations) over the API | 123456qwertz                                    |
+| [official_id]     | The official id of the animal. This is in the most cases the eartag of the animal.       | AT111111112                                     |
+| [device_id]       | The id of a device.                                                                      | 0600000001                                      |
+| [user_agent]      | User - Agent                                                                             | HerdManagerSoftwareXYZ/2.4                      |
+| [language]        | Language of the wanted translated text.                                                  | en                                              |
+| [event_type]      | [Event type](#get-all-events) of an animal event.                                        | HEALTH_102                                      |
 
 # Authentication
 
@@ -212,13 +212,13 @@ This endpoint retrieves all organisations of the user. For the Integration API c
 
 **Response**
 
-Parameter       | Description
----------       | -----------
-name            | Name of the Organisation.
-organisation_id | ID of the organisation where the animal belongs to.
-permissions     | Permission the user has for this organisation.
-role            | Role the user has for this organisation.
-timezone        | Timezone of the organisation.
+| Parameter       | Description                                         |
+| --------------- | --------------------------------------------------- |
+| name            | Name of the Organisation.                           |
+| organisation_id | ID of the organisation where the animal belongs to. |
+| permissions     | Permission the user has for this organisation.      |
+| role            | Role the user has for this organisation.            |
+| timezone        | Timezone of the organisation.                       |
 
 ## Create An Organisation
 
@@ -309,22 +309,22 @@ This endpoint creates an organisation and its billing address. The smaXtec inter
 
 **URL Parameters**
 
-Parameter       | Description                                   ||
----------       | -----------                                   | ---
-name            | Name of the farm                              | `required`
-timezone        | Timezone of the farm                          | `required`
-**account**||
-name            | Name of the account                           | `required`
-vat_number      | Value added tax identification number         |
-**address**||
-line1           | First line of the address                     | `required`
-line2           | Second line of the address                    | `required`
-line3           | Third line of the address                     |
-country_code    | Country code                                  | `required`
-region          | Region                                        |
-city            | City                                          |
-postal_code     | Postal code / ZIP                             |
-address_type    | Type of the adress. (`default` or `primary`)  |
+| Parameter    | Description                                  |            |
+| ------------ | -------------------------------------------- | ---------- |
+| name         | Name of the farm                             | `required` |
+| timezone     | Timezone of the farm                         | `required` |
+| **account**  |                                              |            |
+| name         | Name of the account                          | `required` |
+| vat_number   | Value added tax identification number        |            |
+| **address**  |                                              |            |
+| line1        | First line of the address                    | `required` |
+| line2        | Second line of the address                   | `required` |
+| line3        | Third line of the address                    |            |
+| country_code | Country code                                 | `required` |
+| region       | Region                                       |            |
+| city         | City                                         |            |
+| postal_code  | Postal code / ZIP                            |            |
+| address_type | Type of the adress. (`default` or `primary`) |            |
 
 
 # Animals
@@ -346,7 +346,6 @@ headers = {
     'accept': 'application/json',
     'User-Agent': user_agent,
     'Authorization': 'bearer ' + token
-  
 }
 
 r = requests.get(route, headers=headers)
@@ -396,15 +395,15 @@ This endpoint retrieves from a provided `organisation_id` all animals.
 
 **URL Parameters**
 
-Parameter         | Description ||
----------         | ----------- | ---
-organisation_id   | ID of the organisation where the animal belongs to. | `required`
-include_archived  | Include archived animals. | default: `false`
+| Parameter        | Description                                         |                  |
+| ---------------- | --------------------------------------------------- | ---------------- |
+| organisation_id  | ID of the organisation where the animal belongs to. | `required`       |
+| include_archived | Include archived animals.                           | default: `false` |
 
 ## Get Single Animal
 
 > Request
-  
+
 ```python
 import requests
 
@@ -465,10 +464,10 @@ This endpoint retrieves from a provided `organisation_id` and `official_id` the 
 
 **URL Parameters**
 
-Parameter | Description | |
---------- | ----------- | ----
-organisation_id | ID of the organisation where the animal belongs to. | `required`
-official_id     | The official id of the animal. This is in the most cases the eartag of the animal. | `required`
+| Parameter       | Description                                                                        |            |
+| --------------- | ---------------------------------------------------------------------------------- | ---------- |
+| organisation_id | ID of the organisation where the animal belongs to.                                | `required` |
+| official_id     | The official id of the animal. This is in the most cases the eartag of the animal. | `required` |
 
 ## Create/Update Single Animal
 
@@ -554,28 +553,28 @@ This endpoint creates/updates an animal which is in the organisation with `organ
 
 **URL Parameters**
 
-Parameter         | Description ||
----------         | ----------- | ---
-organisation_id   | ID of the organisation where the animal belongs to. | `required`
-official_id       | The official id of the animal. This is in the most cases the eartag of the animal. | `required`
-||
-_id               | Internal ID for the animal. Can't be changed.
-archived          | When the animal is archived (inactive) the archived is set to `true`.
-birthday          | Day of birth of the animal.
-created_at        | The creation time of the animal in the smaXtec system. Can't be changed.
-current_device_id | The ID of the device which is currently active in the animal.
-display_name      | Composition of the official ID and the name of the animal.
-group_id          | ID of the group where the animal is currently in.
-lactation_status  | Status of the cow. Possible parameters: `Young_Cow`, `Lactating_Cow`, `Dry_Cow`. Changes according to events.
-location          | Location where the cow currently is.
-mark              | Animal number. | `required` for creation.
-mixed_race        | When the animal is a breed of two or more races. Example: `"mixed_race": [{"race": "ANGLER", "percent": 22}, ` `{"race": "FLECKVIEW", "percent": 78}]`. The percent needs to sum up to 100. If mixed race is set `"race": "mixed"`.
-name              | Name of the animal.
-official_id       | Official ID (ear tag) of the animal. Needs to be unique in the organisation. If the official_id is in the data of the PUT methode and is different from the route the official_id gets updated.
-official_id_rule  | The rule how the official_id should be formated/stored. Possible parameters: `AT`, `BE`, `BG`, etc. (country code).
-organisation_id   | ID of the organisation where the animal belongs to.
-race              | Race of the animal.
-tags              | Tags which can be given to the animals. Example: `"tags": ["sold"]`.
+| Parameter         | Description                                                                                                                                                                                                                         |                          |
+| ----------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------ |
+| organisation_id   | ID of the organisation where the animal belongs to.                                                                                                                                                                                 | `required`               |
+| official_id       | The official id of the animal. This is in the most cases the eartag of the animal.                                                                                                                                                  | `required`               |
+|                   |
+| _id               | Internal ID for the animal. Can't be changed.                                                                                                                                                                                       |
+| archived          | When the animal is archived (inactive) the archived is set to `true`.                                                                                                                                                               |
+| birthday          | Day of birth of the animal.                                                                                                                                                                                                         |
+| created_at        | The creation time of the animal in the smaXtec system. Can't be changed.                                                                                                                                                            |
+| current_device_id | The ID of the device which is currently active in the animal.                                                                                                                                                                       |
+| display_name      | Composition of the official ID and the name of the animal.                                                                                                                                                                          |
+| group_id          | ID of the group where the animal is currently in.                                                                                                                                                                                   |
+| lactation_status  | Status of the cow. Possible parameters: `Young_Cow`, `Lactating_Cow`, `Dry_Cow`. Changes according to events.                                                                                                                       |
+| location          | Location where the cow currently is.                                                                                                                                                                                                |
+| mark              | Animal number.                                                                                                                                                                                                                      | `required` for creation. |
+| mixed_race        | When the animal is a breed of two or more races. Example: `"mixed_race": [{"race": "ANGLER", "percent": 22}, ` `{"race": "FLECKVIEW", "percent": 78}]`. The percent needs to sum up to 100. If mixed race is set `"race": "mixed"`. |
+| name              | Name of the animal.                                                                                                                                                                                                                 |
+| official_id       | Official ID (ear tag) of the animal. Needs to be unique in the organisation. If the official_id is in the data of the PUT methode and is different from the route the official_id gets updated.                                     |
+| official_id_rule  | The rule how the official_id should be formated/stored. Possible parameters: `AT`, `BE`, `BG`, etc. (country code).                                                                                                                 |
+| organisation_id   | ID of the organisation where the animal belongs to.                                                                                                                                                                                 |
+| race              | Race of the animal.                                                                                                                                                                                                                 |
+| tags              | Tags which can be given to the animals. Example: `"tags": ["sold"]`.                                                                                                                                                                |
 
 
 ## Get Animal Metrics
@@ -649,28 +648,28 @@ This Endpoint retrieves all metrics and the corresponding availlable units from 
 
 **URL Parameters**
 
-Parameter | Description ||
---------- | ----------- | ---
-organisation_id | ID of the organisation where the animal belongs to. | `required`
-official_id | The official id of the animal. This is in the most cases the eartag of the animal. | `required`
+| Parameter       | Description                                                                        |            |
+| --------------- | ---------------------------------------------------------------------------------- | ---------- |
+| organisation_id | ID of the organisation where the animal belongs to.                                | `required` |
+| official_id     | The official id of the animal. This is in the most cases the eartag of the animal. | `required` |
 
 **Available Metrics**
 
-Metric | Visible in messenger | Short description |
---------- | ----------- | --------- |
-act_index | ✓ `default` | Smoothed version of act (rolling mean)
-temp | ✓ `default` | Temperature
-temp_normal_index | ✓ `default` | Normal temperature of the animal calculated by 70% of `temp_without_drink_cycles` in the last 5d.
-heat_index | ✓ `optional` | Used for thresholding for the heat events
-ph | ✓ `premium only` | Show the ph value
-rum_index | ✓ `SX.2 only` | The sums up boolean indicators whether that cow has possibly ruminated at a given time or not
-act |  ✕ | Activity
-act_heat_index_smart | ✕| Smoothes of the current selected heat algorithm
-drink_cycles_v2 | ✕ | Detect a spike in the temperature that is considered as a drinking phase
-temp_dec_index | ✕ | A simple outlier detection based on the difference between two moving avarager filters od different lengths
-temp_height_index | ✕ | The difference between `temp_normal_index` and `temp_without_drink_cycles`
-temp_inc_index | ✕ | Not available anymore
-temp_without_drink_cycles | ✕ | Fast decreases in the temperature signal (drink spikes)
+| Metric                    | Visible in messenger | Short description                                                                                           |
+| ------------------------- | -------------------- | ----------------------------------------------------------------------------------------------------------- |
+| act_index                 | ✓ `default`          | Smoothed version of act (rolling mean)                                                                      |
+| temp                      | ✓ `default`          | Temperature                                                                                                 |
+| temp_normal_index         | ✓ `default`          | Normal temperature of the animal calculated by 70% of `temp_without_drink_cycles` in the last 5d.           |
+| heat_index                | ✓ `optional`         | Used for thresholding for the heat events                                                                   |
+| ph                        | ✓ `premium only`     | Show the ph value                                                                                           |
+| rum_index                 | ✓ `SX.2 only`        | The sums up boolean indicators whether that cow has possibly ruminated at a given time or not               |
+| act                       | ✕                    | Activity                                                                                                    |
+| act_heat_index_smart      | ✕                    | Smoothes of the current selected heat algorithm                                                             |
+| drink_cycles_v2           | ✕                    | Detect a spike in the temperature that is considered as a drinking phase                                    |
+| temp_dec_index            | ✕                    | A simple outlier detection based on the difference between two moving avarager filters od different lengths |
+| temp_height_index         | ✕                    | The difference between `temp_normal_index` and `temp_without_drink_cycles`                                  |
+| temp_inc_index            | ✕                    | Not available anymore                                                                                       |
+| temp_without_drink_cycles | ✕                    | Fast decreases in the temperature signal (drink spikes)                                                     |
 
 
 
@@ -768,16 +767,16 @@ This endpoint retrieves from a provided `organisation_id` and `official_id` data
 
 **URL Parameters**
 
-Parameter | Description ||
---------- | ----------- | ---
-organisation_id | ID of the organisation where the animal belongs to. | `required`
-official_id | The official id of the animal. This is in the most cases the eartag of the animal. | `required`
-||
-metrics | The list of metrics where data is wanted. | `required`
-from_date | The start date from the period where data is wanted. | `required`
-to_date | The end date from the period where data is wanted. | `required`
-aggregation_period | The period of data points. Either 10 minutes or 1 hour.
-preferred_units | The units which are prefered. For example: "act", "degree_celsius", "degree_fahrenheit".
+| Parameter          | Description                                                                              |            |
+| ------------------ | ---------------------------------------------------------------------------------------- | ---------- |
+| organisation_id    | ID of the organisation where the animal belongs to.                                      | `required` |
+| official_id        | The official id of the animal. This is in the most cases the eartag of the animal.       | `required` |
+|                    |
+| metrics            | The list of metrics where data is wanted.                                                | `required` |
+| from_date          | The start date from the period where data is wanted.                                     | `required` |
+| to_date            | The end date from the period where data is wanted.                                       | `required` |
+| aggregation_period | The period of data points. Either 10 minutes or 1 hour.                                  |
+| preferred_units    | The units which are prefered. For example: "act", "degree_celsius", "degree_fahrenheit". |
 
 # Events
 
@@ -830,7 +829,7 @@ curl -X GET "[endpoint]/organisations/[organisation_id]/events?min_create_ts=201
     "create_ts": "2020-03-23T16:54:21+00:00",
     "event_ts": "2020-03-23T00:00:00+00:00",
     "event_type": "calving_confirmation",
-    "calving_number": 3
+    "number": 3
   },
   {
     "_id": "5b61e5bdb493c3931a260123",
@@ -883,12 +882,12 @@ This endpoint retrieves from a provided `organisation_id` the events of the anim
 
 **URL Parameters**
 
-Parameter | Description ||
---------- | ----------- | ---
-organisation_id | ID of the organisation where the animal belongs to. | `required`
-official_id | The official id of the animal. This is in the most cases the eartag of the animal. |
-min_create_ts | The minimum creation timestamp of the events. |
-min_event_ts | The minimum event timestamp of the events. |
+| Parameter       | Description                                                                        |            |
+| --------------- | ---------------------------------------------------------------------------------- | ---------- |
+| organisation_id | ID of the organisation where the animal belongs to.                                | `required` |
+| official_id     | The official id of the animal. This is in the most cases the eartag of the animal. |
+| min_create_ts   | The minimum creation timestamp of the events.                                      |
+| min_event_ts    | The minimum event timestamp of the events.                                         |
 
 ## Get Events by official_id
 
@@ -932,7 +931,7 @@ curl -X GET "[endpoint]/organisations/[organisation_id]/animals/[official_id]/ev
     "create_ts": "2018-08-01T16:54:21+00:00",
     "event_ts": "2015-03-23T00:00:00+00:00",
     "event_type": "calving_confirmation",
-    "calving_number": 3
+    "number": 3
   },
   {
     "_id": "5b61e5bdb493c3931a260123",
@@ -985,51 +984,51 @@ This endpoint retrieves from a provided `organisation_id` and `official_id` the 
 
 **URL Parameters**
 
-Parameter | Description ||
---------- | ----------- | ---
-organisation_id | ID of the organisation where the animal belongs to. | `required`
-official_id | The official id of the animal. This is in the most cases the eartag of the animal. | `required`
+| Parameter       | Description                                                                        |            |
+| --------------- | ---------------------------------------------------------------------------------- | ---------- |
+| organisation_id | ID of the organisation where the animal belongs to.                                | `required` |
+| official_id     | The official id of the animal. This is in the most cases the eartag of the animal. | `required` |
 
 **Event Types**
 
 The smaXtec system has the following event types.
 
-Event Type           | Description
-----------           | -----------
-heat                 | Detection of a heat
-insemination         | Inseminated of an animal
-pregnancy_result     | A positive or negative pregnancy result
-calving_detection    | Detection of a calving
-dry_off              | Dry off
-calving_confirmation | Confirmation of a calving
-waiting_for_calving  | Few days before calving
-abort                | Abortion of a pregnancy which can be a late abort
-information_update   | Updating information
-diagnosis            | Diagnose
-health_101           | Insufficient water intake
-health_102           | Increase in drinking cycles
-health_103           | Reduced drinking cycles
-health_104           | Temperature increase
-health_106           | Temperature drop
-health_301           | Rumination decrease and cow is dry
-health_302           | Rumination decrease and cow is close up
-health_303           | Rumination decrease and cow is around calving
-health_304           | Rumination decrease and cow is a fresh cow
-health_305           | Rumination decrease and cow is lactating
-health_601           | THI ≥ 72 Heat stress
-health_602           | THI ≥ 78 Heat stress
-health_603           | THI ≥ 82 Heat stress
-health_703           | Drop in activity
-feeding_201          | Feed efficiency
-feeding_202          | Risk of acidosis
-feeding_203          | Increase in average pH
-feeding_204          | Drop in average pH
-feeding_205          | Increase in 12h pH
-feeding_206          | Drop in 12h pH
-fertility_105        | Indication of imminent calving
-fertility_702        | Oestrus
-actincrease_701      | Increase in activity
-actincrease_704      | Increase in activity
+| Event Type           | Description                                       |
+| -------------------- | ------------------------------------------------- |
+| heat                 | Detection of a heat                               |
+| insemination         | Inseminated of an animal                          |
+| pregnancy_result     | A positive or negative pregnancy result           |
+| calving_detection    | Detection of a calving                            |
+| dry_off              | Dry off                                           |
+| calving_confirmation | Confirmation of a calving                         |
+| waiting_for_calving  | Few days before calving                           |
+| abort                | Abortion of a pregnancy which can be a late abort |
+| information_update   | Updating information                              |
+| diagnosis            | Diagnose                                          |
+| health_101           | Insufficient water intake                         |
+| health_102           | Increase in drinking cycles                       |
+| health_103           | Reduced drinking cycles                           |
+| health_104           | Temperature increase                              |
+| health_106           | Temperature drop                                  |
+| health_301           | Rumination decrease and cow is dry                |
+| health_302           | Rumination decrease and cow is close up           |
+| health_303           | Rumination decrease and cow is around calving     |
+| health_304           | Rumination decrease and cow is a fresh cow        |
+| health_305           | Rumination decrease and cow is lactating          |
+| health_601           | THI ≥ 72 Heat stress                              |
+| health_602           | THI ≥ 78 Heat stress                              |
+| health_603           | THI ≥ 82 Heat stress                              |
+| health_703           | Drop in activity                                  |
+| feeding_201          | Feed efficiency                                   |
+| feeding_202          | Risk of acidosis                                  |
+| feeding_203          | Increase in average pH                            |
+| feeding_204          | Drop in average pH                                |
+| feeding_205          | Increase in 12h pH                                |
+| feeding_206          | Drop in 12h pH                                    |
+| fertility_105        | Indication of imminent calving                    |
+| fertility_702        | Oestrus                                           |
+| actincrease_701      | Increase in activity                              |
+| actincrease_704      | Increase in activity                              |
 
 ## Create Events
 
@@ -1099,39 +1098,39 @@ It is possible to add just the events to the data which should be added to the s
 
 **URL Parameters**
 
-Parameter       | Description | |
----------       | ----------- | ----
-organisation_id | The ID of the organisation which the animals belong to. | `required`
-official_id     | The official id of the animal. This is in the most cases the eartag of the animal. | `required`
-||
-_id             | ID of the Event in the smaXtec system.
-animal_id       | ID of the Aniamal in the smaXtec system.
-create_ts       | Time when the event was created.
-event_ts        | Time when the event happened.
-event_type      | Type of the event.
-||
-**Heat Parameters**                 |
-cycle_length                        | Length of the current cycle.
-reason                              | The reason why the heat was added.
-||
-**Insemination Parameters**         |
-days_to_calving                     | Days from the insamination untill the expected calving date. Default: `280`
-||
-**Pregnancy Result Parameters**     |
-expected_calving_date               | Date when the calving is expected.
-insemination_date                   | Date of the insamination which led to the pregnancy result. If no prior insemination on that date is saved an insemination event on that date will be created.
-pregnant                            | If the pregnancy resutl was positive (true) or negative (false).
-||
-**Calving Confirmation Parameters** |
-calving_number                      | Number of calvings.
-||
-**Abort Parameters**                |
-late_abort                          | When the cow was long enough pregnant so that the cow is lactating then `late_abort` is `true`.
-||
-**Diagnosis**                       |
-icar_key                            | ICAR key for the diagnosis.
-diagnosis_key                       | If an own key for diagnosis is used, it should be set here.
-diagnosis_key_type                  | If an own key for diagnosis is used, a type of the diagnosis_key should be defined. eg.: `MY_OWN_KEY_DEFENITION_SYSTEM`
+| Parameter                           | Description                                                                                                                                                    |            |
+| ----------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------- |
+| organisation_id                     | The ID of the organisation which the animals belong to.                                                                                                        | `required` |
+| official_id                         | The official id of the animal. This is in the most cases the eartag of the animal.                                                                             | `required` |
+|                                     |
+| _id                                 | ID of the Event in the smaXtec system.                                                                                                                         |
+| animal_id                           | ID of the Aniamal in the smaXtec system.                                                                                                                       |
+| create_ts                           | Time when the event was created.                                                                                                                               |
+| event_ts                            | Time when the event happened.                                                                                                                                  |
+| event_type                          | Type of the event.                                                                                                                                             |
+|                                     |
+| **Heat Parameters**                 |
+| cycle_length                        | Length of the current cycle.                                                                                                                                   |
+| reason                              | The reason why the heat was added.                                                                                                                             |
+|                                     |
+| **Insemination Parameters**         |
+| days_to_calving                     | Days from the insamination untill the expected calving date. Default: `280`                                                                                    |
+|                                     |
+| **Pregnancy Result Parameters**     |
+| expected_calving_date               | Date when the calving is expected.                                                                                                                             |
+| insemination_date                   | Date of the insamination which led to the pregnancy result. If no prior insemination on that date is saved an insemination event on that date will be created. |
+| pregnant                            | If the pregnancy resutl was positive (true) or negative (false).                                                                                               |
+|                                     |
+| **Calving Confirmation Parameters** |
+| number                              | Number of calvings.                                                                                                                                            |
+|                                     |
+| **Abort Parameters**                |
+| late_abort                          | When the cow was long enough pregnant so that the cow is lactating then `late_abort` is `true`.                                                                |
+|                                     |
+| **Diagnosis**                       |
+| icar_key                            | ICAR key for the diagnosis.                                                                                                                                    |
+| diagnosis_key                       | If an own key for diagnosis is used, it should be set here.                                                                                                    |
+| diagnosis_key_type                  | If an own key for diagnosis is used, a type of the diagnosis_key should be defined. eg.: `MY_OWN_KEY_DEFENITION_SYSTEM`                                        |
 
 
 # Devices
@@ -1191,10 +1190,10 @@ This call delivers all devices of the given organisation if the parameter 'all' 
 
 **URL Parameters**
 
-Parameter         | Description ||
----------         | ----------- | ---
-organisation_id   | ID of the organisation where the animal belongs to. | `required`
-device_type   | 'all' represents all devices.
+| Parameter       | Description                                         |            |
+| --------------- | --------------------------------------------------- | ---------- |
+| organisation_id | ID of the organisation where the animal belongs to. | `required` |
+| device_type     | 'all' represents all devices.                       |
 
 
 ## Get Device Stats
@@ -1253,10 +1252,10 @@ This call delivers data about the last readout.
 
 **URL Parameters**
 
-Parameter         | Description ||
----------         | ----------- | ---
-organisation_id   | ID of the organisation where the animal belongs to. | `required`
-device_id         | ID of the device | `required`
+| Parameter       | Description                                         |            |
+| --------------- | --------------------------------------------------- | ---------- |
+| organisation_id | ID of the organisation where the animal belongs to. | `required` |
+| device_id       | ID of the device                                    | `required` |
 
 
 ## Get Device Data
@@ -1352,17 +1351,17 @@ This endpoint retrives from a specific `organisation_id` and `device_id` the cor
 
 **URL Parameters**
 
-Parameter | Description ||
---------- | ----------- | ---
-organisation_id     | ID of the organisation where the animal belongs to.   | `required`
-device_id           | The ID of the device.                                 | `required`
-||
-metrics             | The list of metrics which are wanted.                 | `required`
-from_date           | The start date from the period of data.               | `required`
-to_date             | The end date from the period of data.                 | `required`
-timestamp_format    | The format of the provided time stamps. (`iso`, `utc`, `local` or `tuple`)
-aggregation_period  | The period of data points. Either 10 minutes or 1 hour. (`10minutes` or `hourly`)
-preferred_units     | The units which are prefered. For example: `act`, `degree_celsius`, `degree_fahrenheit`.
+| Parameter          | Description                                                                              |            |
+| ------------------ | ---------------------------------------------------------------------------------------- | ---------- |
+| organisation_id    | ID of the organisation where the animal belongs to.                                      | `required` |
+| device_id          | The ID of the device.                                                                    | `required` |
+|                    |                                                                                          |            |
+| metrics            | The list of metrics which are wanted.                                                    | `required` |
+| from_date          | The start date from the period of data.                                                  | `required` |
+| to_date            | The end date from the period of data.                                                    | `required` |
+| timestamp_format   | The format of the provided time stamps. (`iso`, `utc`, `local` or `tuple`)               |            |
+| aggregation_period | The period of data points. Either 10 minutes or 1 hour. (`10minutes` or `hourly`)        |            |
+| preferred_units    | The units which are prefered. For example: `act`, `degree_celsius`, `degree_fahrenheit`. |            |
 
 
 # Translations
@@ -1429,11 +1428,11 @@ With this call translations for the animal events can be accessed for various la
 
 **Response**
 
-Key           | Descrition
----           | ----------
-`KEYWORD`     | Keywords for the event translation.
-`TITLE`       | Short description.
-`DESCRIPTION` | Detailed information about the event.
+| Key           | Descrition                            |
+| ------------- | ------------------------------------- |
+| `KEYWORD`     | Keywords for the event translation.   |
+| `TITLE`       | Short description.                    |
+| `DESCRIPTION` | Detailed information about the event. |
 
 ## Get single Event Translations
 
