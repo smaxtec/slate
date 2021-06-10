@@ -792,7 +792,6 @@ import requests
 
 endpoint = 'https://api-staging.smaxtec.com/integration/v2'
 organisation_id = '123456qwertz'
-official_id = 'AT111111112'
 route = endpoint + '/organisations/' + organisation_id + '/events'
 token = 'yx2zvuB8JD8ppwGti84OT8Muq5eiB2b2EZqsqC-HOXUvLSg'
 user_agent = 'HerdManagerSoftwareXYZ/2.4'
@@ -886,7 +885,6 @@ This endpoint retrieves from a provided `organisation_id` the events of the anim
 Parameter | Description ||
 --------- | ----------- | ---
 organisation_id | ID of the organisation where the animal belongs to. | `required`
-official_id | The official id of the animal. This is in the most cases the eartag of the animal. |
 min_create_ts | The minimum creation timestamp of the events. |
 min_event_ts | The minimum event timestamp of the events. |
 
@@ -909,14 +907,19 @@ headers = {
     'Authorization': 'bearer ' + token
 }
 
-r = requests.get(route, headers=headers)
+data = {
+    "min_create_ts": "2016-07-30T12:22:16",
+    "min_event_ts": "2016-07-21T12:22:16"
+}
+
+r = requests.get(route, data=data, headers=headers)
 
 status_code = r.status_code
 all_animal_events = r.json()
 ```
 
 ```bash
-curl -X GET "[endpoint]/organisations/[organisation_id]/animals/[official_id]/events" \
+curl -X GET "[endpoint]/organisations/[organisation_id]/animals/[official_id]/events?min_create_ts=2016-07-30T13%3A04%3A52&min_event_ts=2016-07-21T13%3A04%3A52" \
         -H  "accept: application/json" \
         -H  "Authorization: bearer [token]" \
         -H  "User-Agent: [user_agent]"
@@ -988,7 +991,9 @@ This endpoint retrieves from a provided `organisation_id` and `official_id` the 
 Parameter | Description ||
 --------- | ----------- | ---
 organisation_id | ID of the organisation where the animal belongs to. | `required`
-official_id | The official id of the animal. This is in the most cases the eartag of the animal. | `required`
+official_id     | The official id of the animal. This is in the most cases the eartag of the animal. | `required`
+min_create_ts | The minimum creation timestamp of the events. |
+min_event_ts | The minimum event timestamp of the events. |
 
 **Event Types**
 
