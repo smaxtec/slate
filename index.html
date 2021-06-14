@@ -1371,7 +1371,6 @@ It should contain the name of your software and the version. e.g.: &#39;HerdMana
 
 <span class="n">endpoint</span> <span class="o">=</span> <span class="s">'https://api-staging.smaxtec.com/integration/v2'</span>
 <span class="n">organisation_id</span> <span class="o">=</span> <span class="s">'123456qwertz'</span>
-<span class="n">official_id</span> <span class="o">=</span> <span class="s">'AT111111112'</span>
 <span class="n">route</span> <span class="o">=</span> <span class="n">endpoint</span> <span class="o">+</span> <span class="s">'/organisations/'</span> <span class="o">+</span> <span class="n">organisation_id</span> <span class="o">+</span> <span class="s">'/events'</span>
 <span class="n">token</span> <span class="o">=</span> <span class="s">'yx2zvuB8JD8ppwGti84OT8Muq5eiB2b2EZqsqC-HOXUvLSg'</span>
 <span class="n">user_agent</span> <span class="o">=</span> <span class="s">'HerdManagerSoftwareXYZ/2.4'</span>
@@ -1470,11 +1469,6 @@ It should contain the name of your software and the version. e.g.: &#39;HerdMana
 <td><code>required</code></td>
 </tr>
 <tr>
-<td>official_id</td>
-<td>The official id of the animal. This is in the most cases the eartag of the animal.</td>
-<td></td>
-</tr>
-<tr>
 <td>min_create_ts</td>
 <td>The minimum creation timestamp of the events.</td>
 <td></td>
@@ -1503,11 +1497,16 @@ It should contain the name of your software and the version. e.g.: &#39;HerdMana
     <span class="s">'Authorization'</span><span class="p">:</span> <span class="s">'bearer '</span> <span class="o">+</span> <span class="n">token</span>
 <span class="p">}</span>
 
-<span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">route</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">)</span>
+<span class="n">data</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s">"min_create_ts"</span><span class="p">:</span> <span class="s">"2016-07-30T12:22:16"</span><span class="p">,</span>
+    <span class="s">"min_event_ts"</span><span class="p">:</span> <span class="s">"2016-07-21T12:22:16"</span>
+<span class="p">}</span>
+
+<span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">route</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">)</span>
 
 <span class="n">status_code</span> <span class="o">=</span> <span class="n">r</span><span class="o">.</span><span class="n">status_code</span>
 <span class="n">all_animal_events</span> <span class="o">=</span> <span class="n">r</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
-</code></pre><pre class="highlight shell"><code>curl -X GET <span class="s2">"[endpoint]/organisations/[organisation_id]/animals/[official_id]/events"</span> <span class="se">\</span>
+</code></pre><pre class="highlight shell"><code>curl -X GET <span class="s2">"[endpoint]/organisations/[organisation_id]/animals/[official_id]/events?min_create_ts=2016-07-30T13%3A04%3A52&amp;min_event_ts=2016-07-21T13%3A04%3A52"</span> <span class="se">\</span>
         -H  <span class="s2">"accept: application/json"</span> <span class="se">\</span>
         -H  <span class="s2">"Authorization: bearer [token]"</span> <span class="se">\</span>
         -H  <span class="s2">"User-Agent: [user_agent]"</span>
@@ -1590,6 +1589,16 @@ It should contain the name of your software and the version. e.g.: &#39;HerdMana
 <td>official_id</td>
 <td>The official id of the animal. This is in the most cases the eartag of the animal.</td>
 <td><code>required</code></td>
+</tr>
+<tr>
+<td>min_create_ts</td>
+<td>The minimum creation timestamp of the events.</td>
+<td></td>
+</tr>
+<tr>
+<td>min_event_ts</td>
+<td>The minimum event timestamp of the events.</td>
+<td></td>
 </tr>
 </tbody></table>
 
