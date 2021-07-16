@@ -239,6 +239,9 @@
                     <a href="#user-agent" class="toc-h2 toc-link" data-title="User-Agent">User-Agent</a>
                   </li>
                   <li>
+                    <a href="#datetime" class="toc-h2 toc-link" data-title="Datetime">Datetime</a>
+                  </li>
+                  <li>
                     <a href="#placeholder" class="toc-h2 toc-link" data-title="Placeholder">Placeholder</a>
                   </li>
               </ul>
@@ -342,23 +345,23 @@
 
 <p>The <em>staging</em> endpoint can be used for <strong>testing</strong>.</p>
 <h2 id='parameters-and-responses'>Parameters and Responses</h2>
-<p>The parameters in the data of the PUT API calls and the response of the GET/PUT API calls are the same. This means that the output can be taken and provided to a PUT methode.</p>
+<p>The parameters in the data of the PUT API calls and the response of the GET/PUT API calls are the same. This means that the output can be taken and provided to a PUT method.</p>
 <h2 id='user-registration'>User Registration</h2>
 <p>The registration is done via the <a href="https://messenger.smaxtec.com">smaXtec messenger</a>.</p>
 
 <p>If the user is registered over the <a href="https://messenger-staging.smaxtec.com">smaXtec staging messenger</a> no registration e-mail is sent. You need to contact us so we can activate your user.</p>
 <h2 id='common-tasks'>Common Tasks</h2>
-<p>For all common tasks the <a href="#authentication">authetication</a> is necessary.</p>
+<p>For all common tasks the <a href="#authentication">authentication</a> is necessary.</p>
 <h3 id='get-organisation-of-user'>Get Organisation of User</h3>
 <p>One user can have multiple organisations. With the logged in user the user can <a href="#get-all-organisations">get all organisations</a>.</p>
 <h3 id='add-or-update-an-animal'>Add or Update an Animal</h3>
 <p>For adding an animal to an organisation (<code>organisation_id</code>) at least the required fields in the animal data (link to animal parameters) need to be filled in. With the <a href="#create-update-single-animal">PUT call</a> the animal can be added.</p>
 
-<p>For updating an animal the <code>organisation_id</code> and the <code>official_id</code> of the animal, which should be updated, need to be in the route. Write all changing parameters in the data and use the <a href="#create-update-single-animal">animal PUT</a> methode. The response of the animal calls can be put in as data to the animal put call. Changes are detected and are applied.</p>
+<p>For updating an animal the <code>organisation_id</code> and the <code>official_id</code> of the animal, which should be updated, need to be in the route. Write all changing parameters in the data and use the <a href="#create-update-single-animal">animal PUT</a> method. The response of the animal calls can be put in as data to the animal put call. Changes are detected and are applied.</p>
 <h3 id='add-heat-insemination-pregnancy-result-dry-off-calving-confirmation-abort-and-diagnosis'>Add heat, insemination, pregnancy result, dry off, calving confirmation, abort and diagnosis</h3>
-<p>These occurrences are stored as <a href="#events">events</a> where insemination, pregnancy result, calving confirmation and abort are the event types. To add an event the event type (<code>event_type</code>) and the event time (<code>event_ts</code>) need to be provided to the <a href="#create-events">event PUT methode</a>. Regarding of the type additional information can be added which is listed in the parameter list.</p>
+<p>These occurrences are stored as <a href="#events">events</a> where insemination, pregnancy result, calving confirmation and abort are the event types. To add an event the event type (<code>event_type</code>) and the event time (<code>event_ts</code>) need to be provided to the <a href="#create-events">event PUT method</a>. Regarding of the type additional information can be added which is listed in the parameter list.</p>
 
-<p>The cronical order of an animal life and how the events happen is the following:</p>
+<p>The chronological order of an animal life and how the events happen is the following:</p>
 
 <p><code>-&gt; heat -&gt; insemination -&gt; pregnancy_result -&gt; dry_off -&gt; calving_confirmation -&gt;</code></p>
 
@@ -370,6 +373,8 @@
 <h2 id='user-agent'>User-Agent</h2>
 <p>The <em>user-agent</em> should be used so that we know which client is requesting or sending data to us.
 It should contain the name of your software and the version. e.g.: &#39;HerdManagerSoftwareXYZ/2.4&#39;</p>
+<h2 id='datetime'>Datetime</h2>
+<p>Fields which store the date and time are formatted in the ISO 8601 standard. For example <code>2016-10-01T14:00:00+00:00</code>. Some fields contain ms as well, but they can be ignored.</p>
 <h2 id='placeholder'>Placeholder</h2>
 <p>Several placeholders are used in this document.</p>
 
@@ -392,7 +397,7 @@ It should contain the name of your software and the version. e.g.: &#39;HerdMana
 </tr>
 <tr>
 <td>[email]</td>
-<td>E-mail adress from the registered user</td>
+<td>E-mail address from the registered user</td>
 <td>user@smaxtec.com</td>
 </tr>
 <tr>
@@ -474,6 +479,8 @@ It should contain the name of your software and the version. e.g.: &#39;HerdMana
 
 <p><code>-H &quot;authorization: Bearer yx2zvuB8JD8ppwGti84OT8Muq5eiB2b2EZqsqC-HOXUvLSg&quot;</code></p>
 
+<p>The token expires after 24 hours.</p>
+
 <aside class="notice">The authorization header is needed in all following calls.</aside>
 
 <p><strong>HTTP Request</strong></p>
@@ -531,7 +538,7 @@ It should contain the name of your software and the version. e.g.: &#39;HerdMana
   </span><span class="p">}</span><span class="w">
 </span><span class="p">]</span><span class="w">
 </span></code></pre>
-<p>This endpoint retrieves all organisations of the user. For the Integration API calls the <code>organisation_id</code> is needed to make changes to the animals of the organsation.</p>
+<p>This endpoint retrieves all organisations of the user. For the Integration API calls the <code>organisation_id</code> is needed to make changes to the animals of the organisation.</p>
 
 <p><strong>HTTP Request</strong></p>
 
@@ -723,7 +730,7 @@ It should contain the name of your software and the version. e.g.: &#39;HerdMana
 </tr>
 <tr>
 <td>address_type</td>
-<td>Type of the adress. (<code>default</code> or <code>primary</code>)</td>
+<td>Type of the address. (<code>default</code> or <code>primary</code>)</td>
 <td></td>
 </tr>
 </tbody></table>
@@ -951,7 +958,7 @@ It should contain the name of your software and the version. e.g.: &#39;HerdMana
   </span><span class="s2">"tags"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"sold"</span><span class="p">]</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
-<p>This endpoint creates/updates an animal which is in the organisation with <code>organisation_id</code> and the <code>official_id</code>. If the animal is created or updated depends. If the animal with the provided <code>official_id</code> exists in the organisation, it gets updated. Otherwise the animal gets created. The animal response can be used as a input for thes call and just the parameters that are needed to be updated can be replaced.</p>
+<p>This endpoint creates/updates an animal which is in the organisation with <code>organisation_id</code> and the <code>official_id</code>. If the animal is created or updated depends. If the animal with the provided <code>official_id</code> exists in the organisation, it gets updated. Otherwise the animal gets created. The animal response can be used as a input for these call and just the parameters that are needed to be updated can be replaced.</p>
 
 <p><strong>HTTP Request</strong></p>
 
@@ -1043,12 +1050,12 @@ It should contain the name of your software and the version. e.g.: &#39;HerdMana
 </tr>
 <tr>
 <td>official_id</td>
-<td>Official ID (ear tag) of the animal. Needs to be unique in the organisation. If the official_id is in the data of the PUT methode and is different from the route the official_id gets updated.</td>
+<td>Official ID (ear tag) of the animal. Needs to be unique in the organisation. If the official_id is in the data of the PUT method and is different from the route the official_id gets updated.</td>
 <td></td>
 </tr>
 <tr>
 <td>official_id_rule</td>
-<td>The rule how the official_id should be formated/stored. Possible parameters: <code>AT</code>, <code>BE</code>, <code>BG</code>, etc. (country code).</td>
+<td>The rule how the official_id should be formatted/stored. Possible parameters: <code>AT</code>, <code>BE</code>, <code>BG</code>, etc. (country code).</td>
 <td></td>
 </tr>
 <tr>
@@ -1123,7 +1130,7 @@ It should contain the name of your software and the version. e.g.: &#39;HerdMana
     </span><span class="p">}</span><span class="w">
 </span><span class="p">]</span><span class="w">
 </span></code></pre>
-<p>This Endpoint retrieves all metrics and the corresponding availlable units from an animal which is in the organisation with <code>organisation_id</code> and the <code>official_id</code>.</p>
+<p>This Endpoint retrieves all metrics and the corresponding available units from an animal which is in the organisation with <code>organisation_id</code> and the <code>official_id</code>.</p>
 
 <p><strong>HTTP Request</strong></p>
 
@@ -1161,27 +1168,32 @@ It should contain the name of your software and the version. e.g.: &#39;HerdMana
 </thead><tbody>
 <tr>
 <td>act_index</td>
-<td>✓ <code>default</code></td>
+<td>✓</td>
 <td>Smoothed version of act (rolling mean)</td>
 </tr>
 <tr>
 <td>temp</td>
-<td>✓ <code>default</code></td>
+<td>✓</td>
 <td>Temperature</td>
 </tr>
 <tr>
 <td>temp_normal_index</td>
-<td>✓ <code>default</code></td>
+<td>✓</td>
 <td>Normal temperature of the animal calculated by 70% of <code>temp_without_drink_cycles</code> in the last 5d.</td>
 </tr>
 <tr>
 <td>heat_index</td>
-<td>✓ <code>optional</code></td>
-<td>Used for thresholding for the heat events</td>
+<td>✓</td>
+<td>Used for thresholding for the <code>heat</code> events</td>
+</tr>
+<tr>
+<td>calving_index</td>
+<td>✓</td>
+<td>Used for thresholding for the <code>calving_detection</code> events</td>
 </tr>
 <tr>
 <td>ph</td>
-<td>✓ <code>premium only</code></td>
+<td>✓ <code>premium bolus only</code></td>
 <td>Show the ph value</td>
 </tr>
 <tr>
@@ -1207,7 +1219,7 @@ It should contain the name of your software and the version. e.g.: &#39;HerdMana
 <tr>
 <td>temp_dec_index</td>
 <td>✕</td>
-<td>A simple outlier detection based on the difference between two moving avarager filters od different lengths</td>
+<td>A simple outlier detection based on the difference between two moving average filters of different lengths</td>
 </tr>
 <tr>
 <td>temp_height_index</td>
@@ -1268,37 +1280,37 @@ It should contain the name of your software and the version. e.g.: &#39;HerdMana
 </blockquote>
 <pre class="highlight json tab-json"><code><span class="p">[</span><span class="w">
     </span><span class="p">{</span><span class="s2">"metric"</span><span class="p">:</span><span class="w"> </span><span class="s2">"temp"</span><span class="p">,</span><span class="w"> </span><span class="s2">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
-            </span><span class="p">[</span><span class="s2">"2019-02-01T09: 00: 00+01: 00"</span><span class="p">,</span><span class="w">
+            </span><span class="p">[</span><span class="s2">"2019-02-01T09:00:00+01:00"</span><span class="p">,</span><span class="w">
                 </span><span class="mf">38.13</span><span class="w">
             </span><span class="p">],</span><span class="w">
-            </span><span class="p">[</span><span class="s2">"2019-02-01T10: 00: 00+01: 00"</span><span class="p">,</span><span class="w">
+            </span><span class="p">[</span><span class="s2">"2019-02-01T10:00:00+01:00"</span><span class="p">,</span><span class="w">
                 </span><span class="mf">38.52</span><span class="w">
             </span><span class="p">],</span><span class="w">
-            </span><span class="p">[</span><span class="s2">"2019-02-01T11: 00: 00+01: 00"</span><span class="p">,</span><span class="w">
+            </span><span class="p">[</span><span class="s2">"2019-02-01T11:00:00+01:00"</span><span class="p">,</span><span class="w">
                 </span><span class="mf">38.85</span><span class="w">
             </span><span class="p">],</span><span class="w">
-            </span><span class="p">[</span><span class="s2">"2019-02-01T12: 00: 00+01: 00"</span><span class="p">,</span><span class="w">
+            </span><span class="p">[</span><span class="s2">"2019-02-01T12:00:00+01:00"</span><span class="p">,</span><span class="w">
                 </span><span class="mf">36.89</span><span class="w">
             </span><span class="p">],</span><span class="w">
-            </span><span class="p">[</span><span class="s2">"2019-02-01T13: 00: 00+01: 00"</span><span class="p">,</span><span class="w">
+            </span><span class="p">[</span><span class="s2">"2019-02-01T13:00:00+01:00"</span><span class="p">,</span><span class="w">
                 </span><span class="mf">37.6</span><span class="w">
             </span><span class="p">]</span><span class="w">
         </span><span class="p">],</span><span class="w"> </span><span class="s2">"unit"</span><span class="p">:</span><span class="w"> </span><span class="s2">"degree_celsius"</span><span class="w">
     </span><span class="p">},</span><span class="w">
     </span><span class="p">{</span><span class="s2">"metric"</span><span class="p">:</span><span class="w"> </span><span class="s2">"act"</span><span class="p">,</span><span class="w"> </span><span class="s2">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
-            </span><span class="p">[</span><span class="s2">"2019-02-01T09: 00: 00+01: 00"</span><span class="p">,</span><span class="w">
+            </span><span class="p">[</span><span class="s2">"2019-02-01T09:00:00+01:00"</span><span class="p">,</span><span class="w">
                 </span><span class="mf">3.35</span><span class="w">
             </span><span class="p">],</span><span class="w">
-            </span><span class="p">[</span><span class="s2">"2019-02-01T10: 00: 00+01: 00"</span><span class="p">,</span><span class="w">
+            </span><span class="p">[</span><span class="s2">"2019-02-01T10:00:00+01:00"</span><span class="p">,</span><span class="w">
                 </span><span class="mf">3.31</span><span class="w">
             </span><span class="p">],</span><span class="w">
-            </span><span class="p">[</span><span class="s2">"2019-02-01T11: 00: 00+01: 00"</span><span class="p">,</span><span class="w">
+            </span><span class="p">[</span><span class="s2">"2019-02-01T11:00:00+01:00"</span><span class="p">,</span><span class="w">
                 </span><span class="mf">3.46</span><span class="w">
             </span><span class="p">],</span><span class="w">
-            </span><span class="p">[</span><span class="s2">"2019-02-01T12: 00: 00+01: 00"</span><span class="p">,</span><span class="w">
+            </span><span class="p">[</span><span class="s2">"2019-02-01T12:00:00+01:00"</span><span class="p">,</span><span class="w">
                 </span><span class="mf">3.99</span><span class="w">
             </span><span class="p">],</span><span class="w">
-            </span><span class="p">[</span><span class="s2">"2019-02-01T13: 00: 00+01: 00"</span><span class="p">,</span><span class="w">
+            </span><span class="p">[</span><span class="s2">"2019-02-01T13:00:00+01:00"</span><span class="p">,</span><span class="w">
                 </span><span class="mf">4.3</span><span class="w">
             </span><span class="p">]</span><span class="w">
         </span><span class="p">],</span><span class="w"> </span><span class="s2">"unit"</span><span class="p">:</span><span class="w"> </span><span class="s2">"act"</span><span class="w">
@@ -1357,7 +1369,7 @@ It should contain the name of your software and the version. e.g.: &#39;HerdMana
 </tr>
 <tr>
 <td>preferred_units</td>
-<td>The units which are prefered. For example: &quot;act&quot;, &quot;degree_celsius&quot;, &quot;degree_fahrenheit&quot;.</td>
+<td>The units which are preferred. For example: &quot;act&quot;, &quot;degree_celsius&quot;, &quot;degree_fahrenheit&quot;.</td>
 <td></td>
 </tr>
 </tbody></table>
@@ -1737,10 +1749,6 @@ It should contain the name of your software and the version. e.g.: &#39;HerdMana
 <td>Indication of imminent calving</td>
 </tr>
 <tr>
-<td>fertility_702</td>
-<td>Oestrus</td>
-</tr>
-<tr>
 <td>actincrease_701</td>
 <td>Increase in activity</td>
 </tr>
@@ -1800,7 +1808,7 @@ It should contain the name of your software and the version. e.g.: &#39;HerdMana
   </span><span class="p">}</span><span class="w">
 </span><span class="p">]</span><span class="w">
 </span></code></pre>
-<p>This endpoint creates events for an animal with the given <code>official_id</code> which belongs to the organisation with the given <code>organisation_id</code>. If the event is created depents on the <code>event_type</code> and the <code>event_ts</code>. If the event with this two parameters does not exist, it gets created. Otherwise the event is skipped.
+<p>This endpoint creates events for an animal with the given <code>official_id</code> which belongs to the organisation with the given <code>organisation_id</code>. If the event is created it depends on the <code>event_type</code> and the <code>event_ts</code>. If the event with this two parameters does not exist, it gets created. Otherwise the event is skipped.
 It is possible to add just the events to the data which should be added to the smaXtec system or add just all events from your system and the smaXtec system adds those which are not in the system.</p>
 
 <aside class="notice">Just events of the type <b>heat</b>, <b>insemination</b>, <b>pregnancy_result</b>, <b>dry_off</b>, <b>calving_confirmation</b>, <b>abort</b> and <b>diagnosis</b> can be created via the API.</aside>
@@ -1840,17 +1848,17 @@ It is possible to add just the events to the data which should be added to the s
 </tr>
 <tr>
 <td>animal_id</td>
-<td>ID of the Aniamal in the smaXtec system.</td>
+<td>ID of the Animal in the smaXtec system.</td>
 <td></td>
 </tr>
 <tr>
 <td>create_ts</td>
-<td>Time when the event was created.</td>
+<td>Time when the event was created on our server.</td>
 <td></td>
 </tr>
 <tr>
 <td>event_ts</td>
-<td>Time when the event happened.</td>
+<td>Time when the event actually happened.</td>
 <td></td>
 </tr>
 <tr>
@@ -1890,7 +1898,7 @@ It is possible to add just the events to the data which should be added to the s
 </tr>
 <tr>
 <td>days_to_calving</td>
-<td>Days from the insamination untill the expected calving date. Default: <code>280</code></td>
+<td>Days from the insemination until the expected calving date. Default: <code>280</code></td>
 <td></td>
 </tr>
 <tr>
@@ -1910,12 +1918,12 @@ It is possible to add just the events to the data which should be added to the s
 </tr>
 <tr>
 <td>insemination_date</td>
-<td>Date of the insamination which led to the pregnancy result. If no prior insemination on that date is saved an insemination event on that date will be created.</td>
+<td>Date of the insemination which led to the pregnancy result. If no prior insemination on that date is saved an insemination event on that date will be created.</td>
 <td></td>
 </tr>
 <tr>
 <td>pregnant</td>
-<td>If the pregnancy resutl was positive (true) or negative (false).</td>
+<td>If the pregnancy result was positive (true) or negative (false).</td>
 <td></td>
 </tr>
 <tr>
@@ -1970,7 +1978,7 @@ It is possible to add just the events to the data which should be added to the s
 </tr>
 <tr>
 <td>diagnosis_key_type</td>
-<td>If an own key for diagnosis is used, a type of the diagnosis_key should be defined. eg.: <code>MY_OWN_KEY_DEFENITION_SYSTEM</code></td>
+<td>If an own key for diagnosis is used, a type of the diagnosis_key should be defined. eg.: <code>MY_OWN_KEY_DEFINITION_SYSTEM</code></td>
 <td></td>
 </tr>
 </tbody></table>
@@ -2189,7 +2197,7 @@ It is possible to add just the events to the data which should be added to the s
     </span><span class="p">}</span><span class="w">
 </span><span class="p">]</span><span class="w">
 </span></code></pre>
-<p>This endpoint retrives from a specific <code>organisation_id</code> and <code>device_id</code> the corresponding data. The response depends furthermore on the list of provided <code>metrics</code> and the period of time.</p>
+<p>This endpoint retrieves from a specific <code>organisation_id</code> and <code>device_id</code> the corresponding data. The response depends furthermore on the list of provided <code>metrics</code> and the period of time.</p>
 
 <p><strong>HTTP Request</strong></p>
 
@@ -2246,7 +2254,7 @@ It is possible to add just the events to the data which should be added to the s
 </tr>
 <tr>
 <td>preferred_units</td>
-<td>The units which are prefered. For example: <code>act</code>, <code>degree_celsius</code>, <code>degree_fahrenheit</code>.</td>
+<td>The units which are preferred. For example: <code>act</code>, <code>degree_celsius</code>, <code>degree_fahrenheit</code>.</td>
 <td></td>
 </tr>
 </tbody></table>
@@ -2309,7 +2317,7 @@ It is possible to add just the events to the data which should be added to the s
 <table><thead>
 <tr>
 <th>Key</th>
-<th>Descrition</th>
+<th>Description</th>
 </tr>
 </thead><tbody>
 <tr>
